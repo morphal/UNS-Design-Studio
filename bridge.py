@@ -24,7 +24,7 @@ stop_flag = False
 _stats    = {
     "connected": False, "opc_ok": False,
     "published": 0, "errors": 0, "rate": 0.0,
-    "protocol": "—", "ts": 0.0,
+    "protocol": "-", "ts": 0.0,
 }
 
 
@@ -211,7 +211,7 @@ class OpcPoller:
         root = self._opc.get_root_node()
 
         if not self._cache:
-            print("[bridge] Building node cache from uns_config.json…", flush=True)
+            print("[bridge] Building node cache from uns_config.json...", flush=True)
             ok = miss = 0
             for topic, opc_parts, unit, schema_id, data_type, tag_name in self._entries:
                 try:
@@ -265,7 +265,7 @@ def run_mqtt(cfg):
     host     = cfg.get("broker_host", "localhost")
     port     = int(cfg.get("broker_port", 1883))
     interval = float(cfg.get("interval", 2.0))
-    print(f"[bridge] MQTT mode → {host}:{port}", flush=True)
+    print(f"[bridge] MQTT mode -> {host}:{port}", flush=True)
 
     # Use MQTTv311 — universally supported; upgrade to v5 only if broker advertises it
     try:
@@ -346,7 +346,7 @@ def run_nats(cfg):
     if cfg.get("username"):
         url = f"nats://{cfg['username']}:{cfg.get('password','')}@{host}:{port}"
 
-    print(f"[bridge] NATS mode → {url}", flush=True)
+    print(f"[bridge] NATS mode -> {url}", flush=True)
 
     async def _run():
         global stop_flag
@@ -446,7 +446,7 @@ def _poll_loop(poller: OpcPoller, publish_fn, interval: float):
 if __name__ == "__main__":
     cfg      = _load_cfg()
     protocol = cfg.get("protocol", "mqtt").lower()
-    print(f"[bridge] UNS Bridge starting — protocol={protocol}", flush=True)
+    print(f"[bridge] UNS Bridge starting - protocol={protocol}", flush=True)
     _emit()
 
     if protocol == "nats":

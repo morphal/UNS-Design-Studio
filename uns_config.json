@@ -1,5 +1,5 @@
 {
-  "lastModified": "2026-04-19T16:40:33Z",
+  "lastModified": "2026-04-19T19:05:33Z",
   "namespaceUri": "http://royalfarmerscollective.com/uns",
   "tree": {
     "children": [
@@ -395,7 +395,50 @@
                     "description": "",
                     "id": "wc-bog-pc",
                     "name": "ProcessControl",
-                    "tags": [],
+                    "tags": [
+                      {
+                        "id": "717143a4-57b5-4ef0-9b4a-99acb6b00d62",
+                        "name": "NewTag",
+                        "dataType": "Float",
+                        "unit": "",
+                        "description": "",
+                        "access": "R",
+                        "payloadSchema": "simple",
+                        "simulation": {
+                          "profile": "oee"
+                        }
+                      },
+                      {
+                        "id": "e7828e7e-d0ca-4405-92df-3db4e0ae97e3",
+                        "name": "NewTag2",
+                        "dataType": "Float",
+                        "unit": "",
+                        "description": "",
+                        "access": "R",
+                        "payloadSchema": "pi",
+                        "simulation": null
+                      },
+                      {
+                        "id": "107504ae-71c9-4140-96db-540b9a862620",
+                        "name": "NewTag3",
+                        "dataType": "Float",
+                        "unit": "",
+                        "description": "",
+                        "access": "R",
+                        "payloadSchema": "isa95",
+                        "simulation": null
+                      },
+                      {
+                        "id": "3477765c-73b1-4d49-9258-e527f0fcc117",
+                        "name": "NewTag4",
+                        "dataType": "Float",
+                        "unit": "",
+                        "description": "",
+                        "access": "R",
+                        "payloadSchema": "",
+                        "simulation": null
+                      }
+                    ],
                     "type": "workCenter"
                   },
                   {
