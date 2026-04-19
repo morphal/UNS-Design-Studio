@@ -1,0 +1,976 @@
+{
+  "lastModified": "2026-04-19T15:00:42Z",
+  "namespaceUri": "http://royalfarmerscollective.com/uns",
+  "tree": {
+    "children": [
+      {
+        "children": [
+          {
+            "children": [
+              {
+                "children": [
+                  {
+                    "children": [],
+                    "description": "Process control and automation",
+                    "id": "wc-tern-pc",
+                    "name": "ProcessControl",
+                    "tags": [
+                      {
+                        "access": "RW",
+                        "dataType": "Bool",
+                        "description": "Line running state",
+                        "id": "t-pc-1",
+                        "name": "ProcessState",
+                        "payloadSchema": "sparkplug",
+                        "simulation": {
+                          "profile": "oee"
+                        },
+                        "unit": ""
+                      },
+                      {
+                        "access": "RW",
+                        "dataType": "String",
+                        "description": "Active production recipe",
+                        "id": "t-pc-2",
+                        "name": "Recipe",
+                        "payloadSchema": "sparkplug",
+                        "simulation": {
+                          "profile": "temperature"
+                        },
+                        "unit": ""
+                      }
+                    ],
+                    "type": "workCenter"
+                  },
+                  {
+                    "children": [],
+                    "description": "Overall Equipment Effectiveness",
+                    "id": "wc-tern-oee",
+                    "name": "OEE",
+                    "tags": [
+                      {
+                        "access": "R",
+                        "dataType": "Float",
+                        "description": "Overall OEE",
+                        "id": "t-oee-1",
+                        "name": "OEEPercent",
+                        "simulation": {
+                          "profile": "oee"
+                        },
+                        "unit": "%"
+                      },
+                      {
+                        "access": "R",
+                        "dataType": "Float",
+                        "description": "Availability rate",
+                        "id": "t-oee-2",
+                        "name": "AvailabilityPercent",
+                        "opcNodeName": "BeschikbaarheidPercent",
+                        "unit": "%"
+                      },
+                      {
+                        "access": "R",
+                        "dataType": "Float",
+                        "description": "Performance rate",
+                        "id": "t-oee-3",
+                        "name": "PerformancePercent",
+                        "opcNodeName": "PrestatiePercent",
+                        "unit": "%"
+                      },
+                      {
+                        "access": "R",
+                        "dataType": "Float",
+                        "description": "Quality rate",
+                        "id": "t-oee-4",
+                        "name": "QualityPercent",
+                        "opcNodeName": "KwaliteitPercent",
+                        "unit": "%"
+                      }
+                    ],
+                    "type": "workCenter"
+                  },
+                  {
+                    "children": [],
+                    "description": "Energy monitoring",
+                    "id": "wc-tern-energy",
+                    "name": "Energy",
+                    "tags": [
+                      {
+                        "access": "R",
+                        "dataType": "Float",
+                        "description": "Active power demand",
+                        "id": "t-en-1",
+                        "name": "CurrentPowerkW",
+                        "opcNodeName": "HuidigVermogenkW",
+                        "unit": "kW"
+                      },
+                      {
+                        "access": "R",
+                        "dataType": "Float",
+                        "description": "Cumulative energy consumption",
+                        "id": "t-en-2",
+                        "name": "CumulativeEnergykWh",
+                        "opcNodeName": "CumulatiefEnergieverbruikkWh",
+                        "unit": "kWh"
+                      }
+                    ],
+                    "type": "workCenter"
+                  },
+                  {
+                    "children": [],
+                    "description": "Production quantities",
+                    "id": "wc-tern-prod",
+                    "name": "Production",
+                    "tags": [
+                      {
+                        "access": "R",
+                        "dataType": "Float",
+                        "description": "Good product output",
+                        "id": "t-pr-1",
+                        "name": "GoodCountTons",
+                        "unit": "t"
+                      },
+                      {
+                        "access": "R",
+                        "dataType": "Float",
+                        "description": "Rejected product",
+                        "id": "t-pr-2",
+                        "name": "BadCountTons",
+                        "unit": "t"
+                      },
+                      {
+                        "access": "R",
+                        "dataType": "Float",
+                        "description": "Active batch size",
+                        "id": "t-pr-3",
+                        "name": "CurrentBatchTons",
+                        "opcNodeName": "HuidigeBatchTons",
+                        "unit": "t"
+                      }
+                    ],
+                    "type": "workCenter"
+                  },
+                  {
+                    "children": [],
+                    "description": "Maintenance & reliability",
+                    "id": "wc-tern-maint",
+                    "name": "Maintenance",
+                    "tags": [
+                      {
+                        "access": "R",
+                        "dataType": "String",
+                        "description": "Running / Down",
+                        "id": "t-m-1",
+                        "name": "FactoryStatus",
+                        "opcNodeName": "FabriekStatus",
+                        "unit": ""
+                      },
+                      {
+                        "access": "R",
+                        "dataType": "Int",
+                        "description": "Cumulative corrective failures",
+                        "id": "t-m-2",
+                        "name": "CorrectiveFailureCount",
+                        "opcNodeName": "AantalCorrectieveStoringen",
+                        "unit": ""
+                      },
+                      {
+                        "access": "R",
+                        "dataType": "DateTime",
+                        "description": "Last failure date/time",
+                        "id": "t-m-3",
+                        "name": "LastFailureTimestamp",
+                        "opcNodeName": "LaatsteStoringTijdstip",
+                        "unit": ""
+                      },
+                      {
+                        "access": "R",
+                        "dataType": "DateTime",
+                        "description": "Next planned maintenance date",
+                        "id": "t-m-4",
+                        "name": "NextPMDueDate",
+                        "opcNodeName": "VolgendePMVervaldatum",
+                        "unit": ""
+                      },
+                      {
+                        "access": "R",
+                        "dataType": "Float",
+                        "description": "PM schedule compliance",
+                        "id": "t-m-5",
+                        "name": "PMCompliancePercent",
+                        "opcNodeName": "PMNalevingPercent",
+                        "unit": "%"
+                      }
+                    ],
+                    "type": "workCenter"
+                  },
+                  {
+                    "children": [],
+                    "description": "Product quality metrics",
+                    "id": "wc-tern-qual",
+                    "name": "Quality",
+                    "tags": [
+                      {
+                        "access": "R",
+                        "dataType": "Float",
+                        "description": "Dry matter content",
+                        "id": "t-q-1",
+                        "name": "DroogstofgehaltePercent",
+                        "opcNodeName": "DroogstofGehaltePercent",
+                        "unit": "%"
+                      },
+                      {
+                        "access": "R",
+                        "dataType": "Float",
+                        "description": "Free fat content",
+                        "id": "t-q-2",
+                        "name": "VrijVetGramPerKg",
+                        "opcNodeName": "VrijVetGPerKg",
+                        "unit": "g/kg"
+                      },
+                      {
+                        "access": "R",
+                        "dataType": "Float",
+                        "description": "First pass yield",
+                        "id": "t-q-3",
+                        "name": "FirstPassYieldPercent",
+                        "opcNodeName": "EersteDoorloopRendementPercent",
+                        "unit": "%"
+                      },
+                      {
+                        "access": "R",
+                        "dataType": "Bool",
+                        "description": "Quality hold flag",
+                        "id": "t-q-4",
+                        "name": "QualityHold",
+                        "opcNodeName": "KwaliteitsBlokkering",
+                        "unit": ""
+                      }
+                    ],
+                    "type": "workCenter"
+                  },
+                  {
+                    "children": [],
+                    "description": "Key performance indicators",
+                    "id": "wc-tern-kpi",
+                    "name": "KPIs",
+                    "tags": [
+                      {
+                        "access": "R",
+                        "dataType": "Float",
+                        "description": "Mean time between failures",
+                        "id": "t-k-1",
+                        "name": "MTBFHours",
+                        "opcNodeName": "MTBFUren",
+                        "unit": "h"
+                      },
+                      {
+                        "access": "R",
+                        "dataType": "Float",
+                        "description": "Mean time to repair",
+                        "id": "t-k-2",
+                        "name": "MTTRMinutes",
+                        "opcNodeName": "MTTRMinuten",
+                        "unit": "min"
+                      },
+                      {
+                        "access": "R",
+                        "dataType": "Float",
+                        "description": "Raw material coverage days",
+                        "id": "t-k-3",
+                        "name": "DaysOfSupply",
+                        "opcNodeName": "DagenGrondstofdekking",
+                        "unit": "days"
+                      },
+                      {
+                        "access": "R",
+                        "dataType": "Float",
+                        "description": "Overall production yield",
+                        "id": "t-k-4",
+                        "name": "OverallYieldPercent",
+                        "opcNodeName": "TotaalRendementPercent",
+                        "unit": "%"
+                      }
+                    ],
+                    "type": "workCenter"
+                  },
+                  {
+                    "children": [],
+                    "description": "Inbound & outbound logistics",
+                    "id": "wc-tern-log",
+                    "name": "Logistics",
+                    "tags": [
+                      {
+                        "access": "R",
+                        "dataType": "Float",
+                        "description": "Cumulative outbound weight",
+                        "id": "t-l-1",
+                        "name": "OutboundWeightTons",
+                        "unit": "t"
+                      },
+                      {
+                        "access": "R",
+                        "dataType": "Float",
+                        "description": "Silo 1 fill level",
+                        "id": "t-l-2",
+                        "name": "InfeedSilo1LevelTons",
+                        "unit": "t"
+                      },
+                      {
+                        "access": "R",
+                        "dataType": "Float",
+                        "description": "Silo 2 fill level",
+                        "id": "t-l-3",
+                        "name": "InfeedSilo2LevelTons",
+                        "unit": "t"
+                      },
+                      {
+                        "access": "R",
+                        "dataType": "String",
+                        "description": "Last inbound truck ID",
+                        "id": "t-l-4",
+                        "name": "LastInboundTruckID",
+                        "opcPath": "Logistics/InkomendWeegbrug/LaatsteTruckID",
+                        "unit": ""
+                      },
+                      {
+                        "access": "R",
+                        "dataType": "Float",
+                        "description": "Total inbound material received",
+                        "id": "t-l-5",
+                        "name": "CumulativeReceivedTons",
+                        "opcPath": "Logistics/InkomendWeegbrug/CumulatiefOntvangenTons",
+                        "unit": "t"
+                      }
+                    ],
+                    "type": "workCenter"
+                  },
+                  {
+                    "children": [],
+                    "description": "Batch and lot traceability",
+                    "id": "wc-tern-trac",
+                    "name": "Traceability",
+                    "tags": [
+                      {
+                        "access": "R",
+                        "dataType": "String",
+                        "description": "Active inbound lot ID",
+                        "id": "t-tr-1",
+                        "name": "CurrentInboundLotID",
+                        "opcNodeName": "HuidigInkomendLotID",
+                        "unit": ""
+                      },
+                      {
+                        "access": "R",
+                        "dataType": "String",
+                        "description": "Active finished goods lot ID",
+                        "id": "t-tr-2",
+                        "name": "CurrentFinishedGoodsLotID",
+                        "opcNodeName": "HuidigGereedProductLotID",
+                        "unit": ""
+                      }
+                    ],
+                    "type": "workCenter"
+                  }
+                ],
+                "description": "Main Chip Production Line",
+                "id": "area-tern-pl",
+                "name": "ProductionLine",
+                "tags": [],
+                "type": "area"
+              }
+            ],
+            "description": "Terneuzen Production Facility",
+            "id": "site-tern",
+            "name": "Terneuzen",
+            "tags": [],
+            "type": "site"
+          },
+          {
+            "children": [
+              {
+                "children": [
+                  {
+                    "children": [],
+                    "description": "",
+                    "id": "wc-bog-pc",
+                    "name": "ProcessControl",
+                    "tags": [],
+                    "type": "workCenter"
+                  },
+                  {
+                    "children": [],
+                    "description": "",
+                    "id": "wc-bog-oee",
+                    "name": "OEE",
+                    "tags": [],
+                    "type": "workCenter"
+                  },
+                  {
+                    "children": [],
+                    "description": "",
+                    "id": "wc-bog-energy",
+                    "name": "Energy",
+                    "tags": [],
+                    "type": "workCenter"
+                  },
+                  {
+                    "children": [],
+                    "description": "",
+                    "id": "wc-bog-prod",
+                    "name": "Production",
+                    "tags": [],
+                    "type": "workCenter"
+                  },
+                  {
+                    "children": [],
+                    "description": "",
+                    "id": "wc-bog-qual",
+                    "name": "Quality",
+                    "tags": [],
+                    "type": "workCenter"
+                  }
+                ],
+                "description": "",
+                "id": "area-bog-pl",
+                "name": "ProductionLine",
+                "tags": [],
+                "type": "area"
+              }
+            ],
+            "description": "Bergen op Zoom Production Facility",
+            "id": "site-bog",
+            "name": "BergenOpZoom",
+            "tags": [],
+            "type": "site"
+          },
+          {
+            "children": [],
+            "description": "",
+            "id": "4e3b306b-f98f-4faa-ab0d-ece252b928d2",
+            "name": "NewSite",
+            "tags": [
+              {
+                "access": "R",
+                "dataType": "Float",
+                "description": "",
+                "id": "5899645e-f3c4-4ff3-b6f8-330076f288b5",
+                "name": "TEST tag",
+                "payloadSchema": "standard",
+                "unit": ""
+              }
+            ],
+            "type": "site"
+          }
+        ],
+        "description": "Chips & Snacks Division",
+        "id": "bu-knap",
+        "name": "KnappertjesBV",
+        "tags": [],
+        "type": "businessUnit"
+      },
+      {
+        "children": [
+          {
+            "children": [
+              {
+                "children": [
+                  {
+                    "children": [],
+                    "description": "",
+                    "id": "wc-emm-pc",
+                    "name": "ProcessControl",
+                    "tags": [],
+                    "type": "workCenter"
+                  },
+                  {
+                    "children": [],
+                    "description": "",
+                    "id": "wc-emm-oee",
+                    "name": "OEE",
+                    "tags": [],
+                    "type": "workCenter"
+                  },
+                  {
+                    "children": [],
+                    "description": "",
+                    "id": "wc-emm-energy",
+                    "name": "Energy",
+                    "tags": [],
+                    "type": "workCenter"
+                  },
+                  {
+                    "children": [],
+                    "description": "",
+                    "id": "wc-emm-prod",
+                    "name": "Production",
+                    "tags": [],
+                    "type": "workCenter"
+                  }
+                ],
+                "description": "",
+                "id": "area-emm-pl",
+                "name": "ProductionLine",
+                "tags": [],
+                "type": "area"
+              }
+            ],
+            "description": "",
+            "id": "site-emm",
+            "name": "Emmeloord",
+            "tags": [],
+            "type": "site"
+          },
+          {
+            "children": [
+              {
+                "children": [
+                  {
+                    "children": [],
+                    "description": "",
+                    "id": "wc-veen-pc",
+                    "name": "ProcessControl",
+                    "tags": [],
+                    "type": "workCenter"
+                  },
+                  {
+                    "children": [],
+                    "description": "",
+                    "id": "wc-veen-oee",
+                    "name": "OEE",
+                    "tags": [],
+                    "type": "workCenter"
+                  }
+                ],
+                "description": "",
+                "id": "area-veen-pl",
+                "name": "ProductionLine",
+                "tags": [],
+                "type": "area"
+              }
+            ],
+            "description": "",
+            "id": "site-veen",
+            "name": "Veendam",
+            "tags": [],
+            "type": "site"
+          }
+        ],
+        "description": "Potato Flakes Division",
+        "id": "bu-vlok",
+        "name": "Vlokkenheim",
+        "tags": [],
+        "type": "businessUnit"
+      },
+      {
+        "children": [
+          {
+            "children": [
+              {
+                "children": [
+                  {
+                    "children": [],
+                    "description": "",
+                    "id": "wc-heer-pc",
+                    "name": "ProcessControl",
+                    "tags": [],
+                    "type": "workCenter"
+                  },
+                  {
+                    "children": [],
+                    "description": "",
+                    "id": "wc-heer-oee",
+                    "name": "OEE",
+                    "tags": [],
+                    "type": "workCenter"
+                  },
+                  {
+                    "children": [],
+                    "description": "",
+                    "id": "wc-heer-energy",
+                    "name": "Energy",
+                    "tags": [],
+                    "type": "workCenter"
+                  }
+                ],
+                "description": "",
+                "id": "area-heer-pl",
+                "name": "ProductionLine",
+                "tags": [],
+                "type": "area"
+              },
+              {
+                "children": [],
+                "description": "",
+                "id": "b182ad37-a864-4d47-9fe4-a6558f668332",
+                "name": "_ERP",
+                "tags": [],
+                "type": "area"
+              }
+            ],
+            "description": "",
+            "id": "site-heer",
+            "name": "Heerenveen",
+            "tags": [],
+            "type": "site"
+          },
+          {
+            "children": [
+              {
+                "children": [
+                  {
+                    "children": [],
+                    "description": "",
+                    "id": "wc-harl-pc",
+                    "name": "ProcessControl",
+                    "tags": [],
+                    "type": "workCenter"
+                  }
+                ],
+                "description": "",
+                "id": "area-harl-pl",
+                "name": "ProductionLine",
+                "tags": [],
+                "type": "area"
+              }
+            ],
+            "description": "",
+            "id": "site-harl",
+            "name": "Harlingen",
+            "tags": [],
+            "type": "site"
+          },
+          {
+            "children": [
+              {
+                "children": [
+                  {
+                    "children": [],
+                    "description": "",
+                    "id": "wc-mepp-pc",
+                    "name": "ProcessControl",
+                    "tags": [],
+                    "type": "workCenter"
+                  }
+                ],
+                "description": "",
+                "id": "area-mepp-pl",
+                "name": "ProductionLine",
+                "tags": [],
+                "type": "area"
+              }
+            ],
+            "description": "",
+            "id": "site-mepp",
+            "name": "Meppel",
+            "tags": [],
+            "type": "site"
+          },
+          {
+            "children": [
+              {
+                "children": [
+                  {
+                    "children": [],
+                    "description": "",
+                    "id": "wc-hard-pc",
+                    "name": "ProcessControl",
+                    "tags": [],
+                    "type": "workCenter"
+                  }
+                ],
+                "description": "",
+                "id": "area-hard-pl",
+                "name": "ProductionLine",
+                "tags": [],
+                "type": "area"
+              }
+            ],
+            "description": "",
+            "id": "site-hard",
+            "name": "Hardenberg",
+            "tags": [],
+            "type": "site"
+          },
+          {
+            "children": [
+              {
+                "children": [
+                  {
+                    "children": [],
+                    "description": "",
+                    "id": "wc-hoog-pc",
+                    "name": "ProcessControl",
+                    "tags": [],
+                    "type": "workCenter"
+                  }
+                ],
+                "description": "",
+                "id": "area-hoog-pl",
+                "name": "ProductionLine",
+                "tags": [],
+                "type": "area"
+              }
+            ],
+            "description": "",
+            "id": "site-hoog",
+            "name": "Hoogeveen",
+            "tags": [],
+            "type": "site"
+          },
+          {
+            "children": [
+              {
+                "children": [
+                  {
+                    "children": [],
+                    "description": "",
+                    "id": "wc-coev-pc",
+                    "name": "ProcessControl",
+                    "tags": [],
+                    "type": "workCenter"
+                  }
+                ],
+                "description": "",
+                "id": "area-coev-pl",
+                "name": "ProductionLine",
+                "tags": [],
+                "type": "area"
+              }
+            ],
+            "description": "",
+            "id": "site-coev",
+            "name": "Coevorden",
+            "tags": [],
+            "type": "site"
+          }
+        ],
+        "description": "Frozen Frites Division",
+        "id": "bu-frito",
+        "name": "FritoMaxx",
+        "tags": [],
+        "type": "businessUnit"
+      },
+      {
+        "children": [
+          {
+            "children": [
+              {
+                "children": [
+                  {
+                    "children": [],
+                    "description": "",
+                    "id": "wc-roos-pc",
+                    "name": "ProcessControl",
+                    "tags": [],
+                    "type": "workCenter"
+                  },
+                  {
+                    "children": [],
+                    "description": "",
+                    "id": "wc-roos-oee",
+                    "name": "OEE",
+                    "tags": [],
+                    "type": "workCenter"
+                  },
+                  {
+                    "children": [],
+                    "description": "",
+                    "id": "wc-roos-energy",
+                    "name": "Energy",
+                    "tags": [],
+                    "type": "workCenter"
+                  }
+                ],
+                "description": "",
+                "id": "area-roos-pl",
+                "name": "ProductionLine",
+                "tags": [],
+                "type": "area"
+              }
+            ],
+            "description": "",
+            "id": "site-roos",
+            "name": "Roosendaal",
+            "tags": [],
+            "type": "site"
+          }
+        ],
+        "description": "Chicory & Inulin Division",
+        "id": "bu-wort",
+        "name": "Wortelkracht",
+        "tags": [],
+        "type": "businessUnit"
+      },
+      {
+        "children": [
+          {
+            "children": [
+              {
+                "children": [
+                  {
+                    "children": [],
+                    "description": "",
+                    "id": "wc-zev-pc",
+                    "name": "ProcessControl",
+                    "tags": [],
+                    "type": "workCenter"
+                  },
+                  {
+                    "children": [],
+                    "description": "",
+                    "id": "wc-zev-oee",
+                    "name": "OEE",
+                    "tags": [],
+                    "type": "workCenter"
+                  },
+                  {
+                    "children": [],
+                    "description": "",
+                    "id": "wc-zev-energy",
+                    "name": "Energy",
+                    "tags": [],
+                    "type": "workCenter"
+                  }
+                ],
+                "description": "",
+                "id": "area-zev-pl",
+                "name": "ProductionLine",
+                "tags": [],
+                "type": "area"
+              }
+            ],
+            "description": "",
+            "id": "site-zev",
+            "name": "Zevenbergen",
+            "tags": [],
+            "type": "site"
+          },
+          {
+            "children": [
+              {
+                "children": [
+                  {
+                    "children": [],
+                    "description": "",
+                    "id": "wc-stad-pc",
+                    "name": "ProcessControl",
+                    "tags": [],
+                    "type": "workCenter"
+                  },
+                  {
+                    "children": [],
+                    "description": "",
+                    "id": "wc-stad-oee",
+                    "name": "OEE",
+                    "tags": [],
+                    "type": "workCenter"
+                  }
+                ],
+                "description": "",
+                "id": "area-stad-pl",
+                "name": "ProductionLine",
+                "tags": [],
+                "type": "area"
+              }
+            ],
+            "description": "",
+            "id": "site-stad",
+            "name": "Stadskanaal",
+            "tags": [],
+            "type": "site"
+          }
+        ],
+        "description": "Sugar Beet Division",
+        "id": "bu-biet",
+        "name": "DeBietenBende",
+        "tags": [],
+        "type": "businessUnit"
+      },
+      {
+        "children": [
+          {
+            "children": [
+              {
+                "children": [
+                  {
+                    "children": [
+                      {
+                        "children": [
+                          {
+                            "children": [],
+                            "description": "",
+                            "id": "0952f6c5-d811-4690-b580-56eeafa02192",
+                            "name": "NewDevice",
+                            "tags": [
+                              {
+                                "access": "R",
+                                "dataType": "Float",
+                                "description": "",
+                                "id": "aca01747-0588-46ab-9eac-01ffca078faa",
+                                "name": "NewTag",
+                                "unit": ""
+                              },
+                              {
+                                "access": "R",
+                                "dataType": "Float",
+                                "description": "",
+                                "id": "09cb3a8d-b82c-40e5-87e8-fcdbe212b6b1",
+                                "name": "NewTag2",
+                                "unit": ""
+                              },
+                              {
+                                "access": "R",
+                                "dataType": "Float",
+                                "description": "",
+                                "id": "9c9cc6f8-704b-42fe-ac86-425730702f23",
+                                "name": "NewTag3",
+                                "unit": ""
+                              }
+                            ],
+                            "type": "device"
+                          }
+                        ],
+                        "description": "",
+                        "id": "d7ebf929-8e9f-479d-8143-8c0d949498c9",
+                        "name": "NewWorkUnit",
+                        "tags": [],
+                        "type": "workUnit"
+                      }
+                    ],
+                    "description": "",
+                    "id": "dfe07d1d-75bc-4298-a155-5f02be40d7a6",
+                    "name": "NewWorkCenter",
+                    "tags": [],
+                    "type": "workCenter"
+                  }
+                ],
+                "description": "",
+                "id": "213e0b27-b179-47f4-83f7-bfbf8b5c1f94",
+                "name": "NewArea",
+                "tags": [],
+                "type": "area"
+              }
+            ],
+            "description": "",
+            "id": "1908250f-7b88-48f6-85d3-9de8c5a7446a",
+            "name": "NewSite",
+            "tags": [],
+            "type": "site"
+          }
+        ],
+        "description": "",
+        "id": "12379dd2-d3ce-4085-98d5-1d75b95ddee0",
+        "name": "NewBusinessUnit",
+        "tags": [],
+        "type": "businessUnit"
+      }
+    ],
+    "description": "Royal Farmers Collective â€“ Agricultural Processing Holding",
+    "id": "ent-rfc",
+    "name": "RoyalFarmersCollective",
+    "tags": [],
+    "type": "enterprise"
+  },
+  "version": "1.0"
+}

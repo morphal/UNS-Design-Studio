@@ -1,0 +1,7 @@
+{
+  "opc_bind_ip": "0.0.0.0",
+  "opc_port": 4840,
+  "opc_client_host": "127.0.0.1",
+  "tcp_port": 9999,
+  "host_ip": "127.0.0.1"
+}

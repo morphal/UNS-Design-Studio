@@ -1,0 +1,17 @@
+services:
+
+  uns-simulator:
+    image: uns-simulator:latest
+    container_name: uns-simulator
+    restart: unless-stopped
+    ports:
+      - "5000:5000"   # Flask dashboard  →  http://10.10.3.4:5000
+      - "4840:4840"   # OPC-UA           →  opc.tcp://10.10.3.4:4840
+      - "9999:9999"   # Anomaly TCP
+    volumes:
+      - uns-data:/data
+    environment:
+      - PYTHONUNBUFFERED=1
+
+volumes:
+  uns-data:

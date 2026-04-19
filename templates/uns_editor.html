@@ -1,0 +1,1443 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UNS Topic Designer – Royal Farmers Collective</title>
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
+
+    :root {
+      --bg: #0d1117;
+      --surface: #161b22;
+      --surface2: #1c2128;
+      --surface3: #21262d;
+      --border: #30363d;
+      --text: #e6edf3;
+      --muted: #8b949e;
+      --accent: #58a6ff;
+      --green: #3fb950;
+      --red: #f85149;
+      --yellow: #e3b341;
+      --orange: #d29922;
+      --purple: #a371f7;
+      --radius: 8px;
+      --shadow: 0 4px 16px rgba(0, 0, 0, .5);
+    }
+
+    html,
+    body {
+      height: 100%;
+      font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 14px;
+      line-height: 1.5;
+      overflow: hidden
+    }
+
+    button {
+      cursor: pointer;
+      border: none;
+      border-radius: 6px;
+      font: inherit;
+      transition: opacity .15s, transform .1s
+    }
+
+    button:hover {
+      opacity: .85
+    }
+
+    button:active {
+      transform: scale(.97)
+    }
+
+    input,
+    select,
+    textarea {
+      background: var(--surface3);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text);
+      font: inherit;
+      font-size: 13px;
+      padding: 6px 10px;
+      width: 100%;
+      outline: none;
+      transition: border-color .15s
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: var(--accent)
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none
+    }
+
+    /* Header */
+    header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 16px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      height: 50px
+    }
+
+    .hlogo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      white-space: nowrap
+    }
+
+    .hsub {
+      color: var(--muted);
+      font-size: 11px;
+      margin-left: 2px;
+      font-weight: 400
+    }
+
+    .hspacer {
+      flex: 1
+    }
+
+    #save-ind {
+      font-size: 12px;
+      padding: 3px 10px;
+      border-radius: 12px;
+      font-weight: 500
+    }
+
+    #save-ind.saved {
+      background: rgba(63, 185, 80, .12);
+      color: var(--green)
+    }
+
+    #save-ind.unsaved {
+      background: rgba(227, 179, 65, .12);
+      color: var(--yellow)
+    }
+
+    .btn {
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 500;
+      white-space: nowrap
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #0d1117
+    }
+
+    .btn-secondary {
+      background: var(--surface3);
+      color: var(--text);
+      border: 1px solid var(--border)
+    }
+
+    .btn-danger {
+      background: rgba(248, 81, 73, .12);
+      color: var(--red);
+      border: 1px solid rgba(248, 81, 73, .25)
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--muted);
+      border: 1px solid var(--border)
+    }
+
+    .btn-ghost:hover {
+      color: var(--text)
+    }
+
+    /* Layout */
+    .layout {
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      height: calc(100vh - 50px);
+      overflow: hidden
+    }
+
+    /* Tree panel */
+    .tree-panel {
+      display: flex;
+      flex-direction: column;
+      border-right: 1px solid var(--border);
+      overflow: hidden;
+      background: var(--bg)
+    }
+
+    .tree-toolbar {
+      padding: 8px 10px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      background: var(--surface);
+      flex-shrink: 0
+    }
+
+    .tree-toolbar input {
+      flex: 1;
+      font-size: 12px;
+      padding: 5px 9px
+    }
+
+    .tree-scroll {
+      flex: 1;
+      overflow-y: auto;
+      padding: 4px 0
+    }
+
+    .tree-stats {
+      padding: 6px 12px;
+      font-size: 11px;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+      display: flex;
+      gap: 14px;
+      background: var(--surface);
+      flex-shrink: 0
+    }
+
+    .tree-stats strong {
+      color: var(--text)
+    }
+
+    /* Tree nodes */
+    .t-row {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 6px 4px 0;
+      cursor: pointer;
+      border-radius: 6px;
+      margin: 1px 5px;
+      transition: background .1s;
+      position: relative;
+      min-height: 28px
+    }
+
+    .t-row:hover {
+      background: var(--surface2)
+    }
+
+    .t-row.sel {
+      background: var(--surface3);
+      outline: 1px solid var(--border)
+    }
+
+    .t-exp {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 8px;
+      color: var(--muted);
+      border-radius: 3px
+    }
+
+    .t-exp:hover {
+      background: var(--surface3);
+      color: var(--text)
+    }
+
+    .t-exp.inv {
+      visibility: hidden
+    }
+
+    .t-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0
+    }
+
+    .t-name {
+      flex: 1;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-size: 13px
+    }
+
+    .t-badge {
+      font-size: 10px;
+      padding: 1px 5px;
+      border-radius: 8px;
+      background: var(--surface3);
+      color: var(--muted);
+      flex-shrink: 0
+    }
+
+    .t-acts {
+      display: none;
+      gap: 1px;
+      flex-shrink: 0
+    }
+
+    .t-row:hover .t-acts {
+      display: flex
+    }
+
+    .t-row.sel .t-acts {
+      display: flex
+    }
+
+    .ibtn {
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      color: var(--muted);
+      font-size: 13px;
+      border-radius: 3px;
+      padding: 0;
+      line-height: 1
+    }
+
+    .ibtn:hover {
+      background: var(--surface2);
+      color: var(--text)
+    }
+
+    .ibtn.del:hover {
+      background: rgba(248, 81, 73, .15);
+      color: var(--red)
+    }
+
+    .t-children {
+      border-left: 1px solid var(--surface3);
+      margin-left: 19px
+    }
+
+    /* Props panel */
+    .props-panel {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden
+    }
+
+    .props-empty {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 8px;
+      color: var(--muted)
+    }
+
+    .props-empty-icon {
+      font-size: 48px;
+      opacity: .25
+    }
+
+    /* Tabs */
+    .tabs {
+      display: flex;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface);
+      padding: 0 14px;
+      gap: 0;
+      flex-shrink: 0
+    }
+
+    .tab {
+      padding: 9px 14px;
+      font-size: 12px;
+      cursor: pointer;
+      color: var(--muted);
+      background: transparent;
+      border-radius: 0;
+      border-bottom: 2px solid transparent;
+      transition: color .15s
+    }
+
+    .tab.on {
+      color: var(--text);
+      border-bottom-color: var(--accent)
+    }
+
+    .tab:hover:not(.on) {
+      color: var(--text)
+    }
+
+    .tab-body {
+      display: none;
+      padding: 14px;
+      overflow-y: auto;
+      flex: 1
+    }
+
+    .tab-body.on {
+      display: flex;
+      flex-direction: column;
+      gap: 0
+    }
+
+    /* Form */
+    .fg {
+      margin-bottom: 12px
+    }
+
+    .fg label {
+      display: block;
+      font-size: 11px;
+      color: var(--muted);
+      margin-bottom: 4px;
+      text-transform: uppercase;
+      letter-spacing: .04em
+    }
+
+    .topic-path {
+      padding: 7px 10px;
+      background: var(--surface3);
+      border-radius: 6px;
+      font-family: monospace;
+      font-size: 11px;
+      color: var(--accent);
+      word-break: break-all;
+      border: 1px solid var(--border);
+      line-height: 1.6
+    }
+
+    .type-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 10px;
+      border-radius: 14px;
+      font-size: 12px;
+      font-weight: 500;
+      margin-bottom: 12px
+    }
+
+    .act-row {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 14px;
+      flex-wrap: wrap
+    }
+
+    .props-foot {
+      margin-top: auto;
+      padding-top: 14px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      gap: 8px;
+      justify-content: space-between;
+      flex-wrap: wrap
+    }
+
+    /* Tags table */
+    .tags-hdr {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px
+    }
+
+    .tags-hdr h4 {
+      font-size: 13px;
+      font-weight: 600
+    }
+
+    .ttable {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 11px
+    }
+
+    .ttable th {
+      padding: 5px 6px;
+      text-align: left;
+      color: var(--muted);
+      font-weight: 500;
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap
+    }
+
+    .ttable td {
+      padding: 2px 3px;
+      border-bottom: 1px solid var(--surface3)
+    }
+
+    .ttable tr:hover td {
+      background: var(--surface2)
+    }
+
+    .ti {
+      background: transparent;
+      border: 1px solid transparent;
+      padding: 3px 5px;
+      font-size: 11px;
+      border-radius: 3px;
+      width: 100%;
+      min-width: 60px
+    }
+
+    .ti:hover {
+      border-color: var(--border)
+    }
+
+    .ti:focus {
+      background: var(--surface3);
+      border-color: var(--accent)
+    }
+
+    .ts {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      padding: 2px 3px;
+      font-size: 10px;
+      border-radius: 3px;
+      color: var(--text);
+      width: auto
+    }
+
+    .tags-empty {
+      padding: 14px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 12px
+    }
+
+    /* Paths */
+    .paths-toolbar {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 10px;
+      align-items: center
+    }
+
+    .paths-count {
+      font-size: 11px;
+      color: var(--muted)
+    }
+
+    .path-item {
+      padding: 3px 6px;
+      border-radius: 3px;
+      font-family: monospace;
+      font-size: 11px;
+      color: var(--muted);
+      display: flex;
+      flex-wrap: wrap;
+      word-break: break-all;
+      line-height: 1.7
+    }
+
+    .path-item:hover {
+      background: var(--surface2)
+    }
+
+    .path-tag {
+      color: var(--green)
+    }
+
+    /* Modal */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, .7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 200
+    }
+
+    .modal {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 22px;
+      min-width: 380px;
+      max-width: 600px;
+      width: 100%;
+      box-shadow: var(--shadow)
+    }
+
+    .modal h3 {
+      margin-bottom: 14px;
+      font-size: 15px
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 8px;
+      justify-content: flex-end;
+      margin-top: 18px
+    }
+
+    .modal textarea {
+      font-family: monospace;
+      font-size: 11px;
+      height: 280px;
+      resize: vertical
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 18px;
+      right: 18px;
+      padding: 9px 14px;
+      border-radius: 7px;
+      font-size: 13px;
+      z-index: 500;
+      animation: tin .18s ease;
+      pointer-events: none
+    }
+
+    .toast.ok {
+      background: var(--green);
+      color: #000
+    }
+
+    .toast.err {
+      background: var(--red);
+      color: #fff
+    }
+
+    .toast.info {
+      background: var(--accent);
+      color: #000
+    }
+
+    @keyframes tin {
+      from {
+        opacity: 0;
+        transform: translateY(6px)
+      }
+
+      to {
+        opacity: 1;
+        transform: none
+      }
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar {
+      width: 5px;
+      height: 5px
+    }
+
+    ::-webkit-scrollbar-track {
+      background: transparent
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 3px
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="hlogo">🌐 <span>UNS Topic Designer</span><span class="hsub">— Royal Farmers Collective</span></div>
+    <div class="hspacer"></div>
+    <span id="save-ind" class="saved">● Saved</span>
+    <button class="btn btn-ghost" onclick="showImport()">📂 Import</button>
+    <button class="btn btn-ghost" onclick="doExportJSON()">📤 Export JSON</button>
+    <button class="btn btn-ghost" onclick="doExportPaths()">📋 Topic Paths</button>
+    <button class="btn btn-primary" id="btn-save" onclick="saveConfig()">💾 Save</button>
+    <a href="/payload-schemas" class="btn btn-ghost">⚙️ Payload Schemas</a>
+    <a href="/" class="btn btn-ghost">← Dashboard</a>
+  </header>
+
+  <div class="layout">
+    <!-- Left: tree -->
+    <div class="tree-panel">
+      <div class="tree-toolbar">
+        <input type="search" id="srch" placeholder="🔍 Search…" oninput="filterTree(this.value)">
+        <button class="btn btn-ghost" style="padding:5px 8px;font-size:13px" onclick="expandAll()"
+          title="Expand all">⊞</button>
+        <button class="btn btn-ghost" style="padding:5px 8px;font-size:13px" onclick="collapseAll()"
+          title="Collapse all">⊟</button>
+        <button class="btn btn-primary" style="padding:5px 10px;font-size:12px" onclick="addToRoot()">+ Node</button>
+      </div>
+      <div class="tree-scroll" id="tree"></div>
+      <div class="tree-stats" id="stats"></div>
+    </div>
+
+    <!-- Right: props -->
+    <div class="props-panel" id="props-panel">
+      <div class="props-empty" id="props-empty">
+        <div class="props-empty-icon">🌐</div>
+        <div>Select a node to edit</div>
+        <div style="font-size:11px;margin-top:3px">or click <strong>+ Node</strong> to start</div>
+      </div>
+
+      <div id="props-content" style="display:none;flex-direction:column;height:100%">
+        <div class="tabs">
+          <button class="tab on" data-tab="props" onclick="tab('props')">Properties</button>
+          <button class="tab" data-tab="tags" onclick="tab('tags')">Tags</button>
+          <button class="tab" data-tab="paths" onclick="tab('paths')">Topic Paths</button>
+        </div>
+
+        <!-- Properties tab -->
+        <div class="tab-body on" id="tb-props">
+          <div id="type-badge"></div>
+          <div class="act-row" id="act-row"></div>
+          <div class="fg"><label>Name</label><input id="p-name" oninput="propChanged()"></div>
+          <div class="fg">
+            <label>Type</label>
+            <select id="p-type" onchange="propChanged()">
+              <option value="enterprise">🏢 Enterprise</option>
+              <option value="businessUnit">🏭 Business Unit</option>
+              <option value="site">🏗️ Site</option>
+              <option value="area">📐 Area</option>
+              <option value="workCenter">⚙️ Work Center</option>
+              <option value="workUnit">🔧 Work Unit</option>
+              <option value="device">📟 Device</option>
+            </select>
+          </div>
+          <div class="fg"><label>Description</label><textarea id="p-desc" rows="2" oninput="propChanged()"></textarea>
+          </div>
+          <div class="fg"><label>Topic Path</label>
+            <div class="topic-path" id="p-path">—</div>
+          </div>
+          <div class="props-foot">
+            <button class="btn btn-danger" onclick="confirmDel()">Delete Node</button>
+            <button class="btn btn-ghost" onclick="dupSel()">⧉ Duplicate Subtree</button>
+          </div>
+        </div>
+
+        <!-- Tags tab -->
+        <div class="tab-body" id="tb-tags">
+          <div class="tags-hdr">
+            <h4>Tags / Data Points</h4>
+            <button class="btn btn-primary" style="font-size:11px;padding:4px 10px" onclick="addTag()">+ Add
+              Tag</button>
+          </div>
+          <div id="tags-wrap"></div>
+        </div>
+
+        <!-- Paths tab -->
+        <div class="tab-body" id="tb-paths">
+          <div class="paths-toolbar">
+            <button class="btn btn-ghost" style="font-size:11px;padding:4px 10px" onclick="copyPaths()">📋 Copy</button>
+            <span class="paths-count" id="paths-count"></span>
+          </div>
+          <div id="paths-list"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Import modal -->
+  <div class="overlay" id="import-modal" style="display:none">
+    <div class="modal">
+      <h3>Import UNS Configuration</h3>
+      <div class="fg"><label>Paste JSON</label><textarea id="imp-text"
+          placeholder='{"version":"1.0","tree":{...}}'></textarea></div>
+      <div class="fg"><input type="file" id="imp-file" accept=".json" onchange="loadFile(this)"
+          style="background:transparent;border:none;padding:2px 0;font-size:12px"></div>
+      <div class="modal-actions">
+        <button class="btn btn-ghost" onclick="closeModal('import-modal')">Cancel</button>
+        <button class="btn btn-primary" onclick="doImport()">Import</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Export modal -->
+  <div class="overlay" id="export-modal" style="display:none">
+    <div class="modal" style="max-width:680px">
+      <h3 id="exp-title">Export</h3>
+      <div class="fg"><textarea id="exp-text" readonly style="height:360px"></textarea></div>
+      <div class="modal-actions">
+        <button class="btn btn-ghost" onclick="closeModal('export-modal')">Close</button>
+        <button class="btn btn-ghost" onclick="copyExp()">📋 Copy</button>
+        <button class="btn btn-primary" id="exp-dl">⬇️ Download</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Confirm delete modal -->
+  <div class="overlay" id="confirm-modal" style="display:none">
+    <div class="modal" style="min-width:340px">
+      <h3 id="conf-title">Confirm Delete</h3>
+      <p id="conf-msg" style="color:var(--muted);font-size:13px"></p>
+      <div class="modal-actions">
+        <button class="btn btn-ghost" onclick="closeModal('confirm-modal')">Cancel</button>
+        <button class="btn btn-danger" id="conf-ok">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ── Config ──────────────────────────────────────────────────────────────────────
+    const NT = {
+      enterprise: { label: 'Enterprise', color: '#58a6ff', icon: '🏢', next: 'businessUnit' },
+      businessUnit: { label: 'Business Unit', color: '#a371f7', icon: '🏭', next: 'site' },
+      site: { label: 'Site', color: '#3fb950', icon: '🏗️', next: 'area' },
+      area: { label: 'Area', color: '#f4900c', icon: '📐', next: 'workCenter' },
+      workCenter: { label: 'Work Center', color: '#e3b341', icon: '⚙️', next: 'workUnit' },
+      workUnit: { label: 'Work Unit', color: '#f85149', icon: '🔧', next: 'device' },
+      device: { label: 'Device', color: '#8b949e', icon: '📟', next: 'device' },
+    };
+
+    let uns = null;
+    let selId = null;
+    let expanded = new Set();
+    let srchQ = '';
+    let dirty = false;
+    let activeTab = 'props';
+    let editingTagIndex = null;
+
+    // ── Utilities ───────────────────────────────────────────────────────────────────
+    function eid(id) { return document.getElementById(id); }
+    function esc(s) { return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+    function uid() {
+      return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
+        (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16));
+    }
+    function toast(msg, type = 'info') {
+      const el = document.createElement('div');
+      el.className = `toast ${type === 'ok' ? 'ok' : type === 'err' ? 'err' : 'info'}`;
+      el.textContent = msg; document.body.appendChild(el);
+      setTimeout(() => el.remove(), 2400);
+    }
+    function setDirty(v = true) {
+      dirty = v;
+      const el = eid('save-ind');
+      el.textContent = v ? '● Unsaved' : '● Saved';
+      el.className = v ? 'unsaved' : 'saved';
+    }
+
+    // ── Tree traversal ──────────────────────────────────────────────────────────────
+    function find(id, node = uns?.tree) {
+      if (!node) return null;
+      if (node.id === id) return node;
+      for (const c of node.children || []) { const f = find(id, c); if (f) return f; }
+      return null;
+    }
+    function findParent(id, node = uns?.tree, par = null) {
+      if (!node) return undefined;
+      if (node.id === id) return par;
+      for (const c of node.children || []) { const f = findParent(id, c, node); if (f !== undefined) return f; }
+      return undefined;
+    }
+    function topicPath(id) {
+      const parts = [];
+      let cur = id;
+      const map = {};
+      function bm(n) { map[n.id] = n; (n.children || []).forEach(bm); }
+      bm(uns.tree);
+      const pmap = {};
+      function bp(n, p = null) { pmap[n.id] = p; (n.children || []).forEach(c => bp(c, n.id)); }
+      bp(uns.tree);
+      while (cur) { const n = map[cur]; if (n) parts.unshift(n.name); cur = pmap[cur]; }
+      return parts.join('/');
+    }
+    function allTagPaths(node = uns?.tree, prefix = '') {
+      if (!node) return [];
+      const out = [];
+      const np = prefix ? `${prefix}/${node.name}` : node.name;
+      (node.tags || []).forEach(t => out.push(`${np}/${t.name}`));
+      (node.children || []).forEach(c => out.push(...allTagPaths(c, np)));
+      return out;
+    }
+    function cntNodes(n = uns?.tree) { return n ? 1 + (n.children || []).reduce((s, c) => s + cntNodes(c), 0) : 0; }
+    function cntTags(n = uns?.tree) { return n ? (n.tags || []).length + (n.children || []).reduce((s, c) => s + cntTags(c), 0) : 0; }
+    function maxDepth(n = uns?.tree, d = 0) {
+      if (!n || !(n.children || []).length) return d;
+      return Math.max(...n.children.map(c => maxDepth(c, d + 1)));
+    }
+
+    // ── Rendering ───────────────────────────────────────────────────────────────────
+    function renderTree() {
+      if (!uns || !uns.tree) {
+        eid('tree').innerHTML = '<div style="padding:20px;text-align:center;color:var(--muted)">No configuration</div>';
+        return;
+      }
+      if (!expanded.has(uns.tree.id)) expanded.add(uns.tree.id);
+      eid('tree').innerHTML = '';
+      eid('tree').appendChild(buildEl(uns.tree, 0));
+      eid('stats').innerHTML = `<span>Nodes: <strong>${cntNodes()}</strong></span><span>Tags: <strong>${cntTags()}</strong></span><span>Depth: <strong>${maxDepth()}</strong></span>`;
+    }
+
+    function subtreeMatch(n, q) {
+      if (!q) return true;
+      const lq = q.toLowerCase();
+      if (n.name.toLowerCase().includes(lq) || (n.description || '').toLowerCase().includes(lq)) return true;
+      if ((n.tags || []).some(t => t.name.toLowerCase().includes(lq))) return true;
+      return (n.children || []).some(c => subtreeMatch(c, q));
+    }
+
+    function buildEl(node, depth) {
+      if (srchQ && !subtreeMatch(node, srchQ)) return null;
+      const tc = NT[node.type] || NT.device;
+      const hasC = (node.children || []).length > 0;
+      const isExp = expanded.has(node.id);
+      const isSel = node.id === selId;
+
+      const wrap = document.createElement('div');
+      wrap.className = 't-node';
+
+      const row = document.createElement('div');
+      row.className = 't-row' + (isSel ? ' sel' : '');
+      row.style.paddingLeft = `${depth * 18 + 6}px`;
+      row.onclick = () => selNode(node.id);
+
+      const tc2 = NT[tc.next] || NT.device;
+      row.innerHTML = `
+    <span class="t-exp${hasC ? '' : ' inv'}" onclick="toggleExp('${node.id}',event)">${isExp ? '▼' : '▶'}</span>
+    <span class="t-dot" style="background:${tc.color}"></span>
+    <span class="t-name">${esc(node.name)}</span>
+    ${(node.tags || []).length ? `<span class="t-badge">${node.tags.length}t</span>` : ''}
+    <span class="t-acts">
+      <span class="ibtn" title="Add ${tc2.label}" onclick="addChild('${node.id}',false,event)">+</span>
+      <span class="ibtn" title="Duplicate subtree" onclick="dupNode('${node.id}',event)">⧉</span>
+      <span class="ibtn del" title="Delete" onclick="confirmDelId('${node.id}',event)">×</span>
+    </span>`;
+
+      wrap.appendChild(row);
+
+      if (isExp && hasC) {
+        const ch = document.createElement('div');
+        ch.className = 't-children';
+        for (const c of node.children) {
+          const el = buildEl(c, depth + 1);
+          if (el) ch.appendChild(el);
+        }
+        wrap.appendChild(ch);
+      }
+      return wrap;
+    }
+
+    // ── Selection ───────────────────────────────────────────────────────────────────
+    function selNode(id) {
+      selId = id;
+      renderTree();
+      showProps();
+    }
+
+    function showProps() {
+      const node = selId ? find(selId) : null;
+      if (!node) {
+        eid('props-empty').style.display = 'flex';
+        eid('props-content').style.display = 'none';
+        return;
+      }
+      eid('props-empty').style.display = 'none';
+      eid('props-content').style.display = 'flex';
+
+      const tc = NT[node.type] || NT.device;
+      const ntc = NT[tc.next] || NT.device;
+
+      eid('type-badge').innerHTML = `<span class="type-badge" style="background:${tc.color}18;color:${tc.color};border:1px solid ${tc.color}30">${tc.icon} ${tc.label}</span>`;
+      eid('act-row').innerHTML = `
+    <button class="btn btn-ghost" style="font-size:11px;padding:4px 10px" onclick="addChild('${node.id}',false)">${ntc.icon} Add ${ntc.label}</button>
+    <button class="btn btn-ghost" style="font-size:11px;padding:4px 10px" onclick="addChild('${node.id}',true)">+ Custom Child</button>`;
+
+      eid('p-name').value = node.name;
+      eid('p-type').value = node.type;
+      eid('p-desc').value = node.description || '';
+      eid('p-path').textContent = topicPath(node.id);
+
+      renderTags(node.tags || []);
+      renderPaths(node);
+      tab(activeTab);
+    }
+
+    // ── Payload schemas ─────────────────────────────────────────────────────────────
+    let _schemas = [];
+    async function loadSchemas() {
+      try {
+        const r = await fetch('/api/payload-schemas');
+        const d = await r.json();
+        _schemas = d.schemas || [];
+      }
+      catch (e) { _schemas = []; }
+    }
+    function schemaOptions(current) {
+      const opts = [{ id: '', name: '— default (standard) —' }, ..._schemas];
+      return opts.map(s => `<option value="${esc(s.id)}"${(current || '') === (s.id) ? ' selected' : ''}>${esc(s.name)}</option>`).join('');
+    }
+
+    // ── Tags ────────────────────────────────────────────────────────────────────────
+    function renderTags(tags) {
+      const w = eid('tags-wrap');
+      if (!tags.length) {
+        w.innerHTML = '<div class="tags-empty">No tags defined.<br><small>Tags are individual data points published to the UNS.</small></div>';
+        return;
+      }
+
+      let html = `<table class="ttable">
+    <thead><tr>
+      <th>Name</th>
+      <th>Data Type</th>
+      <th>Unit</th>
+      <th>Access</th>
+      <th>Payload Schema</th>
+      <th>Simulation</th>
+      <th>Description</th>
+      <th></th>
+    </tr></thead><tbody>`;
+
+      tags.forEach((t, i) => {
+        const sim = t.simulation || {};
+        let simDisplay = '—';
+        if (sim.profile) {
+          const profileNames = {
+            oee: 'OEE %',
+            percent: 'Percent',
+            temperature: 'Temp',
+            accumulator: 'Accumulator',
+            boolean: 'Boolean',
+            truck_id: 'Truck ID',
+            default: 'Gauss Walk'
+          };
+          simDisplay = `<span style="color:var(--green);font-weight:500">${profileNames[sim.profile] || sim.profile}</span>`;
+          if (sim.profile === 'default' && sim.base !== undefined) {
+            simDisplay += ` <small>(${sim.base}±${sim.std})</small>`;
+          }
+        }
+
+        html += `<tr>
+      <td><input class="ti" value="${esc(t.name)}" oninput="updTag(${i},'name',this.value)"></td>
+      <td><select class="ts" onchange="updTag(${i},'dataType',this.value)">${['Float', 'Int', 'Bool', 'String', 'DateTime'].map(x => `<option value="${x}"${t.dataType === x ? ' selected' : ''}>${x}</option>`).join('')}</select></td>
+      <td><input class="ti" style="width:55px" value="${esc(t.unit || '')}" oninput="updTag(${i},'unit',this.value)"></td>
+      <td><select class="ts" onchange="updTag(${i},'access',this.value)">${['R', 'RW', 'W'].map(x => `<option value="${x}"${t.access === x ? ' selected' : ''}>${x}</option>`).join('')}</select></td>
+      <td><select class="ts" onchange="updTag(${i},'payloadSchema',this.value)">${schemaOptions(t.payloadSchema)}</select></td>
+      <td style="cursor:pointer" onclick="editSimulation(${i})">${simDisplay}</td>
+      <td><input class="ti" value="${esc(t.description || '')}" oninput="updTag(${i},'description',this.value)"></td>
+      <td><span class="ibtn del" onclick="delTag(${i})">×</span></td>
+    </tr>`;
+      });
+
+      html += `</tbody></table>`;
+      w.innerHTML = html;
+    }
+
+    function updTag(i, field, val) {
+      const n = find(selId);
+      if (!n || !n.tags[i]) return;
+      n.tags[i][field] = val;
+      setDirty();
+    }
+
+    function addTag() {
+      const n = find(selId);
+      if (!n) return;
+      if (!n.tags) n.tags = [];
+      n.tags.push({
+        id: uid(),
+        name: 'NewTag',
+        dataType: 'Float',
+        unit: '',
+        description: '',
+        access: 'R',
+        payloadSchema: '',
+        simulation: null
+      });
+      setDirty();
+      renderTags(n.tags);
+      tab('tags');
+    }
+
+    function delTag(i) {
+      const n = find(selId);
+      if (!n) return;
+      n.tags.splice(i, 1);
+      setDirty();
+      renderTags(n.tags);
+    }
+
+    // ── Simulation Profile Modal ────────────────────────────────────────────────────
+    function editSimulation(i) {
+      const node = find(selId);
+      if (!node || !node.tags[i]) return;
+
+      const tag = node.tags[i];
+      editingTagIndex = i;
+
+      let modalHTML = `
+    <div class="overlay" id="sim-modal">
+      <div class="modal" style="max-width:480px">
+        <h3>Simulation Profile — <span style="color:var(--accent)">${esc(tag.name)}</span></h3>
+        
+        <div class="fg">
+          <label>Profile <small style="color:var(--muted)">(optional — enables live simulation)</small></label>
+          <select id="tag-simulation-profile" onchange="updateSimulationFields()" style="padding:8px">
+            <option value="">None (static value)</option>
+            <option value="oee">OEE / Percent (65-99.5%)</option>
+            <option value="percent">Generic Percent</option>
+            <option value="temperature">Temperature</option>
+            <option value="accumulator">Accumulator (slow increase)</option>
+            <option value="boolean">Boolean (on/off toggle)</option>
+            <option value="truck_id">Truck ID cycle</option>
+            <option value="default">Custom Gauss walk</option>
+          </select>
+        </div>
+
+        <div id="custom-sim-fields" style="display:none; margin-top:16px; display:flex; gap:12px; flex-wrap:wrap">
+          <div style="flex:1; min-width:100px">
+            <label style="font-size:11px;color:var(--muted)">Base</label>
+            <input id="tag-sim-base" type="number" step="0.01" class="ti" value="50">
+          </div>
+          <div style="flex:1; min-width:100px">
+            <label style="font-size:11px;color:var(--muted)">Std Dev</label>
+            <input id="tag-sim-std" type="number" step="0.01" class="ti" value="8">
+          </div>
+          <div style="flex:1; min-width:100px">
+            <label style="font-size:11px;color:var(--muted)">Min</label>
+            <input id="tag-sim-min" type="number" step="0.01" class="ti" value="0">
+          </div>
+          <div style="flex:1; min-width:100px">
+            <label style="font-size:11px;color:var(--muted)">Max</label>
+            <input id="tag-sim-max" type="number" step="0.01" class="ti" value="100">
+          </div>
+        </div>
+
+        <div class="modal-actions">
+          <button class="btn btn-ghost" onclick="closeSimModal()">Cancel</button>
+          <button class="btn btn-primary" onclick="saveSimulation()">Save Simulation Settings</button>
+        </div>
+      </div>
+    </div>`;
+
+      // Remove previous modal if exists
+      const oldModal = document.getElementById('sim-modal');
+      if (oldModal) oldModal.remove();
+
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = modalHTML;
+      document.body.appendChild(tempDiv.firstElementChild);
+
+      // Populate values
+      const profileSelect = document.getElementById('tag-simulation-profile');
+      const sim = tag.simulation || {};
+      profileSelect.value = sim.profile || '';
+
+      if (sim.profile === 'default') {
+        document.getElementById('tag-sim-base').value = sim.base ?? 50;
+        document.getElementById('tag-sim-std').value = sim.std ?? 8;
+        document.getElementById('tag-sim-min').value = sim.min ?? 0;
+        document.getElementById('tag-sim-max').value = sim.max ?? 100;
+      }
+
+      updateSimulationFields();
+    }
+
+    function updateSimulationFields() {
+      const profile = document.getElementById('tag-simulation-profile').value;
+      const customDiv = document.getElementById('custom-sim-fields');
+      if (customDiv) {
+        customDiv.style.display = (profile === 'default') ? 'flex' : 'none';
+      }
+    }
+
+    function saveSimulation() {
+      if (editingTagIndex === null) return;
+      const node = find(selId);
+      if (!node || !node.tags[editingTagIndex]) return;
+
+      const tag = node.tags[editingTagIndex];
+      const profile = document.getElementById('tag-simulation-profile').value;
+
+      if (profile) {
+        if (!tag.simulation) tag.simulation = {};
+        tag.simulation.profile = profile;
+
+        if (profile === 'default') {
+          tag.simulation.base = parseFloat(document.getElementById('tag-sim-base').value) || 50;
+          tag.simulation.std = parseFloat(document.getElementById('tag-sim-std').value) || 8;
+          tag.simulation.min = parseFloat(document.getElementById('tag-sim-min').value) || 0;
+          tag.simulation.max = parseFloat(document.getElementById('tag-sim-max').value) || 100;
+        } else {
+          delete tag.simulation.base;
+          delete tag.simulation.std;
+          delete tag.simulation.min;
+          delete tag.simulation.max;
+        }
+      } else {
+        delete tag.simulation;
+      }
+
+      setDirty();
+      closeSimModal();
+      renderTags(node.tags);
+    }
+
+    function closeSimModal() {
+      const modal = document.getElementById('sim-modal');
+      if (modal) modal.remove();
+      editingTagIndex = null;
+    }
+
+    // ── Paths tab ───────────────────────────────────────────────────────────────────
+    function renderPaths(node) {
+      const fullPath = topicPath(node.id);
+      const parentPath = fullPath.includes('/') ? fullPath.substring(0, fullPath.lastIndexOf('/')) : '';
+      const paths = allTagPaths(node, parentPath);
+      eid('paths-count').textContent = `${paths.length} path${paths.length !== 1 ? 's' : ''}`;
+      if (!paths.length) {
+        eid('paths-list').innerHTML = '<div class="tags-empty">No tags in this subtree.</div>';
+        return;
+      }
+      eid('paths-list').innerHTML = paths.map(p => {
+        const parts = p.split('/');
+        const tag = parts.pop();
+        const rest = parts.join('/');
+        return `<div class="path-item"><span style="color:var(--muted)">${esc(rest)}/</span><span class="path-tag">${esc(tag)}</span></div>`;
+      }).join('');
+    }
+
+    // ── Tab switching ───────────────────────────────────────────────────────────────
+    function tab(name) {
+      activeTab = name;
+      document.querySelectorAll('.tab').forEach(t => t.classList.toggle('on', t.dataset.tab === name));
+      document.querySelectorAll('.tab-body').forEach(t => t.classList.toggle('on', t.id === `tb-${name}`));
+    }
+
+    // ── Property changes ────────────────────────────────────────────────────────────
+    function propChanged() {
+      const n = find(selId);
+      if (!n) return;
+      n.name = eid('p-name').value;
+      n.type = eid('p-type').value;
+      n.description = eid('p-desc').value;
+      eid('p-path').textContent = topicPath(selId);
+      setDirty();
+      renderTree();
+    }
+
+    // ── Tree operations ─────────────────────────────────────────────────────────────
+    function toggleExp(id, e) {
+      if (e) e.stopPropagation();
+      expanded.has(id) ? expanded.delete(id) : expanded.add(id);
+      renderTree();
+    }
+    function expandAll(n = uns?.tree) {
+      if (!n) return;
+      expanded.add(n.id);
+      (n.children || []).forEach(c => expandAll(c));
+      renderTree();
+    }
+    function collapseAll(n = uns?.tree) {
+      if (!n) return;
+      if (n.id !== uns.tree.id) expanded.delete(n.id);
+      (n.children || []).forEach(c => collapseAll(c));
+      renderTree();
+    }
+    function filterTree(q) {
+      srchQ = q.trim();
+      if (srchQ) expandAll();
+      renderTree();
+    }
+    function addToRoot() {
+      if (uns && uns.tree) addChild(uns.tree.id, false);
+    }
+
+    function addChild(parentId, custom = false, e) {
+      if (e) e.stopPropagation();
+      const par = find(parentId);
+      if (!par) return;
+      const tc = NT[par.type] || NT.device;
+      const ctype = custom ? 'workCenter' : tc.next;
+      const ctc = NT[ctype] || NT.device;
+      const nn = {
+        id: uid(),
+        name: `New${ctc.label.replace(/\s/g, '')}`,
+        type: ctype,
+        description: '',
+        tags: [],
+        children: []
+      };
+      if (!par.children) par.children = [];
+      par.children.push(nn);
+      expanded.add(parentId);
+      setDirty();
+      renderTree();
+      selNode(nn.id);
+      setTimeout(() => {
+        const el = eid('p-name');
+        if (el) { el.focus(); el.select(); }
+      }, 60);
+    }
+
+    function deepClone(o) { return JSON.parse(JSON.stringify(o)); }
+    function reId(n) {
+      n.id = uid();
+      (n.children || []).forEach(reId);
+      (n.tags || []).forEach(t => t.id = uid());
+      return n;
+    }
+
+    function dupNode(id, e) {
+      if (e) e.stopPropagation();
+      const n = find(id);
+      const par = findParent(id);
+      if (!n || !par) { toast('Cannot duplicate root', 'err'); return; }
+      const copy = reId(deepClone(n));
+      copy.name += '_copy';
+      const idx = par.children.indexOf(n);
+      par.children.splice(idx + 1, 0, copy);
+      setDirty();
+      renderTree();
+      selNode(copy.id);
+      toast(`Duplicated ${n.name}`, 'ok');
+    }
+    function dupSel() { if (selId) dupNode(selId); }
+
+    function confirmDelId(id, e) {
+      if (e) e.stopPropagation();
+      const n = find(id);
+      if (!n) return;
+      const nc = cntNodes(n) - 1, nt = cntTags(n);
+      eid('conf-title').textContent = `Delete "${n.name}"?`;
+      eid('conf-msg').textContent = `Removes ${nc} child node${nc !== 1 ? 's' : ''} and ${nt} tag${nt !== 1 ? 's' : ''}. Cannot be undone.`;
+      eid('conf-ok').onclick = () => { doDelete(id); closeModal('confirm-modal'); };
+      eid('confirm-modal').style.display = 'flex';
+    }
+    function confirmDel() { if (selId) confirmDelId(selId); }
+
+    function doDelete(id) {
+      if (id === uns.tree.id) { toast('Cannot delete root', 'err'); return; }
+      const par = findParent(id);
+      if (!par) return;
+      par.children = par.children.filter(c => c.id !== id);
+      if (selId === id) {
+        selId = null;
+        eid('props-empty').style.display = 'flex';
+        eid('props-content').style.display = 'none';
+      }
+      setDirty();
+      renderTree();
+      toast('Node deleted', 'info');
+    }
+
+    // ── Persist ─────────────────────────────────────────────────────────────────────
+    async function saveConfig() {
+      try {
+        const r = await fetch('/api/uns', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(uns) });
+        const d = await r.json();
+        if (d.ok) {
+          setDirty(false);
+          const svc = (d.restarted || []).join(' + ');
+          toast(svc ? `Saved — restarted: ${svc}` : 'Saved', 'ok');
+        } else toast('Save failed', 'err');
+      } catch (err) { toast('Save error: ' + err.message, 'err'); }
+    }
+
+    async function loadConfig() {
+      try {
+        const r = await fetch('/api/uns');
+        const d = await r.json();
+        if (d && d.tree) {
+          uns = d;
+          expanded.clear();
+          expanded.add(uns.tree.id);
+          renderTree();
+          setDirty(false);
+        }
+      } catch (e) { toast('Failed to load config', 'err'); }
+    }
+
+    // ── Import / Export ─────────────────────────────────────────────────────────────
+    function showImport() {
+      eid('imp-text').value = '';
+      eid('import-modal').style.display = 'flex';
+    }
+    function loadFile(inp) {
+      const f = inp.files[0];
+      if (!f) return;
+      const fr = new FileReader();
+      fr.onload = e => { eid('imp-text').value = e.target.result; };
+      fr.readAsText(f);
+    }
+    function doImport() {
+      try {
+        const d = JSON.parse(eid('imp-text').value.trim());
+        if (!d.tree) throw new Error('Missing "tree" property');
+        uns = d;
+        expanded.clear();
+        expanded.add(uns.tree.id);
+        selId = null;
+        eid('props-empty').style.display = 'flex';
+        eid('props-content').style.display = 'none';
+        setDirty();
+        renderTree();
+        closeModal('import-modal');
+        toast('Imported', 'ok');
+      } catch (e) { toast('Invalid JSON: ' + e.message, 'err'); }
+    }
+    function doExportJSON() {
+      showExportModal('Export UNS Configuration', JSON.stringify(uns, null, 2), 'uns_config.json');
+    }
+    function doExportPaths() {
+      const paths = allTagPaths();
+      if (!paths.length) { toast('No tags defined yet', 'info'); return; }
+      showExportModal(`Topic Paths (${paths.length})`, paths.join('\n'), 'uns_topic_paths.txt');
+    }
+    function showExportModal(title, text, fname) {
+      eid('exp-title').textContent = title;
+      eid('exp-text').value = text;
+      eid('exp-dl').onclick = () => dlFile(text, fname);
+      eid('export-modal').style.display = 'flex';
+    }
+    function copyExp() {
+      navigator.clipboard.writeText(eid('exp-text').value).then(() => toast('Copied', 'ok'));
+    }
+    function copyPaths() {
+      const n = selId ? find(selId) : uns.tree;
+      const fp = selId ? topicPath(selId) : '';
+      const pp = fp.includes('/') ? fp.substring(0, fp.lastIndexOf('/')) : '';
+      const paths = allTagPaths(n, pp);
+      navigator.clipboard.writeText(paths.join('\n')).then(() => toast(`Copied ${paths.length} paths`, 'ok'));
+    }
+    function dlFile(text, fname) {
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(new Blob([text], { type: 'text/plain' }));
+      a.download = fname; a.click();
+    }
+
+    // ── Modals ───────────────────────────────────────────────────────────────────────
+    function closeModal(id) {
+      eid(id).style.display = 'none';
+    }
+    document.querySelectorAll('.overlay').forEach(o => o.addEventListener('click', e => {
+      if (e.target === o) o.style.display = 'none';
+    }));
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') document.querySelectorAll('.overlay').forEach(m => m.style.display = 'none');
+      if ((e.ctrlKey || e.metaKey) && e.key === 's') { e.preventDefault(); saveConfig(); }
+    });
+
+    // ── Boot ────────────────────────────────────────────────────────────────────────
+    loadSchemas().then(loadConfig);
+  </script>
+</body>
+
+</html>

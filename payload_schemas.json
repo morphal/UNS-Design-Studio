@@ -1,0 +1,162 @@
+{
+  "schemas": [
+    {
+      "description": "Value, timestamp, unit and quality — the bridge default",
+      "fields": [
+        {
+          "key": "value",
+          "source": "value",
+          "staticVal": ""
+        },
+        {
+          "key": "ts",
+          "source": "ts_epoch",
+          "staticVal": ""
+        },
+        {
+          "key": "unit",
+          "source": "unit",
+          "staticVal": ""
+        },
+        {
+          "key": "quality",
+          "source": "quality",
+          "staticVal": ""
+        }
+      ],
+      "id": "standard",
+      "name": "Standard (default)"
+    },
+    {
+      "description": "Minimal payload: value + timestamp only",
+      "fields": [
+        {
+          "key": "value",
+          "source": "value"
+        },
+        {
+          "key": "ts",
+          "source": "ts_epoch"
+        }
+      ],
+      "id": "simple",
+      "name": "Simple Value"
+    },
+    {
+      "description": "Mimics Sparkplug B NBIRTH/DDATA metric structure",
+      "fields": [
+        {
+          "key": "name",
+          "source": "tagName"
+        },
+        {
+          "key": "value",
+          "source": "value"
+        },
+        {
+          "key": "timestamp",
+          "source": "ts_ms"
+        },
+        {
+          "key": "dataType",
+          "source": "dataType"
+        },
+        {
+          "key": "quality",
+          "source": "quality"
+        }
+      ],
+      "id": "sparkplug",
+      "name": "Sparkplug B-like"
+    },
+    {
+      "description": "Full ISA-95 context including site, path and data type",
+      "fields": [
+        {
+          "key": "v",
+          "source": "value"
+        },
+        {
+          "key": "q",
+          "source": "quality"
+        },
+        {
+          "key": "t",
+          "source": "ts_iso"
+        },
+        {
+          "key": "uom",
+          "source": "unit"
+        },
+        {
+          "key": "tagPath",
+          "source": "topicPath"
+        },
+        {
+          "key": "dataType",
+          "source": "dataType"
+        },
+        {
+          "key": "site",
+          "source": "siteName"
+        }
+      ],
+      "id": "isa95",
+      "name": "ISA-95 Extended"
+    },
+    {
+      "description": "Compatible with PI Server ingestion patterns",
+      "fields": [
+        {
+          "key": "Name",
+          "source": "topicPath"
+        },
+        {
+          "key": "Value",
+          "source": "value"
+        },
+        {
+          "key": "Timestamp",
+          "source": "ts_iso"
+        },
+        {
+          "key": "Good",
+          "source": "is_good"
+        },
+        {
+          "key": "UOM",
+          "source": "unit"
+        }
+      ],
+      "id": "pi",
+      "name": "OSIsoft PI-like"
+    },
+    {
+      "description": "Fields suitable for InfluxDB line-protocol ingestion",
+      "fields": [
+        {
+          "key": "measurement",
+          "source": "tagName"
+        },
+        {
+          "key": "field_value",
+          "source": "value"
+        },
+        {
+          "key": "time",
+          "source": "ts_ms"
+        },
+        {
+          "key": "site_tag",
+          "source": "siteName"
+        },
+        {
+          "key": "path_tag",
+          "source": "topicPath"
+        }
+      ],
+      "id": "influx",
+      "name": "InfluxDB-like"
+    }
+  ]
+}
