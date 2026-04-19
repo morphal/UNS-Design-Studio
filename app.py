@@ -304,7 +304,8 @@ def api_opc_test():
     from opcua import Client
     try:
         client = Client(_endpoint())
-        client.set_timeout(3)
+        if hasattr(client, 'set_timeout'):
+            client.set_timeout(3)
         client.connect()
         try:
             ns_array = client.get_namespace_array()
@@ -723,9 +724,9 @@ def api_schemas_save():
 # ── Entry point ────────────────────────────────────────────────────────────────
 if __name__ == '__main__':
     print()
-    print("╔══════════════════════════════════════════════════════════════╗")
-    print("║   Royal Farmers Collective – Enterprise UNS Simulator       ║")
-    print("║   Dashboard:  http://localhost:5000                         ║")
-    print("╚══════════════════════════════════════════════════════════════╝")
+    print("==============================================================")
+    print("Royal Farmers Collective - Enterprise UNS Simulator")
+    print("Dashboard: http://localhost:5000")
+    print("==============================================================")
     print()
     app.run(host='0.0.0.0', port=5000, debug=False, threaded=True)

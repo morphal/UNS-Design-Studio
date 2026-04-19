@@ -31,8 +31,20 @@ _scfg = _load_server_cfg()
 _OPC_BIND_IP    = _scfg.get('opc_bind_ip',    '0.0.0.0')   # Important: 0.0.0.0
 _OPC_PORT       = int(_scfg.get('opc_port',   4840))
 _TCP_PORT       = int(_scfg.get('tcp_port',   9999))
+_HOST_IP        = (_scfg.get('host_ip') or '').strip()
+_OPC_CLIENT_HOST = (_scfg.get('opc_client_host') or '').strip()
 
-SERVER_ENDPOINT = f"opc.tcp://{_OPC_BIND_IP}:{_OPC_PORT}/freeopcua/server/"
+def _resolve_endpoint_host() -> str:
+    # 0.0.0.0 is valid for binding but not for client connections.
+    if _HOST_IP:
+        return _HOST_IP
+    if _OPC_CLIENT_HOST:
+        return _OPC_CLIENT_HOST
+    if _OPC_BIND_IP and _OPC_BIND_IP != '0.0.0.0':
+        return _OPC_BIND_IP
+    return '127.0.0.1'
+
+SERVER_ENDPOINT = f"opc.tcp://{_resolve_endpoint_host()}:{_OPC_PORT}/freeopcua/server/"
 NAMESPACE_URI   = "http://royalfarmerscollective.com/uns"
 TCP_SERVER_IP   = "0.0.0.0"
 TCP_SERVER_PORT = _TCP_PORT
@@ -87,9 +99,12 @@ def _create_dynamic_address_space(server, idx, enterprise_obj):
             else:
                 target_opc = new_opc + [t_opc_name]
 
-            # Navigate or create objects
+            # Navigate or create only the parent objects for this variable.
+            # The final segment is the variable name itself.
             current = enterprise_obj
-            for part in target_opc:
+            parent_parts = target_opc[:-1]
+            var_name = target_opc[-1]
+            for part in parent_parts:
                 try:
                     current = current.get_child([f"{idx}:{part}"])
                 except:
@@ -115,8 +130,8 @@ def _create_dynamic_address_space(server, idx, enterprise_obj):
                 default = 0.0
                 vt = ua.VariantType.Double
 
-            var = current.add_variable(idx, t_opc_name, default, vt)
-            var.set_writable(False)
+            var = current.add_variable(idx, var_name, default, vt)
+            var.set_writable(str(tag.get('access', 'R')).upper() == 'RW')
 
             sim = tag.get('simulation')
             if not sim or not isinstance(sim, dict):
@@ -131,8 +146,9 @@ def _create_dynamic_address_space(server, idx, enterprise_obj):
         for child in node.get('children', []):
             _walk(child, new_uns, new_opc, new_area)
 
-    _walk(tree, [], [], [])
-    print(f"[factory] Dynamic address space ready – {len(variables)} tags")
+    for child in tree.get('children', []):
+        _walk(child, [], [], [])
+    print(f"[factory] Dynamic address space ready - {len(variables)} tags")
     return variables, anomaly_key_map
 
 # ================================================================
@@ -226,8 +242,8 @@ async def main():
     server.set_server_name("Royal Farmers Collective UNS Simulator")
     
     idx = server.register_namespace(NAMESPACE_URI)
-    root = server.get_root_node()
-    enterprise_obj = root.add_object(idx, "RoyalFarmersCollective")
+    objects = server.get_objects_node()
+    enterprise_obj = objects.add_object(idx, "RoyalFarmersCollective")
 
     variables, anomaly_key_map = _create_dynamic_address_space(server, idx, enterprise_obj)
 
@@ -240,11 +256,11 @@ async def main():
     asyncio.create_task(run_simulation(variables, anomaly_key_map))
 
     print("=" * 70)
-    print("    Royal Farmers Collective – Enterprise UNS Simulator")
+    print("    Royal Farmers Collective - Enterprise UNS Simulator")
     print("    OPC UA Server is RUNNING")
     print(f"    Endpoint: {SERVER_ENDPOINT}")
     print("=" * 70)
-    print("[factory] Ready for client connections – simulation active")
+    print("[factory] Ready for client connections - simulation active")
 
     try:
         while not stop_flag:
