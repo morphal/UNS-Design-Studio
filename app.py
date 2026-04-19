@@ -177,6 +177,20 @@ def start_factory_server():
             )
             _state['server_proc'] = proc
             threading.Thread(target=_capture_output, args=(proc,), daemon=True).start()
+
+            # Give the process a short moment to fail fast if something is wrong
+            time.sleep(0.8)
+            if proc.poll() is not None:
+                # Process exited quickly — attempt to capture any available output
+                try:
+                    remaining = proc.stdout.read() or ''
+                except Exception:
+                    remaining = ''
+                msg = f"Server process exited with code {proc.returncode}. Output: {remaining.strip()[:1000]}"
+                _log(f"[server] {msg}")
+                _state['server_proc'] = None
+                return False, msg
+
             return True, "Server process started"
         except Exception as e:
             return False, str(e)
@@ -198,7 +212,12 @@ def stop_factory_server():
 # ── OPC UA node-cache polling ──────────────────────────────────────────────────
 
 def _poll_loop():
-    """Robust polling for dynamic factory.py structure"""
+    """Robust polling for dynamic factory.py structure
+
+    Improves resilience: wait for the server namespace to appear after connect
+    before declaring the connection usable. This avoids race conditions when
+    factory.py starts and the dynamic address space isn't yet ready.
+    """
     from opcua import Client
     last_endpoint = None
 
@@ -211,11 +230,43 @@ def _poll_loop():
         try:
             client = Client(current_endpoint)
             client.connect()
-            _state['opc_connected'] = True
-            idx = client.get_namespace_index(NAMESPACE_URI)
-            root = client.get_root_node()
-            ent = root.get_child(["0:Objects", f"{idx}:RoyalFarmersCollective"])
 
+                    # Wait briefly for the server to finish registering namespaces / nodes.
+            ns_idx = None
+            ent = None
+            for attempt in range(12):
+                try:
+                    ns_idx = client.get_namespace_index(NAMESPACE_URI)
+                except Exception as e:
+                    # Namespace may not be registered yet; retry
+                    if "BadNoMatch" in str(e):
+                        time.sleep(0.5)
+                        continue
+                    raise
+
+                # If we got a namespace index, also verify the expected root object exists
+                try:
+                    root = client.get_root_node()
+                    ent = root.get_child(["0:Objects", f"{ns_idx}:RoyalFarmersCollective"])
+                    break
+                except Exception:
+                    # Node not ready yet — wait and retry
+                    time.sleep(0.5)
+                    continue
+
+            if ent is None:
+                # Namespace or expected node not ready yet — treat as transient and retry
+                _state['opc_connected'] = False
+                _log("[poll] OPC UA available but namespace/objects not ready yet; retrying")
+                try:
+                    client.disconnect()
+                except Exception:
+                    pass
+                time.sleep(1)
+                continue
+
+            # Namespace and RoyalFarmersCollective object found → consider connection healthy
+            _state['opc_connected'] = True
             _log("[poll] Successfully connected to OPC UA server")
 
             # For now, just mark as connected and collect basic data
@@ -228,12 +279,15 @@ def _poll_loop():
                 # Minimal poll - just keep the connection alive and mark connected
                 time.sleep(3)
 
-            client.disconnect()
+            try:
+                client.disconnect()
+            except Exception:
+                pass
 
         except Exception as e:
             _state['opc_connected'] = False
             err_str = str(e)
-            if "10061" in err_str or "ConnectionRefused" in err_str:
+            if "10061" in err_str or "ConnectionRefused" in err_str or "Connection refused" in err_str:
                 _log("[poll] OPC UA unavailable: Connection refused - Is the factory server running?")
             elif "BadNoMatch" in err_str:
                 _log("[poll] OPC UA unavailable: BadNoMatch - Node structure mismatch (normal with dynamic server)")
@@ -243,6 +297,36 @@ def _poll_loop():
 threading.Thread(target=_poll_loop, daemon=True, name="opc-poll").start()
 
 # ── OPC UA write helper (one-shot client per command) ─────────────────────────
+
+# Diagnostic: test OPC UA connection and return namespace / root children
+@app.route('/api/opc/test')
+def api_opc_test():
+    from opcua import Client
+    try:
+        client = Client(_endpoint())
+        client.set_timeout(3)
+        client.connect()
+        try:
+            ns_array = client.get_namespace_array()
+        except Exception:
+            ns_array = None
+        try:
+            idx = client.get_namespace_index(NAMESPACE_URI)
+        except Exception as e:
+            idx = None
+            idx_err = repr(e)
+        else:
+            idx_err = None
+        try:
+            root = client.get_root_node()
+            children = [str(n) for n in root.get_children()[:20]]
+        except Exception:
+            children = []
+        client.disconnect()
+        return jsonify({'ok': True, 'endpoint': _endpoint(), 'namespace_array': ns_array, 'namespace_index': idx, 'namespace_error': idx_err, 'root_children_sample': children})
+    except Exception as e:
+        return jsonify({'ok': False, 'endpoint': _endpoint(), 'error': repr(e)})
+
 
 def _start_all_plants(idx, ent):
     """Set ProcessState=True and default recipe for every known plant. Called after restarts."""
