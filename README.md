@@ -1,5 +1,5 @@
 <div align="center">
-[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/F1F11Y5F5R)
+
 # 🏭 UNS Design Studio
 
 **A fully self-contained Unified Namespace simulator for industrial IoT demos, training and development.**
@@ -413,5 +413,7 @@ MIT — see [LICENSE](LICENSE) for details.
 *GlobalFoodCo and all associated divisions, factories and products are entirely fictional.*<br>
 *Built with ☕ to make UNS concepts tangible for engineers who learn by doing.*<br><br>
 **[⭐ Star on GitHub](https://github.com/Ilja0101/UNS-Design-Studio)** · **[👤 Ilja Bartels](https://github.com/Ilja0101)**
+
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/F1F11Y5F5R)
 
 </div>
