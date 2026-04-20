@@ -1,8 +1,8 @@
 @echo off
-title Royal Farmers Collective – UNS Simulator Dashboard
+title GlobalFoodCo – UNS Simulator Dashboard
 echo.
 echo  ╔══════════════════════════════════════════════════════════════╗
-echo  ║   Royal Farmers Collective – Enterprise UNS Simulator       ║
+echo  ║   Virtual UNS Enterprise Simulator       ║
 echo  ║   Starting web dashboard on http://localhost:5000            ║
 echo  ╚══════════════════════════════════════════════════════════════╝
 echo.

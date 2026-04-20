@@ -1,6 +1,6 @@
 {
-  "lastModified": "2026-04-20T03:32:16Z",
-  "namespaceUri": "http://royalfarmerscollective.com/uns",
+  "lastModified": "2026-04-20T10:22:31Z",
+  "namespaceUri": "http://VirtualUNS.com/uns",
   "tree": {
     "children": [
       {
@@ -38,6 +38,282 @@
                           "profile": "temperature"
                         },
                         "unit": ""
+                      },
+                      {
+                        "access": "R",
+                        "dataType": "Bool",
+                        "description": "Line running",
+                        "id": "83d2defc-49ad-430e-83c2-887a98f1ad34",
+                        "name": "Running",
+                        "payloadSchema": "",
+                        "simulation": {
+                          "profile": "boolean_running"
+                        },
+                        "unit": ""
+                      },
+                      {
+                        "access": "R",
+                        "dataType": "Bool",
+                        "description": "Any alarm active",
+                        "id": "d9d68362-3d0c-4ef8-91bf-b02a53e63795",
+                        "name": "Alarm",
+                        "payloadSchema": "",
+                        "simulation": {
+                          "profile": "boolean_alarm"
+                        },
+                        "unit": ""
+                      },
+                      {
+                        "access": "R",
+                        "dataType": "Float",
+                        "description": "Overall OEE",
+                        "id": "82d0c678-47d0-458d-97f9-98157741a9dd",
+                        "name": "OEEPct",
+                        "payloadSchema": "",
+                        "simulation": {
+                          "profile": "oee"
+                        },
+                        "unit": "%"
+                      },
+                      {
+                        "access": "R",
+                        "dataType": "Float",
+                        "description": "Availability",
+                        "id": "50e517af-15f9-4dbb-ade0-603b8eae6166",
+                        "name": "AvailabilityPct",
+                        "payloadSchema": "",
+                        "simulation": {
+                          "profile": "availability"
+                        },
+                        "unit": "%"
+                      },
+                      {
+                        "access": "R",
+                        "dataType": "Float",
+                        "description": "Performance",
+                        "id": "c71670ec-ccb2-474b-a412-5c8bd87ae856",
+                        "name": "PerformancePct",
+                        "payloadSchema": "",
+                        "simulation": {
+                          "profile": "performance"
+                        },
+                        "unit": "%"
+                      },
+                      {
+                        "access": "R",
+                        "dataType": "Float",
+                        "description": "Quality",
+                        "id": "d8db6394-a5ab-4a64-b9bc-4935c56038c3",
+                        "name": "QualityPct",
+                        "payloadSchema": "",
+                        "simulation": {
+                          "profile": "quality"
+                        },
+                        "unit": "%"
+                      },
+                      {
+                        "access": "R",
+                        "dataType": "Float",
+                        "description": "Power demand",
+                        "id": "5858e1ae-fffa-4066-beff-16ab6bdd5120",
+                        "name": "ActivePowerKW",
+                        "payloadSchema": "",
+                        "simulation": {
+                          "profile": "power_kw"
+                        },
+                        "unit": "kW"
+                      },
+                      {
+                        "access": "R",
+                        "dataType": "Float",
+                        "description": "Cumulative energy",
+                        "id": "c5f1eb1c-a2ad-4e5d-8091-8d93e3803866",
+                        "name": "CumulativeKWh",
+                        "payloadSchema": "",
+                        "simulation": {
+                          "profile": "accumulator_energy"
+                        },
+                        "unit": "kWh"
+                      },
+                      {
+                        "access": "R",
+                        "dataType": "Float",
+                        "description": "Good output (cumulative)",
+                        "id": "c848ab50-9c56-465e-a9fc-cd81a8b4e525",
+                        "name": "GoodOutputAcc",
+                        "payloadSchema": "",
+                        "simulation": {
+                          "profile": "accumulator_good"
+                        },
+                        "unit": "t"
+                      },
+                      {
+                        "access": "R",
+                        "dataType": "Float",
+                        "description": "Rejected output (cumulative)",
+                        "id": "3f1dc3c0-966b-437d-a6c8-f0396c541bad",
+                        "name": "RejectedOutputAcc",
+                        "payloadSchema": "",
+                        "simulation": {
+                          "profile": "accumulator_bad"
+                        },
+                        "unit": "t"
+                      },
+                      {
+                        "access": "R",
+                        "dataType": "String",
+                        "description": "Active batch ID",
+                        "id": "1e04d18c-001c-4ace-b89b-732b1dfc639d",
+                        "name": "CurrentBatchID",
+                        "payloadSchema": "",
+                        "simulation": {
+                          "profile": "batch_id"
+                        },
+                        "unit": ""
+                      },
+                      {
+                        "access": "R",
+                        "dataType": "String",
+                        "description": "Active ERP order",
+                        "id": "81f942e4-2bb4-4122-b52d-65c7f2107f56",
+                        "name": "ERPOrderID",
+                        "payloadSchema": "",
+                        "simulation": {
+                          "profile": "erp_order_id"
+                        },
+                        "unit": ""
+                      },
+                      {
+                        "access": "R",
+                        "dataType": "Float",
+                        "description": "MTBF",
+                        "id": "b95abf01-62b6-4fbd-aa6e-f30d8fad9263",
+                        "name": "MTBFHours",
+                        "payloadSchema": "",
+                        "simulation": {
+                          "profile": "mtbf"
+                        },
+                        "unit": "h"
+                      },
+                      {
+                        "access": "R",
+                        "dataType": "Float",
+                        "description": "MTTR",
+                        "id": "223e139b-3fe5-4d91-b97d-a1651476c93e",
+                        "name": "MTTRMinutes",
+                        "payloadSchema": "",
+                        "simulation": {
+                          "profile": "mttr"
+                        },
+                        "unit": "min"
+                      },
+                      {
+                        "access": "R",
+                        "dataType": "Float",
+                        "description": "PM compliance",
+                        "id": "b99c4333-c133-43ca-b545-a42e9fc23051",
+                        "name": "PMCompliancePct",
+                        "payloadSchema": "",
+                        "simulation": {
+                          "profile": "pm_compliance"
+                        },
+                        "unit": "%"
+                      },
+                      {
+                        "access": "R",
+                        "dataType": "Float",
+                        "description": "Primary quality measurement",
+                        "id": "a999c45f-9344-498a-b329-42d821fa76fb",
+                        "name": "QualityMetric",
+                        "payloadSchema": "",
+                        "simulation": {
+                          "profile": "quality_metric_cont"
+                        },
+                        "unit": ""
+                      },
+                      {
+                        "access": "R",
+                        "dataType": "Bool",
+                        "description": "Quality hold",
+                        "id": "ea279a01-0463-46f1-b823-10cb392e0019",
+                        "name": "QualityHold",
+                        "payloadSchema": "",
+                        "simulation": {
+                          "profile": "quality_hold"
+                        },
+                        "unit": ""
+                      },
+                      {
+                        "access": "R",
+                        "dataType": "Float",
+                        "description": "Raw material silo level",
+                        "id": "4a2a0f8f-12df-4b3a-9c38-61c0b8ff66a6",
+                        "name": "SiloLevelPct",
+                        "payloadSchema": "",
+                        "simulation": {
+                          "profile": "silo_level"
+                        },
+                        "unit": "%"
+                      },
+                      {
+                        "access": "R",
+                        "dataType": "Float",
+                        "description": "Days of supply",
+                        "id": "0e3ba092-795d-4c92-8345-92f6f89eef86",
+                        "name": "DaysOfSupply",
+                        "payloadSchema": "",
+                        "simulation": {
+                          "profile": "days_of_supply"
+                        },
+                        "unit": "days"
+                      },
+                      {
+                        "access": "R",
+                        "dataType": "String",
+                        "description": "Last delivery truck",
+                        "id": "7eded722-2670-4bf7-9b60-c4ef179d017d",
+                        "name": "LastTruckID",
+                        "payloadSchema": "",
+                        "simulation": {
+                          "profile": "truck_id"
+                        },
+                        "unit": ""
+                      },
+                      {
+                        "access": "R",
+                        "dataType": "Float",
+                        "description": "Cumulative revenue",
+                        "id": "15480d61-3df4-43a6-8222-846b3b224602",
+                        "name": "RevenueEUR",
+                        "payloadSchema": "",
+                        "simulation": {
+                          "profile": "revenue_eur"
+                        },
+                        "unit": "EUR"
+                      },
+                      {
+                        "access": "R",
+                        "dataType": "Float",
+                        "description": "Gross margin",
+                        "id": "7dbae451-e6c6-4025-9e00-b3ce7339a8bf",
+                        "name": "MarginPct",
+                        "payloadSchema": "",
+                        "simulation": {
+                          "profile": "margin_pct"
+                        },
+                        "unit": "%"
+                      },
+                      {
+                        "access": "R",
+                        "dataType": "Float",
+                        "description": "Cumulative CO₂",
+                        "id": "d1ad3a0c-75e7-4cba-a427-02aef630c041",
+                        "name": "CO2KgAcc",
+                        "payloadSchema": "",
+                        "simulation": {
+                          "profile": "co2_kg"
+                        },
+                        "unit": "kg"
                       }
                     ],
                     "type": "workCenter"
@@ -371,171 +647,6 @@
                       }
                     ],
                     "type": "workCenter"
-                  },
-                  {
-                    "children": [],
-                    "description": "",
-                    "id": "d460635a-28c2-4288-a492-0442eec4a205",
-                    "name": "Package Unit",
-                    "tags": [
-                      {
-                        "access": "R",
-                        "dataType": "Bool",
-                        "description": "Machine running",
-                        "id": "88610bac-31ef-4d31-ad0e-5f89f4f69efd",
-                        "name": "Running",
-                        "payloadSchema": "",
-                        "simulation": {
-                          "profile": "boolean_running"
-                        },
-                        "unit": ""
-                      },
-                      {
-                        "access": "R",
-                        "dataType": "Bool",
-                        "description": "Fault active",
-                        "id": "23195cf7-a3db-4121-80db-9ba56b3d0d23",
-                        "name": "Fault",
-                        "payloadSchema": "",
-                        "simulation": {
-                          "profile": "boolean_fault"
-                        },
-                        "unit": ""
-                      },
-                      {
-                        "access": "R",
-                        "dataType": "Float",
-                        "description": "Overall Equipment Effectiveness",
-                        "id": "93620d88-a45b-463d-9dc7-55acee8be88e",
-                        "name": "OEEPct",
-                        "payloadSchema": "",
-                        "simulation": {
-                          "profile": "oee"
-                        },
-                        "unit": "%"
-                      },
-                      {
-                        "access": "R",
-                        "dataType": "Float",
-                        "description": "Availability",
-                        "id": "9806a264-ea57-4bf6-99d9-f1555d19dbc4",
-                        "name": "AvailabilityPct",
-                        "payloadSchema": "",
-                        "simulation": {
-                          "profile": "availability"
-                        },
-                        "unit": "%"
-                      },
-                      {
-                        "access": "R",
-                        "dataType": "Float",
-                        "description": "Performance",
-                        "id": "ec375192-e274-4497-b2bd-b0c23b50b270",
-                        "name": "PerformancePct",
-                        "payloadSchema": "",
-                        "simulation": {
-                          "profile": "performance"
-                        },
-                        "unit": "%"
-                      },
-                      {
-                        "access": "R",
-                        "dataType": "Float",
-                        "description": "Quality",
-                        "id": "e055c45e-874a-419a-939e-0e6903fd5dbf",
-                        "name": "QualityPct",
-                        "payloadSchema": "",
-                        "simulation": {
-                          "profile": "quality"
-                        },
-                        "unit": "%"
-                      },
-                      {
-                        "access": "R",
-                        "dataType": "Float",
-                        "description": "Cumulative good output",
-                        "id": "2de4a284-c9b3-4707-832b-bd650dced280",
-                        "name": "GoodUnitsAcc",
-                        "payloadSchema": "",
-                        "simulation": {
-                          "profile": "accumulator_good"
-                        },
-                        "unit": "units"
-                      },
-                      {
-                        "access": "R",
-                        "dataType": "Float",
-                        "description": "Cumulative rejects",
-                        "id": "6d5cc234-70a9-4def-924b-50e27bcbc587",
-                        "name": "RejectedUnitsAcc",
-                        "payloadSchema": "",
-                        "simulation": {
-                          "profile": "accumulator_bad"
-                        },
-                        "unit": "units"
-                      },
-                      {
-                        "access": "R",
-                        "dataType": "Float",
-                        "description": "Total machine cycles",
-                        "id": "08c65d1c-5878-4e05-8ac2-f5b68c02d076",
-                        "name": "CycleCountAcc",
-                        "payloadSchema": "",
-                        "simulation": {
-                          "profile": "accumulator_generic"
-                        },
-                        "unit": ""
-                      },
-                      {
-                        "access": "R",
-                        "dataType": "Float",
-                        "description": "Current production speed",
-                        "id": "fc36c328-6af1-49bb-8e5d-2986cc0babb5",
-                        "name": "SpeedUnitsPMin",
-                        "payloadSchema": "",
-                        "simulation": {
-                          "profile": "speed_rpm"
-                        },
-                        "unit": "u/min"
-                      },
-                      {
-                        "access": "R",
-                        "dataType": "String",
-                        "description": "Active batch identifier",
-                        "id": "0a2e34e2-76d7-4bbe-8825-8556eb187ae9",
-                        "name": "CurrentBatchID",
-                        "payloadSchema": "",
-                        "simulation": {
-                          "profile": "batch_id"
-                        },
-                        "unit": ""
-                      },
-                      {
-                        "access": "R",
-                        "dataType": "Float",
-                        "description": "Power draw",
-                        "id": "a10d1f11-9cf5-42c8-bce0-d22053b4c448",
-                        "name": "PowerKW",
-                        "payloadSchema": "",
-                        "simulation": {
-                          "profile": "power_kw"
-                        },
-                        "unit": "kW"
-                      },
-                      {
-                        "access": "R",
-                        "dataType": "Float",
-                        "description": "Mean time between failures",
-                        "id": "b274d0c6-9fc0-42b5-9f35-375344cb0628",
-                        "name": "MTBFHours",
-                        "payloadSchema": "",
-                        "simulation": {
-                          "profile": "mtbf"
-                        },
-                        "unit": "h"
-                      }
-                    ],
-                    "type": "workCenter"
                   }
                 ],
                 "description": "Main Chip Production Line",
@@ -545,9 +656,9 @@
                 "type": "area"
               }
             ],
-            "description": "Terneuzen Production Facility",
+            "description": "Antwerp Production Facility",
             "id": "site-tern",
-            "name": "Terneuzen2",
+            "name": "Antwerp",
             "tags": [],
             "type": "site"
           },
@@ -556,17 +667,141 @@
               {
                 "children": [
                   {
-                    "id": "f4fd5a1b-cffa-4fd1-bc57-286861d0f13e",
-                    "name": "Productionline",
+                    "children": [],
+                    "description": "",
+                    "id": "wc-bog-pc",
+                    "name": "ProcessControl",
+                    "tags": [
+                      {
+                        "access": "R",
+                        "dataType": "Float",
+                        "description": "",
+                        "id": "717143a4-57b5-4ef0-9b4a-99acb6b00d62",
+                        "name": "NewTag",
+                        "payloadSchema": "simple",
+                        "simulation": {
+                          "profile": "oee"
+                        },
+                        "unit": ""
+                      },
+                      {
+                        "access": "R",
+                        "dataType": "Float",
+                        "description": "",
+                        "id": "e7828e7e-d0ca-4405-92df-3db4e0ae97e3",
+                        "name": "NewTag2",
+                        "payloadSchema": "pi",
+                        "simulation": null,
+                        "unit": ""
+                      },
+                      {
+                        "access": "R",
+                        "dataType": "Float",
+                        "description": "",
+                        "id": "107504ae-71c9-4140-96db-540b9a862620",
+                        "name": "NewTag3",
+                        "payloadSchema": "isa95",
+                        "simulation": null,
+                        "unit": ""
+                      },
+                      {
+                        "access": "R",
+                        "dataType": "Float",
+                        "description": "",
+                        "id": "3477765c-73b1-4d49-9258-e527f0fcc117",
+                        "name": "NewTag4",
+                        "payloadSchema": "",
+                        "simulation": null,
+                        "unit": ""
+                      }
+                    ],
+                    "type": "workCenter"
+                  },
+                  {
+                    "children": [],
+                    "description": "",
+                    "id": "wc-bog-oee",
+                    "name": "OEE",
+                    "tags": [
+                      {
+                        "access": "R",
+                        "dataType": "Float",
+                        "description": "",
+                        "id": "dfda09d9-4a07-4541-a9ef-b44c41a3b1e7",
+                        "name": "OEE_Percent",
+                        "payloadSchema": "pi",
+                        "simulation": {
+                          "profile": "oee"
+                        },
+                        "unit": ""
+                      }
+                    ],
+                    "type": "workCenter"
+                  },
+                  {
+                    "children": [],
+                    "description": "",
+                    "id": "wc-bog-energy",
+                    "name": "Energy",
+                    "tags": [],
+                    "type": "workCenter"
+                  },
+                  {
+                    "children": [],
+                    "description": "",
+                    "id": "wc-bog-prod",
+                    "name": "Production",
+                    "tags": [],
+                    "type": "workCenter"
+                  },
+                  {
+                    "children": [],
+                    "description": "",
+                    "id": "wc-bog-qual",
+                    "name": "Quality",
+                    "tags": [],
+                    "type": "workCenter"
+                  }
+                ],
+                "description": "",
+                "id": "area-bog-pl",
+                "name": "ProductionLine",
+                "tags": [],
+                "type": "area"
+              }
+            ],
+            "description": "Bergen op Zoom Production Facility",
+            "id": "site-bog",
+            "name": "Ghent",
+            "tags": [],
+            "type": "site"
+          },
+          {
+            "id": "9a0d9825-069d-4b7e-a92d-147d2db882bd",
+            "name": "Amsterdam",
+            "type": "site",
+            "description": "",
+            "tags": [],
+            "children": [
+              {
+                "id": "54438e58-231d-4653-84a0-e0294b6cf8c0",
+                "name": "Bijlmer",
+                "type": "area",
+                "description": "",
+                "tags": [],
+                "children": [
+                  {
+                    "id": "3c92306c-4c1e-432b-a9e4-0af4e94dc599",
+                    "name": "afwalwaterinstallatie",
                     "type": "workCenter",
                     "description": "",
                     "tags": [
                       {
-                        "id": "8c215bec-933f-493e-a6d4-54e0440c005a",
+                        "id": "42c2f95e-105d-4951-8f73-16565473e9f9",
                         "name": "Running",
                         "dataType": "Bool",
                         "unit": "",
-                        "description": "Line running",
+                        "description": "Pump running state",
                         "access": "R",
                         "payloadSchema": "",
                         "simulation": {
@@ -574,71 +809,95 @@
                         }
                       },
                       {
-                        "id": "69a91e2a-7480-4369-ac0f-170a2be4fa76",
-                        "name": "Alarm",
+                        "id": "d0e995cd-0794-4a06-8e2d-3a323cb6a372",
+                        "name": "Fault",
                         "dataType": "Bool",
                         "unit": "",
-                        "description": "Any alarm active",
+                        "description": "Fault active",
                         "access": "R",
                         "payloadSchema": "",
                         "simulation": {
-                          "profile": "boolean_alarm"
+                          "profile": "boolean_fault"
                         }
                       },
                       {
-                        "id": "8990343e-d07e-4051-aa0d-479912eed0e8",
-                        "name": "OEEPct",
+                        "id": "e4079d4e-59ee-4d0e-9f1e-753cb293f050",
+                        "name": "MotorCurrentA",
                         "dataType": "Float",
-                        "unit": "%",
-                        "description": "Overall OEE",
+                        "unit": "A",
+                        "description": "Motor current draw",
                         "access": "R",
                         "payloadSchema": "",
                         "simulation": {
-                          "profile": "oee"
+                          "profile": "motor_current"
                         }
                       },
                       {
-                        "id": "d3bb2ae2-a9d1-4c32-8e92-cf630b352c0f",
-                        "name": "AvailabilityPct",
+                        "id": "c87c4928-fc3a-4d3d-a76d-0211ee21282d",
+                        "name": "VibrationMmS",
                         "dataType": "Float",
-                        "unit": "%",
-                        "description": "Availability",
+                        "unit": "mm/s",
+                        "description": "Bearing vibration",
                         "access": "R",
                         "payloadSchema": "",
                         "simulation": {
-                          "profile": "availability"
+                          "profile": "vibration"
                         }
                       },
                       {
-                        "id": "0c3ff98a-16ef-49e1-ba5e-cdbfad866a30",
-                        "name": "PerformancePct",
+                        "id": "010b47e2-86e5-4037-92aa-f715561aeb8c",
+                        "name": "FlowM3H",
                         "dataType": "Float",
-                        "unit": "%",
-                        "description": "Performance",
+                        "unit": "m³/h",
+                        "description": "Process flow rate",
                         "access": "R",
                         "payloadSchema": "",
                         "simulation": {
-                          "profile": "performance"
+                          "profile": "flow_rate"
                         }
                       },
                       {
-                        "id": "0601bce9-4dc4-4636-9727-200b65844706",
-                        "name": "QualityPct",
+                        "id": "a341a3cc-e029-4b26-8a2e-5962b438f47d",
+                        "name": "InletPressureBar",
                         "dataType": "Float",
-                        "unit": "%",
-                        "description": "Quality",
+                        "unit": "bar",
+                        "description": "Inlet pressure",
                         "access": "R",
                         "payloadSchema": "",
                         "simulation": {
-                          "profile": "quality"
+                          "profile": "pressure"
                         }
                       },
                       {
-                        "id": "1709fb7f-ac83-4373-9e3f-c23c39448731",
-                        "name": "ActivePowerKW",
+                        "id": "0f66126c-82fd-4fe7-ae66-af27f8a7c345",
+                        "name": "OutletPressureBar",
+                        "dataType": "Float",
+                        "unit": "bar",
+                        "description": "Outlet pressure",
+                        "access": "R",
+                        "payloadSchema": "",
+                        "simulation": {
+                          "profile": "pressure"
+                        }
+                      },
+                      {
+                        "id": "e9021ffb-51b9-4e89-8514-617ef7f4fdb4",
+                        "name": "SpeedRPM",
+                        "dataType": "Float",
+                        "unit": "RPM",
+                        "description": "Pump speed",
+                        "access": "R",
+                        "payloadSchema": "",
+                        "simulation": {
+                          "profile": "speed_rpm"
+                        }
+                      },
+                      {
+                        "id": "c6d9cd23-21fb-49ee-a4db-fca8a4d55b89",
+                        "name": "PowerKW",
                         "dataType": "Float",
                         "unit": "kW",
-                        "description": "Power demand",
+                        "description": "Power consumption",
                         "access": "R",
                         "payloadSchema": "",
                         "simulation": {
@@ -646,218 +905,40 @@
                         }
                       },
                       {
-                        "id": "bad2e97b-c6ae-44cf-9df8-a3a78042a625",
-                        "name": "CumulativeKWh",
-                        "dataType": "Float",
-                        "unit": "kWh",
-                        "description": "Cumulative energy",
-                        "access": "R",
-                        "payloadSchema": "",
-                        "simulation": {
-                          "profile": "accumulator_energy"
-                        }
-                      },
-                      {
-                        "id": "be3f4275-252f-45cc-b26d-e80a396be286",
-                        "name": "GoodOutputAcc",
-                        "dataType": "Float",
-                        "unit": "t",
-                        "description": "Good output (cumulative)",
-                        "access": "R",
-                        "payloadSchema": "",
-                        "simulation": {
-                          "profile": "accumulator_good"
-                        }
-                      },
-                      {
-                        "id": "05ae4e09-73c9-427d-a883-eba6e9b052eb",
-                        "name": "RejectedOutputAcc",
-                        "dataType": "Float",
-                        "unit": "t",
-                        "description": "Rejected output (cumulative)",
-                        "access": "R",
-                        "payloadSchema": "",
-                        "simulation": {
-                          "profile": "accumulator_bad"
-                        }
-                      },
-                      {
-                        "id": "107cdcca-2424-4083-b230-9ba8cdd29330",
-                        "name": "CurrentBatchID",
-                        "dataType": "String",
-                        "unit": "",
-                        "description": "Active batch ID",
-                        "access": "R",
-                        "payloadSchema": "",
-                        "simulation": {
-                          "profile": "batch_id"
-                        }
-                      },
-                      {
-                        "id": "4d4b5b26-87e6-4399-b5c1-03e6d35995b1",
-                        "name": "ERPOrderID",
-                        "dataType": "String",
-                        "unit": "",
-                        "description": "Active ERP order",
-                        "access": "R",
-                        "payloadSchema": "",
-                        "simulation": {
-                          "profile": "erp_order_id"
-                        }
-                      },
-                      {
-                        "id": "1327a37f-b7f6-444d-8207-0d5ebceffede",
-                        "name": "MTBFHours",
+                        "id": "5cd024e3-2014-4929-9730-4ca4dfde89dd",
+                        "name": "RemainingLifeH",
                         "dataType": "Float",
                         "unit": "h",
-                        "description": "MTBF",
+                        "description": "Estimated RUL",
                         "access": "R",
                         "payloadSchema": "",
                         "simulation": {
-                          "profile": "mtbf"
+                          "profile": "remaining_useful_life"
                         }
                       },
                       {
-                        "id": "9265266e-cc10-40f3-8384-21080a2de446",
-                        "name": "MTTRMinutes",
+                        "id": "7705d54a-a1e0-475a-9339-edbad2f61660",
+                        "name": "RunHoursAcc",
                         "dataType": "Float",
-                        "unit": "min",
-                        "description": "MTTR",
+                        "unit": "h",
+                        "description": "Cumulative run hours",
                         "access": "R",
                         "payloadSchema": "",
                         "simulation": {
-                          "profile": "mttr"
-                        }
-                      },
-                      {
-                        "id": "f067dd24-1b68-4dde-93a9-ac35120ec15d",
-                        "name": "PMCompliancePct",
-                        "dataType": "Float",
-                        "unit": "%",
-                        "description": "PM compliance",
-                        "access": "R",
-                        "payloadSchema": "",
-                        "simulation": {
-                          "profile": "pm_compliance"
-                        }
-                      },
-                      {
-                        "id": "8513791c-0ff4-469e-93dc-9f27d831029c",
-                        "name": "QualityMetric",
-                        "dataType": "Float",
-                        "unit": "",
-                        "description": "Primary quality measurement",
-                        "access": "R",
-                        "payloadSchema": "",
-                        "simulation": {
-                          "profile": "quality_metric_cont"
-                        }
-                      },
-                      {
-                        "id": "8d219e69-390a-4326-814a-6676aca1b3aa",
-                        "name": "QualityHold",
-                        "dataType": "Bool",
-                        "unit": "",
-                        "description": "Quality hold",
-                        "access": "R",
-                        "payloadSchema": "",
-                        "simulation": {
-                          "profile": "quality_hold"
-                        }
-                      },
-                      {
-                        "id": "6df5a02c-b04c-4aa9-bfe5-1e2fd67b7837",
-                        "name": "SiloLevelPct",
-                        "dataType": "Float",
-                        "unit": "%",
-                        "description": "Raw material silo level",
-                        "access": "R",
-                        "payloadSchema": "",
-                        "simulation": {
-                          "profile": "silo_level"
-                        }
-                      },
-                      {
-                        "id": "d138fe63-b234-4385-8cc3-1a7c4c5865c4",
-                        "name": "DaysOfSupply",
-                        "dataType": "Float",
-                        "unit": "days",
-                        "description": "Days of supply",
-                        "access": "R",
-                        "payloadSchema": "",
-                        "simulation": {
-                          "profile": "days_of_supply"
-                        }
-                      },
-                      {
-                        "id": "312586c2-1fcb-436d-97bd-d88c6daea1b2",
-                        "name": "LastTruckID",
-                        "dataType": "String",
-                        "unit": "",
-                        "description": "Last delivery truck",
-                        "access": "R",
-                        "payloadSchema": "",
-                        "simulation": {
-                          "profile": "truck_id"
-                        }
-                      },
-                      {
-                        "id": "70d6bf63-d508-469d-b229-419735532b2c",
-                        "name": "RevenueEUR",
-                        "dataType": "Float",
-                        "unit": "EUR",
-                        "description": "Cumulative revenue",
-                        "access": "R",
-                        "payloadSchema": "",
-                        "simulation": {
-                          "profile": "revenue_eur"
-                        }
-                      },
-                      {
-                        "id": "73649e2d-c89f-425c-b1b6-05463abde08b",
-                        "name": "MarginPct",
-                        "dataType": "Float",
-                        "unit": "%",
-                        "description": "Gross margin",
-                        "access": "R",
-                        "payloadSchema": "",
-                        "simulation": {
-                          "profile": "margin_pct"
-                        }
-                      },
-                      {
-                        "id": "09ac19fa-2f6b-402b-bba6-76a9875d0e54",
-                        "name": "CO2KgAcc",
-                        "dataType": "Float",
-                        "unit": "kg",
-                        "description": "Cumulative CO₂",
-                        "access": "R",
-                        "payloadSchema": "",
-                        "simulation": {
-                          "profile": "co2_kg"
+                          "profile": "accumulator_generic"
                         }
                       }
                     ],
                     "children": []
                   }
-                ],
-                "description": "",
-                "id": "area-bog-pl",
-                "name": "ProcesCell",
-                "tags": [],
-                "type": "area"
+                ]
               }
-            ],
-            "description": "Bergen op Zoom Production Facility",
-            "id": "site-bog",
-            "name": "BergenOpZoom",
-            "tags": [],
-            "type": "site"
+            ]
           }
         ],
         "description": "Chips & Snacks Division",
         "id": "bu-knap",
-        "name": "KnappertjesBV",
+        "name": "CrispCraft",
         "tags": [],
         "type": "businessUnit"
       },
@@ -935,7 +1016,7 @@
             ],
             "description": "",
             "id": "site-emm",
-            "name": "Emmeloord",
+            "name": "Leiden",
             "tags": [
               {
                 "access": "R",
@@ -1007,14 +1088,14 @@
             ],
             "description": "",
             "id": "site-veen",
-            "name": "Veendam",
+            "name": "Groningen",
             "tags": [],
             "type": "site"
           }
         ],
         "description": "Potato Flakes Division",
         "id": "bu-vlok",
-        "name": "Vlokkenheim",
+        "name": "FlakeMill",
         "tags": [
           {
             "access": "R",
@@ -1101,7 +1182,7 @@
             ],
             "description": "",
             "id": "site-heer",
-            "name": "Heerenveen",
+            "name": "Dortmund",
             "tags": [],
             "type": "site"
           },
@@ -1127,7 +1208,7 @@
             ],
             "description": "",
             "id": "site-harl",
-            "name": "Harlingen",
+            "name": "Bremen",
             "tags": [],
             "type": "site"
           },
@@ -1153,7 +1234,7 @@
             ],
             "description": "",
             "id": "site-mepp",
-            "name": "Meppel",
+            "name": "Hanover",
             "tags": [],
             "type": "site"
           },
@@ -1179,7 +1260,7 @@
             ],
             "description": "",
             "id": "site-hard",
-            "name": "Hardenberg",
+            "name": "Leipzig",
             "tags": [],
             "type": "site"
           },
@@ -1205,7 +1286,7 @@
             ],
             "description": "",
             "id": "site-hoog",
-            "name": "Hoogeveen",
+            "name": "Cologne",
             "tags": [],
             "type": "site"
           },
@@ -1231,21 +1312,21 @@
             ],
             "description": "",
             "id": "site-coev",
-            "name": "Coevorden",
+            "name": "Dresden",
             "tags": [],
             "type": "site"
           }
         ],
         "description": "Frozen Frites Division",
         "id": "bu-frito",
-        "name": "FritoMaxx",
+        "name": "FrostLine",
         "tags": [],
         "type": "businessUnit"
       }
     ],
-    "description": "Royal Farmers Collective â€“ Agricultural Processing Holding",
+    "description": "GlobalFoodCo â€“ Global Food Manufacturing Group",
     "id": "ent-rfc",
-    "name": "RoyalFarmersCollective",
+    "name": "GlobalFoodCo",
     "tags": [],
     "type": "enterprise"
   },

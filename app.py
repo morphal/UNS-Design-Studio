@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Royal Farmers Collective – Enterprise UNS Simulator
+Virtual UNS Enterprise Simulator
 Web-based Control Dashboard  (Flask backend)
 """
 
@@ -36,12 +36,12 @@ _scfg = _load_server_cfg()
 
 # ── Enterprise structure (read live from uns_config.json) ──────────────────────
 _ENTERPRISE_FALLBACK = {
-    "KnappertjesBV": ["FactoryTerneuzen",   "FactoryBergenOpZoom"],
-    "Vlokkenheim":   ["FactoryEmmeloord",   "FactoryVeendam"],
-    "FritoMaxx":     ["FactoryHeerenveen",  "FactoryHarlingen",  "FactoryMeppel",
-                      "FactoryHardenberg",  "FactoryHoogeveen",  "FactoryCoevorden"],
-    "Wortelkracht":  ["FactoryRoosendaal"],
-    "DeBietenBende": ["FactoryZevenbergen", "FactoryStadskanaal"],
+    "CrispCraft": ["FactoryAntwerp",   "FactoryGhent"],
+    "FlakeMill":   ["FactoryLeiden",   "FactoryGroningen"],
+    "FrostLine":     ["FactoryDortmund",  "FactoryBremen",  "FactoryHanover",
+                      "FactoryLeipzig",  "FactoryCologne",  "FactoryDresden"],
+    "RootCore":  ["FactoryLille"],
+    "SugarWorks": ["FactoryBruges", "FactoryLiege"],
 }
 
 def _get_enterprise_structure() -> dict:
@@ -71,27 +71,27 @@ def _get_namespace_uri() -> str:
         return NAMESPACE_URI
 
 DIVISION_META = {
-    "KnappertjesBV":  {"label": "Chips & Snacks",    "icon": "🥔", "color": "#f4900c"},
-    "Vlokkenheim":    {"label": "Potato Flakes",      "icon": "🌾", "color": "#c8a96e"},
-    "FritoMaxx":      {"label": "Frozen Frites",      "icon": "🍟", "color": "#f5c518"},
-    "Wortelkracht":   {"label": "Chicory & Inulin",   "icon": "🌿", "color": "#4caf50"},
-    "DeBietenBende":  {"label": "Sugar Beet",         "icon": "🍬", "color": "#a371f7"},
+    "CrispCraft":  {"label": "Chips & Snacks",    "icon": "🥔", "color": "#f4900c"},
+    "FlakeMill":    {"label": "Potato Flakes",      "icon": "🌾", "color": "#c8a96e"},
+    "FrostLine":      {"label": "Frozen Frites",      "icon": "🍟", "color": "#f5c518"},
+    "RootCore":   {"label": "Chicory & Inulin",   "icon": "🌿", "color": "#4caf50"},
+    "SugarWorks":  {"label": "Sugar Beet",         "icon": "🍬", "color": "#a371f7"},
 }
 
 # var_key values (lowercase) → these get .capitalize() applied when building anomaly keys
 EQUIPMENT_OPTIONS = {
-    "KnappertjesBV":  {"Cutter Speed": "cutter_speed", "Blancher Temp": "blancher_temperature",
+    "CrispCraft":  {"Cutter Speed": "cutter_speed", "Blancher Temp": "blancher_temperature",
                        "Fryer Temp": "fryer_temperature", "Cooler Temp": "freezer_temperature"},
-    "Vlokkenheim":    {"Drum Speed": "drum_speed", "Drum Temp": "drum_temperature"},
-    "FritoMaxx":      {"Cutter Speed": "cutter_speed", "Blancher Temp": "blancher_temperature",
+    "FlakeMill":    {"Drum Speed": "drum_speed", "Drum Temp": "drum_temperature"},
+    "FrostLine":      {"Cutter Speed": "cutter_speed", "Blancher Temp": "blancher_temperature",
                        "Pre-Fryer Temp": "fryer_temperature", "IQF Tunnel Temp": "freezer_temperature"},
-    "Wortelkracht":   {"Extraction Temp": "extraction_temperature"},
-    "DeBietenBende":  {"Diffusion Temp": "diffusion_temperature",
+    "RootCore":   {"Extraction Temp": "extraction_temperature"},
+    "SugarWorks":  {"Diffusion Temp": "diffusion_temperature",
                        "Evaporator Temp": "evaporator_temperature",
                        "Crystallizer Temp": "crystallizer_temperature"},
 }
 
-NAMESPACE_URI = "http://royalfarmerscollective.com/uns"
+NAMESPACE_URI = "http://VirtualUNS.com/uns"
 
 # ── Shared state ───────────────────────────────────────────────────────────────
 _state = {
@@ -340,7 +340,7 @@ def _poll_loop():
                 # If we got a namespace index, also verify the expected root object exists
                 try:
                     root = client.get_root_node()
-                    ent = root.get_child(["0:Objects", f"{ns_idx}:RoyalFarmersCollective"])
+                    ent = root.get_child(["0:Objects", f"{ns_idx}:GlobalFoodCo"])
                     break
                 except Exception:
                     # Node not ready yet — wait and retry
@@ -358,7 +358,7 @@ def _poll_loop():
                 time.sleep(1)
                 continue
 
-            # Namespace and RoyalFarmersCollective object found → consider connection healthy
+            # Namespace and GlobalFoodCo object found → consider connection healthy
             _state['opc_connected'] = True
             _log("[poll] Successfully connected to OPC UA server")
 
@@ -453,7 +453,7 @@ def _opc_write(fn):
         client.connect()
         idx  = client.get_namespace_index(NAMESPACE_URI)
         root = client.get_root_node()
-        ent  = root.get_child(["0:Objects", f"{idx}:RoyalFarmersCollective"])
+        ent  = root.get_child(["0:Objects", f"{idx}:GlobalFoodCo"])
         result = fn(client, idx, ent)
         client.disconnect()
         return True, result or "OK"
@@ -478,7 +478,7 @@ def _get_plant_tags(group: str, plant: str) -> list:
         return []
 
     tree     = cfg.get('tree', {})
-    # plant is "FactoryTerneuzen2" → site name is "Terneuzen2"
+    # plant is "FactoryAntwerp" → site name is "Antwerp"
     site_name = plant[len('Factory'):] if plant.startswith('Factory') else plant
 
     results = []
@@ -545,6 +545,13 @@ def api_status():
     cfg.pop('password', None)
     struct = _get_enterprise_structure()
     struct_hash = hashlib.md5(json.dumps(struct, sort_keys=True).encode()).hexdigest()[:8]
+    # Read enterprise name dynamically from uns_config.json tree root
+    try:
+        with open(UNS_CONFIG_FILE) as f:
+            uns = json.load(f)
+        enterprise_name = uns.get('tree', {}).get('name', 'Enterprise')
+    except Exception:
+        enterprise_name = 'Enterprise'
     return jsonify(dict(
         server_running=_server_alive(),
         opc_connected=_state['opc_connected'],
@@ -555,6 +562,7 @@ def api_status():
         bridge_stats=bstats,
         bridge_cfg=cfg,
         structure_hash=struct_hash,
+        enterprise_name=enterprise_name,
         ts=time.time(),
     ))
 
@@ -853,7 +861,7 @@ def api_bridge_cfg_save():
     return jsonify({'ok': True, 'restarted': False})
 
 
-# ── Asset Library ─────────────────────────────────────────────────────────────
+# ── Asset Library ──────────────────────────────────────────────────────────────
 ASSET_LIBRARY_FILE = os.path.join(BASE_DIR, 'asset_library.json')
 
 def _load_asset_library() -> dict:
@@ -874,39 +882,35 @@ def api_simulation_profiles():
     """
     Return the simulation profile catalogue from factory.py as a grouped list
     for rendering in the UNS designer tag editor dropdown.
-    Format: [{"group": "OT / Process", "profiles": [{"id": "oee", "label": "OEE (%)"}, ...]}, ...]
     """
     try:
         factory_py = os.path.join(BASE_DIR, 'factory.py')
         import importlib.util
-        spec   = importlib.util.spec_from_file_location("factory", factory_py)
-        mod    = importlib.util.module_from_spec(spec)
+        spec = importlib.util.spec_from_file_location("factory", factory_py)
+        mod  = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(mod)
         profiles = getattr(mod, 'SIMULATION_PROFILES', {})
     except Exception:
-        # Fallback: minimal set so the UI always renders
         profiles = {
-            "oee":         {"label": "OEE (%)",              "group": "OT / Process"},
-            "availability":{"label": "Availability (%)",     "group": "OT / Process"},
-            "performance": {"label": "Performance (%)",      "group": "OT / Process"},
-            "quality":     {"label": "Quality (%)",          "group": "OT / Process"},
-            "power_kw":    {"label": "Active Power (kW)",    "group": "Energy / Utilities"},
+            "oee":              {"label": "OEE (%)",              "group": "OT / Process"},
+            "availability":     {"label": "Availability (%)",     "group": "OT / Process"},
+            "performance":      {"label": "Performance (%)",      "group": "OT / Process"},
+            "quality":          {"label": "Quality (%)",          "group": "OT / Process"},
+            "power_kw":         {"label": "Active Power (kW)",    "group": "Energy / Utilities"},
             "accumulator_good": {"label": "Accumulator: Good Output", "group": "Accumulators"},
-            "default":     {"label": "Generic Walk",         "group": "Other"},
+            "default":          {"label": "Generic Walk",         "group": "Other"},
         }
 
-    # Group for UI consumption
-    grouped = {}
-    for pid, meta in profiles.items():
-        g = meta.get("group", "Other")
-        grouped.setdefault(g, []).append({"id": pid, "label": meta.get("label", pid)})
-
-    # Preserve a sensible group order
     group_order = [
         "OT / Process", "Accumulators", "Maintenance / CMMS",
         "Quality / Lab", "Logistics", "ERP / Finance",
         "Energy / Utilities", "Other"
     ]
+    grouped = {}
+    for pid, meta in profiles.items():
+        g = meta.get("group", "Other")
+        grouped.setdefault(g, []).append({"id": pid, "label": meta.get("label", pid)})
+
     result = []
     for g in group_order:
         if g in grouped:
@@ -995,7 +999,7 @@ def api_schemas_save():
 if __name__ == '__main__':
     print()
     print("==============================================================")
-    print("Royal Farmers Collective - Enterprise UNS Simulator")
+    print("Virtual UNS Enterprise Simulator")
     print("Dashboard: http://localhost:5000")
     print("==============================================================")
     print()

@@ -1,5 +1,5 @@
 # client.py
-# Royal Farmers Collective – fictief Europees agrifood concern (parodie)
+# Virtual UNS Enterprise Simulator – fictional food manufacturing concern
 # CLI-besturingsclient voor de UNS / OPC UA simulator
 
 import time
@@ -10,17 +10,17 @@ from opcua import Client
 from recipe import Recipe, recipe_data
 
 SERVER_ENDPOINT = "opc.tcp://10.10.3.4:4840/freeopcua/server/"
-NAMESPACE_URI   = "http://royalfarmerscollective.com/uns"
+NAMESPACE_URI   = "http://VirtualUNS.com/uns"
 TCP_SERVER_IP   = "0.0.0.0"
 TCP_SERVER_PORT = 9999
 
 ENTERPRISE_STRUCTURE = {
-    "KnappertjesBV": ["FactoryTerneuzen",    "FactoryBergenOpZoom"],
-    "Vlokkenheim":   ["FactoryEmmeloord",    "FactoryVeendam"],
-    "FritoMaxx":     ["FactoryHeerenveen",   "FactoryHarlingen",   "FactoryMeppel",
-                      "FactoryHardenberg",   "FactoryHoogeveen",   "FactoryCoevorden"],
-    "Wortelkracht":  ["FactoryRoosendaal"],
-    "DeBietenBende": ["FactoryZevenbergen",  "FactoryStadskanaal"],
+    "CrispCraft": ["FactoryAntwerp",    "FactoryGhent"],
+    "FlakeMill":   ["FactoryLeiden",    "FactoryGroningen"],
+    "FrostLine":     ["FactoryDortmund",   "FactoryBremen",   "FactoryHanover",
+                      "FactoryLeipzig",   "FactoryCologne",   "FactoryDresden"],
+    "RootCore":  ["FactoryLille"],
+    "SugarWorks": ["FactoryBruges",  "FactoryLiege"],
 }
 
 
@@ -52,22 +52,22 @@ def get_default_recipe(group):
 def get_equipment_options(group, plant):
     """Geeft beschikbare procesapparatuur terug per divisie/fabriek."""
     options = {}
-    if group == "KnappertjesBV":
+    if group == "CrispCraft":
         options["Snijmachinesnelheid"]   = "cutter_speed"
         options["Blancheertemperatuur"]  = "blancher_temperature"
         options["Frituurtemperatuur"]    = "fryer_temperature"
         options["Koelingtunneltemp."]    = "freezer_temperature"
-    elif group == "Vlokkenheim":
+    elif group == "FlakeMill":
         options["Trommelsnelheid"]       = "drum_speed"
         options["Trommeltemperatuur"]    = "drum_temperature"
-    elif group == "FritoMaxx":
+    elif group == "FrostLine":
         options["Snijmachinesnelheid"]   = "cutter_speed"
         options["Blancheertemperatuur"]  = "blancher_temperature"
         options["Voorfrituurtemperatuur"]= "fryer_temperature"
         options["IQF-tunneltemperatuur"] = "freezer_temperature"
-    elif group == "Wortelkracht":
+    elif group == "RootCore":
         options["Extractietemperatuur"]  = "extraction_temperature"
-    elif group == "DeBietenBende":
+    elif group == "SugarWorks":
         options["Diffusietemperatuur"]   = "diffusion_temperature"
         options["Verdampertemperatuur"]  = "evaporator_temperature"
         options["Kristallisatortemp."]   = "crystallizer_temperature"
@@ -265,9 +265,9 @@ def individual_plant_control(client, idx, enterprise_obj):
 def print_banner():
     print()
     print("╔══════════════════════════════════════════════════════════════╗")
-    print("║        Royal Farmers Collective – Simulatorbesturing         ║")
-    print("║   KnappertjesBV · Vlokkenheim · FritoMaxx                   ║")
-    print("║   Wortelkracht · De BietenBende                              ║")
+    print("║        GlobalFoodCo – Simulatorbesturing         ║")
+    print("║   CrispCraft · FlakeMill · FrostLine                   ║")
+    print("║   RootCore · SugarWorks                              ║")
     print("╚══════════════════════════════════════════════════════════════╝")
     print()
 
@@ -277,10 +277,10 @@ def main():
     client = Client(SERVER_ENDPOINT)
     try:
         client.connect()
-        print(f"✅ Verbonden met Royal Farmers Collective OPC UA server ({SERVER_ENDPOINT})\n")
+        print(f"✅ Verbonden met GlobalFoodCo OPC UA server ({SERVER_ENDPOINT})\n")
         root           = client.get_root_node()
         idx            = client.get_namespace_index(NAMESPACE_URI)
-        enterprise_obj = root.get_child(["0:Objects", f"{idx}:RoyalFarmersCollective"])
+        enterprise_obj = root.get_child(["0:Objects", f"{idx}:GlobalFoodCo"])
 
         while True:
             main_choices = [
@@ -306,7 +306,7 @@ def main():
 
     finally:
         client.disconnect()
-        print("\n👋 Verbinding verbroken. Tot ziens van Royal Farmers Collective!")
+        print("\n👋 Verbinding verbroken. Tot ziens van GlobalFoodCo!")
 
 
 if __name__ == "__main__":

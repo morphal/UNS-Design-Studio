@@ -1,274 +1,296 @@
-# 🏭 Royal Farmers Collective — Enterprise UNS Simulator
+<div align="center">
 
-A fully self-contained **Unified Namespace simulator** for industrial IoT demos, training and development. Simulates a fictional Dutch agri-food concern across five divisions and thirteen factories, publishing realistic OT and IT data over OPC-UA, MQTT and NATS.
+# 🏭 Virtual UNS Enterprise Simulator
 
-Built as a learning and demo tool for **ISA-95 hierarchy**, **UNS architecture**, **OEE analytics**, **CMMS/ERP integration**, and **digital twin** concepts — without needing real factory hardware.
+**A fully self-contained Unified Namespace simulator for industrial IoT demos, training and development.**
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Docker](https://img.shields.io/badge/Docker-ready-2496ED?logo=docker&logoColor=white)](docker-compose.yml)
+[![OPC-UA](https://img.shields.io/badge/OPC--UA-4840-green)](https://opcfoundation.org/)
+[![MQTT](https://img.shields.io/badge/MQTT-1883-orange)](https://mqtt.org/)
+[![NATS](https://img.shields.io/badge/NATS-4222-purple)](https://nats.io/)
+
+*Simulate a complete multi-site food manufacturing enterprise — publishing realistic, stateful OT and IT data over OPC-UA, MQTT and NATS — without needing a single piece of real hardware.*
+
+[Quick Start](#-quick-start) · [Features](#-features) · [UNS Designer](#-uns-topic-designer) · [Simulation Engine](#-simulation-engine) · [API Reference](#-api-reference) · [Release Notes](#-release-notes)
+
+</div>
+
+---
+
+## 🎯 What is this?
+
+The **Virtual UNS Enterprise Simulator** is a hands-on learning and demo environment for anyone working with **Unified Namespace (UNS)** architecture, **ISA-95 hierarchy**, **OPC-UA**, **MQTT/NATS** and **industrial data modelling**.
+
+It ships with a fictional five-division food manufacturer — 13 factories across Europe — all producing coherent, realistic process data driven by a proper plant state machine. No random noise. No hardcoded tags. Everything is configurable through a visual browser-based designer.
+
+**Built for:**
+- Engineers learning UNS and ISA-95 concepts hands-on
+- Teams evaluating MQTT brokers, NATS or time-series databases
+- Demonstrating IIoT architecture to stakeholders without real equipment
+- Testing Grafana dashboards, Telegraf pipelines or digital twin tooling
 
 ---
 
 ## ✨ Features
 
-- **Stateful simulation engine** — each factory runs a state machine (Running → Fault → Recovery → Stopped). OEE, energy, quality, logistics and finance data all derive from the same coherent plant state. No more random noise.
-- **44 simulation profiles** covering the full IT/OT stack: OEE pillars, process variables, accumulators, CMMS, quality lab, logistics, ERP/finance, energy and utilities
-- **Asset library** — 16 predefined asset templates (Pump, Valve, Silo, Boiler, Packing Machine, IQF Tunnel, Conveyor, Batch Reactor, Weighbridge, Quality Lab, CMMS Feed, ERP Order Feed, Energy Meter, Fryer, Drum Dryer, Crystallizer) that can be inserted into any UNS node with one click
-- **Visual UNS Topic Designer** — browser-based drag-and-drop ISA-95 hierarchy editor with asset picker, grouped simulation profile dropdown, and topic path preview
-- **OPC-UA server** — full address space built dynamically from `uns_config.json`
-- **Protocol bridge** — publishes to MQTT or NATS with configurable payload schemas (Standard, Simple, Sparkplug B-like, ISA-95 Extended, PI-like, InfluxDB-like)
-- **Web dashboard** — start/stop individual factories, inject anomalies, monitor bridge stats, design payload schemas
+### Simulation
+- **Stateful plant engine** — each factory runs a full state machine: `Running → Fault → Recovery → Stopped`. Every tag derives from the same coherent plant state — never independent random values
+- **44 simulation profiles** spanning the full IT/OT stack: OEE pillars, process variables, maintenance/CMMS, quality lab, logistics, ERP/finance and energy utilities
+- **OEE always computed correctly** as `Availability × Performance × Quality / 10000`
+- **Accumulators** (energy, good output, bad output, revenue) only advance when the plant is running
+- **Silo levels** drain during production and auto-refill on simulated truck arrivals
+- **String tags** publish meaningful values — batch IDs, lot IDs, truck IDs, order statuses, ERP numbers
+
+### UNS Designer
+- **Visual ISA-95 hierarchy editor** — build Enterprise → Business Unit → Site → Area → Work Center trees in the browser
+- **Asset library** — 16 predefined asset bundles (Pump, Valve, Silo, Boiler, Packing Machine, IQF Tunnel, Conveyor, Batch Reactor, Weighbridge, Quality Lab, CMMS Feed, ERP Feed, Energy Meter, Fryer, Drum Dryer, Crystallizer) — drop any asset onto any node, tags and profiles pre-wired
+- **Grouped simulation profile picker** with contextual hints per profile
+- **Live topic path preview** — see your full MQTT/NATS topic as you build
+- **Payload Schema Designer** — define your own message schemas (Standard, Sparkplug B-like, ISA-95 Extended, PI-like, InfluxDB-like)
+
+### Connectivity
+- **OPC-UA server** — full address space built dynamically from your UNS config
+- **MQTT and NATS bridge** — configurable polling interval, topic prefix and payload schema
+- **Dynamic enterprise name** — dashboard header and topic examples update live when you rename the root node
+
+### Infrastructure
 - **Docker-first** — single `docker compose up` gets everything running
+- **Persistent config volume** — namespace, schemas and asset library survive container rebuilds
+- **REST API** — every feature accessible programmatically
 
 ---
 
-## 🏢 The Fictional Enterprise
+## 🏢 The Example Enterprise
 
-**Royal Farmers Collective** — a parody of Royal Cosun, an agricultural processing holding with five divisions:
+The simulator ships with **GlobalFoodCo** — a fictional food manufacturing holding. Rename it to anything you like in the UNS designer — the dashboard and topic paths update automatically.
 
 | Division | Product | Factories |
 |---|---|---|
-| 🥔 **KnappertjesBV** | Chips & Snacks | Terneuzen, Bergen op Zoom |
-| 🌾 **Vlokkenheim** | Potato Flakes | Emmeloord, Veendam |
-| 🍟 **FritoMaxx** | Frozen Frites | Heerenveen, Harlingen, Meppel, Hardenberg, Hoogeveen, Coevorden |
-| 🌿 **Wortelkracht** | Chicory & Inulin | Roosendaal |
-| 🍬 **DeBietenBende** | Sugar Beet & Sugar | Zevenbergen, Stadskanaal |
+| 🥔 **CrispCraft** | Chips & Snacks | Antwerp, Ghent |
+| 🌾 **FlakeMill** | Potato Flakes | Leiden, Groningen |
+| 🍟 **FrostLine** | Frozen Frites | Dortmund, Bremen, Hanover, Leipzig, Cologne, Dresden |
+| 🌿 **RootCore** | Chicory & Inulin | Lille |
+| 🍬 **SugarWorks** | Sugar Beet & Sugar | Bruges, Liege |
 
----
+> All names, divisions and locations are entirely fictional.
 
-## 🖥️ Screenshots
-
-> **Dashboard** — factory status overview with OEE, power draw and running state per plant
-
-```
-──────────┴──────────────────────┴────────────┴──────────┘
-```
-![alt text](image.png)
-
-> **UNS Topic Designer** — build your ISA-95 namespace visually
-
-```
-
-```
-![alt text](image-1.png)
-
-> **Asset Picker** — insert pre-configured asset bundles into any node
-
-```
-🧩 Insert Asset
-```
-<img width="716" height="661" alt="image" src="https://github.com/user-attachments/assets/6afa89de-c1ca-49d1-ac0c-be878a354ea5" />
-
-Tags with simulation profiles are automatically added!!
-
-<img width="1917" height="938" alt="image" src="https://github.com/user-attachments/assets/9f27d331-8288-4e24-9a2c-22d908f43bbd" />
-
-![alt text](image-2.png)
 ---
 
 ## 🚀 Quick Start
 
 ### Prerequisites
 
-- [Docker](https://docs.docker.com/get-docker/) and Docker Compose
-- Ports `5000`, `4840`, `9999` available on your host
+- [Docker](https://docs.docker.com/get-docker/) with Docker Compose
+- Ports **5000** (dashboard), **4840** (OPC-UA) and **9999** (anomaly TCP) available on your host
 
-### 1 — Clone the repo
+### 1 — Clone
 
 ```bash
-git clone https://github.com/your-org/enterprise-simulator.git
-cd enterprise-simulator
+git clone https://github.com/your-username/virtual-uns-simulator.git
+cd virtual-uns-simulator
 ```
 
-### 2 — Build the image
+### 2 — Build
 
 ```bash
 docker build -t uns-simulator:latest .
 ```
 
-### 3 — Start the simulator
+### 3 — Run
 
 ```bash
 docker compose up -d
 ```
 
-### 4 — Open the dashboard
+### 4 — Open
 
 ```
 http://localhost:5000
 ```
 
-That's it. The simulator starts automatically, all 13 factories boot in Running state, and the OPC-UA server is live on port 4840.
+The OPC-UA server starts automatically. All 13 factories boot in **Running** state and immediately begin publishing data. The MQTT/NATS bridge is off by default — configure and start it from the dashboard when ready.
 
 ---
 
-## 🔌 Connecting a MQTT or NATS Broker
-
-The bridge is **not started automatically** — configure it first via the dashboard.
+## 🔌 Connecting a Broker
 
 ### MQTT
 
-1. Open the dashboard → **Bridge** tab
-2. Set `Protocol: mqtt`, `Broker Host`, `Broker Port` (default 1883)
+1. Dashboard → **Bridge** tab
+2. Set protocol to `mqtt`, enter your broker host and port (default `1883`)
 3. Click **Start Bridge**
 
-The bridge polls OPC-UA every 2 seconds (configurable) and publishes to topics structured as:
-
+Topics are structured as:
 ```
-RoyalFarmersCollective/KnappertjesBV/Terneuzen2/ProductionLine/OEE/OEEPercent
+GlobalFoodCo/CrispCraft/Antwerp/ProductionLine/OEE/OEEPercent
 ```
 
 ### NATS
 
-Set `Protocol: nats` and point to your NATS server. Subjects use `.` separators:
-
+Set protocol to `nats` and port to `4222`. Subjects use `.` separators:
 ```
-RoyalFarmersCollective.KnappertjesBV.Terneuzen2.ProductionLine.OEE.OEEPercent
+GlobalFoodCo.CrispCraft.Antwerp.ProductionLine.OEE.OEEPercent
 ```
 
-### Connecting from TimescaleDB / Telegraf
+### TimescaleDB via Telegraf
 
-Use the Telegraf MQTT consumer input plugin pointed at `RoyalFarmersCollective/#` and write to TimescaleDB. The topic hierarchy maps cleanly to ISA-95 `L1`–`L6` columns.
+Use the Telegraf MQTT consumer input plugin with topic filter `GlobalFoodCo/#`. The ISA-95 topic hierarchy maps directly to `L1`–`L6` hierarchy columns in the `mqtt_consumer_tag` table.
 
 ---
 
 ## 🎨 UNS Topic Designer
 
-Navigate to `http://localhost:5000/uns` to open the visual namespace editor.
+Open the designer at `http://localhost:5000/uns`.
 
 ### Building a namespace from scratch
 
-1. Click **+ Node** to add a child under the root
-2. Set the node **Type** (Enterprise → Business Unit → Site → Area → Work Center → Work Unit → Device)
+1. Click **+ Node** in the left panel to add a child under any node
+2. Set the node **Type** — Enterprise, Business Unit, Site, Area, Work Center, Work Unit or Device
 3. Switch to the **Tags** tab to add data points
 
-### Using the Asset Library
+### Inserting an asset bundle
 
-1. Select any node in the tree
-2. Click **🧩 Insert Asset** in the Tags tab
-3. Filter by category, select an asset, preview its tags, click **Insert Tags**
+The fastest way to populate a node with realistic tags:
 
-All tags come pre-configured with appropriate simulation profiles. A Centrifugal Pump gives you motor current, vibration, flow rate, pressure, speed, RUL and run hours — all coherent and plant-state-aware.
+1. Select a node in the tree
+2. Click **🧩 Insert Asset Bundle** in the Tags tab
+3. Filter by category and click an asset card to preview its tags
+4. Click **Insert Tags** — the full bundle drops in with profiles already configured
 
-### Simulation profiles
+### Assigning simulation profiles
 
-Click the simulation cell on any tag row to open the profile editor. Profiles are grouped by domain:
+Click the **Simulation Profile** cell on any tag row. Profiles are grouped by domain:
 
-| Group | Example profiles |
+| Domain | Example profiles |
 |---|---|
-| OT / Process | `oee`, `availability`, `motor_current`, `vibration`, `flow_rate`, `level` |
-| Accumulators | `accumulator_good`, `accumulator_energy`, `counter_faults` |
-| Maintenance / CMMS | `mtbf`, `mttr`, `pm_compliance`, `remaining_useful_life` |
-| Quality / Lab | `quality_metric_cont`, `quality_hold`, `batch_id` |
-| Logistics | `silo_level`, `truck_id`, `days_of_supply`, `order_status` |
-| ERP / Finance | `erp_order_id`, `revenue_eur`, `margin_pct` |
-| Energy / Utilities | `power_kw`, `steam_flow`, `co2_kg` |
+| **OT / Process** | `oee` · `availability` · `performance` · `quality` · `motor_current` · `vibration` · `flow_rate` · `level` · `pressure` · `temperature_process` |
+| **Accumulators** | `accumulator_good` · `accumulator_bad` · `accumulator_energy` · `counter_faults` |
+| **Maintenance / CMMS** | `mtbf` · `mttr` · `pm_compliance` · `remaining_useful_life` · `corrective_wo_count` |
+| **Quality / Lab** | `quality_metric_cont` · `quality_metric_pct` · `quality_hold` · `batch_id` · `lot_id` |
+| **Logistics** | `silo_level` · `truck_id` · `days_of_supply` · `inbound_tons` · `order_status` |
+| **ERP / Finance** | `erp_order_id` · `revenue_eur` · `production_cost_eur` · `margin_pct` |
+| **Energy / Utilities** | `power_kw` · `steam_flow` · `compressed_air` · `co2_kg` · `accumulator_energy` |
+
+Each profile shows a hint explaining its behaviour — e.g. *"Drops sharply during fault, climbs during recovery"* for `availability`.
 
 ---
 
 ## 🧠 Simulation Engine
 
-Each factory runs an independent `PlantState` state machine:
+Each factory runs an independent `PlantState` object. Every tag derives its value purely from the assigned simulation profile and the plant's current state — no tag names are hardcoded anywhere.
 
 ```
-Running ──(random fault)──► Fault ──(repair done)──► Recovery ──► Running
-   ▲                                                                  │
-   └──────────────────────────(startup)───────────────────────────────┘
+                    ┌──────────────────────────────────┐
+                    ▼                                  │
+  ┌─────────┐   fault    ┌───────┐   repaired   ┌──────────┐
+  │ Running │───────────►│ Fault │─────────────►│ Recovery │
+  └─────────┘            └───────┘              └──────────┘
+       ▲                                              │
+       └──────────────────── ready ───────────────────┘
 
-Stopped ──(start command)──► Recovery ──► Running
+  ┌─────────┐   start command
+  │ Stopped │────────────────────────────────────────► Recovery
+  └─────────┘
 ```
 
-**All tags derive from the plant state** — no independent random values. When a fault fires:
-- Availability drops sharply
-- Flow rate and speed go to zero
-- Motor current spikes
-- Vibration rises
-- Power draw drops to ~12% (standby only)
-- Accumulators pause
+**What happens during a Fault:**
+- Availability collapses; OEE follows
+- Flow rate and speed drop to zero
+- Motor current spikes; vibration rises
+- Power drops to ~12% (standby only)
+- All accumulators pause
 
-When recovery completes, all values climb back toward their targets. OEE is always computed as `Availability × Performance × Quality / 10000` — never independently randomised.
+**What happens during Recovery:**
+- Availability and performance climb back gradually
+- Power ramps up
+- On completion: corrective work order closes, RUL may reset (simulating a PM event)
 
-Per-division base parameters (power draw, infeed rate, product price, unit cost) ensure a FritoMaxx factory behaves differently from a DeBietenBende sugar plant.
+**Per-division parameters** seed realistic base values per division — a FrostLine frozen frites plant (820 kW base, 28 t/h infeed) naturally behaves differently from a SugarWorks beet processing plant (1185 kW base, 95 t/h infeed).
 
 ---
 
 ## 📁 Project Structure
 
 ```
-EnterpriseSimulator/
-├── factory.py          # OPC-UA server + stateful simulation engine
-├── bridge.py           # OPC-UA → MQTT / NATS bridge
-├── app.py              # Flask dashboard + REST API
-├── recipe.py           # Product recipes per division
-├── client.py           # CLI client for testing
+virtual-uns-simulator/
 │
-├── uns_config.json     # ISA-95 namespace definition (editable via UI)
-├── sim_state.json      # Runtime plant running/stopped state
-├── asset_library.json  # Predefined asset templates
-├── payload_schemas.json# MQTT/NATS payload schema definitions
-├── bridge_config.json  # Bridge connection settings
-├── server_config.json  # OPC-UA server bind/endpoint config
+├── factory.py            # OPC-UA server + stateful simulation engine
+├── bridge.py             # OPC-UA → MQTT / NATS bridge
+├── app.py                # Flask web application + REST API
+├── recipe.py             # Product recipe data per division
+├── client.py             # Optional CLI client for direct OPC-UA access
+│
+├── uns_config.json       # ISA-95 namespace definition (editable via UI)
+├── sim_state.json        # Runtime plant running/stopped state
+├── asset_library.json    # Predefined asset tag bundles
+├── payload_schemas.json  # MQTT/NATS payload format definitions
+├── bridge_config.json    # Bridge connection settings
+├── server_config.json    # OPC-UA server endpoint configuration
 │
 ├── templates/
-│   ├── index.html          # Dashboard
-│   ├── uns_editor.html     # UNS Topic Designer
-│   └── payload_schemas.html# Payload Schema Designer
+│   ├── index.html            # Main dashboard
+│   ├── uns_editor.html       # UNS Topic Designer
+│   └── payload_schemas.html  # Payload Schema Designer
 │
 ├── Dockerfile
 ├── docker-compose.yml
-├── entrypoint.sh       # Volume seeding + symlinks on first boot
+├── entrypoint.sh         # First-boot config seeding + symlinks
 └── requirements.txt
 ```
 
 ---
 
-## ⚙️ Configuration
+## ⚙️ Configuration Reference
 
 ### `server_config.json`
 
 ```json
 {
-  "opc_bind_ip":    "0.0.0.0",
-  "opc_port":       4840,
-  "opc_client_host":"127.0.0.1",
-  "tcp_port":       9999,
-  "host_ip":        "127.0.0.1"
+  "opc_bind_ip":     "0.0.0.0",
+  "opc_port":        4840,
+  "opc_client_host": "127.0.0.1",
+  "tcp_port":        9999,
+  "host_ip":         "127.0.0.1"
 }
 ```
 
-Set `host_ip` to your Docker host's LAN IP if you want OPC-UA clients on other machines to connect.
+> Set `host_ip` to your Docker host's LAN IP to allow OPC-UA clients on other machines to connect.
 
 ### `bridge_config.json`
 
 ```json
 {
-  "protocol":    "mqtt",
-  "broker_host": "127.0.0.1",
-  "broker_port": 1883,
+  "protocol":     "mqtt",
+  "broker_host":  "127.0.0.1",
+  "broker_port":  1883,
   "topic_prefix": "",
-  "interval":    2
+  "interval":     2
 }
 ```
 
-Change `protocol` to `"nats"` and `broker_port` to `4222` for NATS mode.
+> Set `protocol` to `"nats"` and `broker_port` to `4222` for NATS mode.
 
 ### Persistent volume
 
-All JSON config files are seeded into the `uns-data` Docker volume on first boot by `entrypoint.sh`. Subsequent container rebuilds preserve your custom namespace without overwriting it.
+On first boot, `entrypoint.sh` seeds all JSON config files into the `uns-data` Docker volume. Subsequent container rebuilds do not overwrite your customised namespace or schemas.
 
 ---
 
 ## 🔧 Running Without Docker
 
-If you prefer to run locally (e.g. for development):
-
 ```bash
 pip install -r requirements.txt
+```
 
+```bash
 # Terminal 1 — OPC-UA simulator
 python factory.py
 
-# Terminal 2 — Dashboard + bridge manager
+# Terminal 2 — Dashboard
 python app.py
 
-# Terminal 3 (optional) — Bridge directly
+# Terminal 3 — Bridge (optional)
 python bridge.py
 ```
 
@@ -278,15 +300,14 @@ Dashboard available at `http://localhost:5000`.
 
 ## 📦 API Reference
 
-The dashboard exposes a REST API used by the frontend, also useful for scripting:
-
 | Method | Endpoint | Description |
 |---|---|---|
-| `GET` | `/api/uns` | Get current UNS configuration |
-| `POST` | `/api/uns` | Save UNS configuration (restarts factory) |
-| `GET` | `/api/asset-library` | Get asset template library |
-| `GET` | `/api/simulation-profiles` | Get grouped simulation profile catalogue |
-| `GET` | `/api/payload-schemas` | Get payload schema definitions |
+| `GET` | `/api/status` | Server status, plant states, bridge stats, enterprise name |
+| `GET` | `/api/uns` | Current UNS namespace configuration |
+| `POST` | `/api/uns` | Save UNS config (triggers factory restart) |
+| `GET` | `/api/asset-library` | Full asset template library |
+| `GET` | `/api/simulation-profiles` | Grouped simulation profile catalogue |
+| `GET` | `/api/payload-schemas` | Payload schema definitions |
 | `POST` | `/api/payload-schemas` | Save payload schemas |
 | `POST` | `/api/server/start` | Start OPC-UA factory server |
 | `POST` | `/api/server/stop` | Stop OPC-UA factory server |
@@ -296,39 +317,40 @@ The dashboard exposes a REST API used by the frontend, also useful for scripting
 | `POST` | `/api/bridge/config` | Save bridge configuration |
 | `POST` | `/api/plant/start` | Start a specific plant |
 | `POST` | `/api/plant/stop` | Stop a specific plant |
-| `GET` | `/api/opc/test` | Test OPC-UA connectivity |
+| `GET` | `/api/opc/test` | Diagnose OPC-UA connectivity |
 
 ---
 
 ## 🗂️ Release Notes
 
-### v3.0 — Stateful Profile Engine
-*Current release*
+### v3.0 — Stateful Profile Engine *(current)*
 
-- **Complete rewrite of `factory.py` simulation engine** — replaced independent random walks with a coherent per-plant state machine (Running / Fault / Recovery / Stopped)
-- **44 simulation profiles** covering OT, CMMS, quality, logistics, ERP and energy — all plant-state-aware
-- **Asset library** (`asset_library.json`) — 16 predefined asset templates with profiles pre-wired
-- **UNS designer** — added 🧩 Insert Asset picker with category filtering and tag preview
-- **Profile dropdown** in tag editor now dynamically loaded from `/api/simulation-profiles` — grouped by domain, with contextual hints per profile
-- **New API endpoints**: `/api/asset-library`, `/api/simulation-profiles`
-- **Backward compatible** — existing `uns_config.json` profiles (`oee`, `percent`, `temperature`, `accumulator`, `boolean`, `truck_id`) continue to work via legacy aliases
-- **OEE is now always `A × P × Q / 10000`** — never independently randomised
-- **String tags now publish meaningful values**: truck IDs, batch IDs, lot IDs, order statuses, ERP order numbers
-- **Accumulators only advance when the plant is running** — paused during fault and stopped states
-- **Silo levels drain during production and auto-refill** on truck arrival events
-- **Finance accumulators** (revenue, production cost, waste cost, margin) accumulate coherently based on good/bad output rates
+- **Complete rewrite of the simulation engine** — replaced independent random walks with a coherent per-plant state machine (Running / Fault / Recovery / Stopped)
+- **44 simulation profiles** — all plant-state-aware, covering OT, CMMS, quality, logistics, ERP and energy
+- **16-asset library** — predefined bundles with profiles pre-wired, insertable from the UNS designer in one click
+- **Dynamic enterprise name** — dashboard header reads the UNS tree root name live
+- **Profile dropdown** dynamically loaded from the factory engine — always in sync, grouped by domain with contextual hints
+- **New API endpoints** — `/api/asset-library`, `/api/simulation-profiles`
+- **OEE always `A × P × Q / 10000`** — never independently randomised
+- **String tags publish meaningful values** — truck IDs, batch IDs, lot IDs, order statuses, ERP numbers
+- **Accumulators gate on plant state** — pause during fault and stop
+- **Silo auto-refill** on simulated truck arrival when level drops below 20%
+- **Finance accumulators** — revenue, production cost, waste cost and margin track coherently from output rates
+- **Backward compatible** — existing profile names (`oee`, `percent`, `temperature`, `accumulator`, `boolean`, `truck_id`) continue to work via legacy aliases
 
 ### v2.0 — Dynamic Address Space
-- Introduced `uns_config.json`-driven dynamic OPC-UA address space — no hardcoded tag names
-- Added visual UNS Topic Designer with ISA-95 node types
-- Added Payload Schema Designer with multiple schema presets (Standard, Sparkplug B-like, ISA-95 Extended, PI-like, InfluxDB-like)
-- Added canonical tag inheritance so all plants in a division share the same tag set
+
+- `uns_config.json`-driven OPC-UA address space — no hardcoded tag names
+- Visual UNS Topic Designer with full ISA-95 node type support
+- Payload Schema Designer with Standard, Sparkplug B-like, ISA-95 Extended, PI-like and InfluxDB-like presets
+- Canonical tag inheritance — all plants in a division share the reference tag set automatically
 - Per-plant start/stop control via `sim_state.json`
-- NATS native mode added to bridge (alongside MQTT)
+- NATS native mode added to the bridge
 - Anomaly injection via TCP socket
 
 ### v1.0 — Initial Release
-- OPC-UA server with hardcoded RoyalFarmersCollective address space
+
+- OPC-UA server with static address space
 - MQTT bridge with configurable polling interval
 - Flask dashboard with factory status overview
 - Basic Gaussian walk simulation for all tags
@@ -338,23 +360,25 @@ The dashboard exposes a REST API used by the frontend, also useful for scripting
 
 ## 🤝 Contributing
 
-This is an internal demo and training tool. To contribute:
+1. Fork the repo and create a feature branch: `git checkout -b feature/my-improvement`
+2. Commit your changes: `git commit -m 'Add XYZ'`
+3. Push and open a pull request
 
-1. Fork the repo (or clone if you have direct access)
-2. Create a feature branch: `git checkout -b feature/my-improvement`
-3. Commit your changes: `git commit -m 'Add XYZ'`
-4. Push and open a pull request
+**Adding a simulation profile:** add the profile to both `_profile_value()` in `factory.py` and the `SIMULATION_PROFILES` dict — the dict populates the UNS designer dropdown automatically.
 
-When adding new simulation profiles, add the profile to both `_profile_value()` in `factory.py` and the `SIMULATION_PROFILES` dict — the latter is what populates the UNS designer dropdown.
-
-When adding new asset templates, add them to `asset_library.json` following the existing structure.
+**Adding an asset template:** add an entry to `asset_library.json` following the existing structure. It appears in the asset picker immediately on next page load.
 
 ---
 
 ## 📄 License
 
-Internal use only. Not for public distribution.
+MIT — see [LICENSE](LICENSE) for details.
 
 ---
 
-*Royal Farmers Collective is a fictional entity created for educational and demonstration purposes. Any resemblance to actual companies, living or dead, is purely coincidental — and probably intentional.*
+<div align="center">
+
+*GlobalFoodCo and all associated divisions, factories and products are entirely fictional.*
+*Built to make UNS concepts tangible for engineers who learn by doing.*
+
+</div>

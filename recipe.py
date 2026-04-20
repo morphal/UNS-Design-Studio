@@ -1,37 +1,37 @@
 # recipe.py
-# Royal Farmers Collective – fictief Europees agrifood concern (parodie)
+# Virtual UNS Enterprise Simulator – fictional food manufacturing concern
 # Productnamen en receptgegevens zijn volledig fictief.
 #
-# Concern:  Royal Farmers Collective
+# Concern:  GlobalFoodCo
 # Divisies:
-#   KnappertjesBV   – chips & snacks          (parodie op Duynie)
-#   Vlokkenheim     – aardappelvlokken         (parodie op Rixona)
-#   FritoMaxx       – diepvriesfrites          (parodie op Aviko)
-#   Wortelkracht    – cichorei & inuline       (parodie op Sensus)
-#   DeBietenBende   – suikerbieten & suiker    (parodie op Cosun Beet Company)
+#   CrispCraft   – chips & snacks          (fictional chips division)
+#   FlakeMill     – aardappelvlokken         (fictional flakes division)
+#   FrostLine       – diepvriesfrites          (fictional frites division)
+#   RootCore    – cichorei & inuline       (fictional inulin division)
+#   SugarWorks   – suikerbieten & suiker    (fictional sugar division)
 
 from enum import Enum
 
 class Recipe(Enum):
-    # ── KnappertjesBV – chips & snacks ──────────────────────────────────────
+    # ── CrispCraft – chips & snacks ──────────────────────────────────────
     KNAPPER_NATUREL      = "Knappertjes Naturel Kettle"
     KNAPPER_PAPRIKA      = "Knappertjes Paprika Crunch"
     KNAPPER_ZEEZOUT      = "Knappertjes Zeezout & Azijn"
 
-    # ── Vlokkenheim – aardappelvlokken ───────────────────────────────────────
-    VLOK_KLASSIEK        = "Vlokkenheim Klassieke Pureevlok"
-    VLOK_INSTANT         = "Vlokkenheim Instantvlok Fijn"
+    # ── FlakeMill – aardappelvlokken ───────────────────────────────────────
+    VLOK_KLASSIEK        = "FlakeMill Klassieke Pureevlok"
+    VLOK_INSTANT         = "FlakeMill Instantvlok Fijn"
 
-    # ── FritoMaxx – diepvriesfrites ──────────────────────────────────────────
-    FRITO_CLASSIC        = "FritoMaxx Huisfrites 10mm"
-    FRITO_STEAKHOUSE     = "FritoMaxx Steakhouse 14mm"
-    FRITO_WEDGE          = "FritoMaxx Potato Wedge Gekruid"
+    # ── FrostLine – diepvriesfrites ──────────────────────────────────────────
+    FRITO_CLASSIC        = "FrostLine Huisfrites 10mm"
+    FRITO_STEAKHOUSE     = "FrostLine Steakhouse 14mm"
+    FRITO_WEDGE          = "FrostLine Potato Wedge Gekruid"
 
-    # ── Wortelkracht – cichorei & inuline ────────────────────────────────────
-    INULINE_STANDAARD    = "Wortelkracht Inuline Standaard"
-    INULINE_HP           = "Wortelkracht Inuline HP (Lange Keten)"
+    # ── RootCore – cichorei & inuline ────────────────────────────────────
+    INULINE_STANDAARD    = "RootCore Inuline Standaard"
+    INULINE_HP           = "RootCore Inuline HP (Lange Keten)"
 
-    # ── De BietenBende – suiker ───────────────────────────────────────────────
+    # ── SugarWorks – suiker ───────────────────────────────────────────────
     BIET_KRISTAL         = "BietenBende Kristalsuiker Wit"
     BIET_BASTERD         = "BietenBende Basterdsuiker Fijn"
 
@@ -46,12 +46,12 @@ def get_enum_by_value(value):
 recipe_data = {
 
     # ════════════════════════════════════════════════════════════════════════
-    # KnappertjesBV – chips & snacks
-    # Fabrieken: FactoryTerneuzen (kettle-lijn), FactoryBergenOpZoom (flats)
+    # CrispCraft – chips & snacks
+    # Fabrieken: FactoryAntwerp (kettle-lijn), FactoryGhent (flats)
     # Grondstof: verse consumptieaardappelen → snijden → frituren → kruiden
     # ════════════════════════════════════════════════════════════════════════
     Recipe.KNAPPER_NATUREL: {
-        'group': 'KnappertjesBV',
+        'group': 'CrispCraft',
         'infeed_rate': 25.0,            # t/h verse aardappelen
         'good_ratio': 0.90,
         'cutter_speed_sp': 0.9,         # m/s snijblad
@@ -67,7 +67,7 @@ recipe_data = {
         },
     },
     Recipe.KNAPPER_PAPRIKA: {
-        'group': 'KnappertjesBV',
+        'group': 'CrispCraft',
         'infeed_rate': 23.0,
         'good_ratio': 0.91,
         'cutter_speed_sp': 0.85,
@@ -83,7 +83,7 @@ recipe_data = {
         },
     },
     Recipe.KNAPPER_ZEEZOUT: {
-        'group': 'KnappertjesBV',
+        'group': 'CrispCraft',
         'infeed_rate': 24.0,
         'good_ratio': 0.89,
         'cutter_speed_sp': 0.88,
@@ -100,12 +100,12 @@ recipe_data = {
     },
 
     # ════════════════════════════════════════════════════════════════════════
-    # Vlokkenheim – aardappelvlokken
-    # Fabrieken: FactoryEmmeloord, FactoryVeendam
+    # FlakeMill – aardappelvlokken
+    # Fabrieken: FactoryLeiden, FactoryGroningen
     # Grondstof: stoomgekookte aardappelen → pureren → trommeldroog → vlokken
     # ════════════════════════════════════════════════════════════════════════
     Recipe.VLOK_KLASSIEK: {
-        'group': 'Vlokkenheim',
+        'group': 'FlakeMill',
         'infeed_rate': 35.0,            # t/h gekookte aardappelmassa
         'good_ratio': 0.96,
         'drum_dryer_speed_sp': 0.8,     # RPM trommel
@@ -117,7 +117,7 @@ recipe_data = {
         },
     },
     Recipe.VLOK_INSTANT: {
-        'group': 'Vlokkenheim',
+        'group': 'FlakeMill',
         'infeed_rate': 32.0,
         'good_ratio': 0.97,
         'drum_dryer_speed_sp': 0.7,
@@ -130,14 +130,14 @@ recipe_data = {
     },
 
     # ════════════════════════════════════════════════════════════════════════
-    # FritoMaxx – diepvriesfrites
-    # Fabrieken: FactoryHeerenveen, FactoryHarlingen, FactoryMeppel,
-    #            FactoryHardenberg, FactoryHoogeveen, FactoryCoevorden
+    # FrostLine – diepvriesfrites
+    # Fabrieken: FactoryDortmund, FactoryBremen, FactoryHanover,
+    #            FactoryLeipzig, FactoryCologne, FactoryDresden
     # Grondstof: frites-aardappelen → schillen → snijden → blancheren →
     #            voorfrituren → invriezen (IQF-tunnel)
     # ════════════════════════════════════════════════════════════════════════
     Recipe.FRITO_CLASSIC: {
-        'group': 'FritoMaxx',
+        'group': 'FrostLine',
         'infeed_rate': 30.0,            # t/h rauwe frites-aardappelen
         'good_ratio': 0.93,
         'cutter_speed_sp': 1.2,         # m/s snijblad
@@ -153,7 +153,7 @@ recipe_data = {
         },
     },
     Recipe.FRITO_STEAKHOUSE: {
-        'group': 'FritoMaxx',
+        'group': 'FrostLine',
         'infeed_rate': 28.0,
         'good_ratio': 0.95,
         'cutter_speed_sp': 1.1,
@@ -169,7 +169,7 @@ recipe_data = {
         },
     },
     Recipe.FRITO_WEDGE: {
-        'group': 'FritoMaxx',
+        'group': 'FrostLine',
         'infeed_rate': 26.0,
         'good_ratio': 0.91,
         'cutter_speed_sp': 0.8,
@@ -186,12 +186,12 @@ recipe_data = {
     },
 
     # ════════════════════════════════════════════════════════════════════════
-    # Wortelkracht – cichorei & inuline
-    # Fabriek: FactoryRoosendaal
+    # RootCore – cichorei & inuline
+    # Fabriek: FactoryLille
     # Grondstof: cichoreiwortels → extractie → zuivering → sproeidroging
     # ════════════════════════════════════════════════════════════════════════
     Recipe.INULINE_STANDAARD: {
-        'group': 'Wortelkracht',
+        'group': 'RootCore',
         'infeed_rate': 40.0,            # t/h cichoreisap
         'good_ratio': 0.88,
         'extraction_temp_sp': 80.0,     # °C extractietemperatuur
@@ -202,7 +202,7 @@ recipe_data = {
         },
     },
     Recipe.INULINE_HP: {
-        'group': 'Wortelkracht',
+        'group': 'RootCore',
         'infeed_rate': 35.0,
         'good_ratio': 0.90,
         'extraction_temp_sp': 75.0,
@@ -214,12 +214,12 @@ recipe_data = {
     },
 
     # ════════════════════════════════════════════════════════════════════════
-    # De BietenBende – suikerbieten & suiker
-    # Fabrieken: FactoryZevenbergen, FactoryStadskanaal
+    # SugarWorks – suikerbieten & suiker
+    # Fabrieken: FactoryBruges, FactoryLiege
     # Grondstof: suikerbieten → diffusie → verdamping → kristallisatie
     # ════════════════════════════════════════════════════════════════════════
     Recipe.BIET_KRISTAL: {
-        'group': 'DeBietenBende',
+        'group': 'SugarWorks',
         'infeed_rate': 100.0,           # t/h bietensap
         'good_ratio': 0.85,
         'diffusion_temp_sp': 70.0,      # °C diffusietoren
@@ -233,7 +233,7 @@ recipe_data = {
         },
     },
     Recipe.BIET_BASTERD: {
-        'group': 'DeBietenBende',
+        'group': 'SugarWorks',
         'infeed_rate': 90.0,
         'good_ratio': 0.82,
         'diffusion_temp_sp': 68.0,

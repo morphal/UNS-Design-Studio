@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Royal Farmers Collective – Enterprise UNS Simulator</title>
+<title>Virtual UNS Enterprise Simulator</title>
 <style>
 /* ── Reset & Base ─────────────────────────────────────────────────────────── */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -246,8 +246,8 @@ body{display:flex;flex-direction:column;min-height:100vh}
   <div class="header-brand">
     <span class="logo">🏭</span>
     <div>
-      <h1>Royal Farmers Collective</h1>
-      <span class="sub">Enterprise UNS Simulator</span>
+      <h1 id="enterprise-name">Virtual UNS</h1>
+      <span class="sub">Virtual UNS Enterprise Simulator</span>
     </div>
   </div>
   <div class="header-sep"></div>
@@ -553,6 +553,12 @@ function updateHeader(d) {
   const srvLbl = document.getElementById('lblServer');
   const opcDot = document.getElementById('dotOpc');
   const opcLbl = document.getElementById('lblOpc');
+  // Update enterprise name from UNS config
+  if (d.enterprise_name) {
+    const h1 = document.getElementById('enterprise-name');
+    if (h1 && h1.textContent !== d.enterprise_name) h1.textContent = d.enterprise_name;
+    _enterpriseName = d.enterprise_name;
+  }
   if (d.server_running) {
     srvDot.className = 'status-dot green';
     srvLbl.textContent = 'Server: Running';
@@ -960,15 +966,19 @@ function escAttr(s) { return s.replace(/"/g,'&quot;'); }
 
 // ── Bridge ─────────────────────────────────────────────────────────────────────
 let _bridgeProto = 'mqtt';
+let _enterpriseName = 'Enterprise';
 
-const PROTO_NOTES = {
-  mqtt: `<strong>MQTT mode</strong> — connects to NATS (or any MQTT broker) on port 1883.<br>
-         Topic format: <code>RoyalFarmersCollective/Division/Site/Line/WorkCenter/Tag</code><br>
-         Requires: <code>pip install paho-mqtt</code>`,
-  nats: `<strong>NATS native mode</strong> — connects to NATS server on port 4222 (not MQTT port).<br>
-         Subject format: <code>RoyalFarmersCollective.Division.Site.Line.WorkCenter.Tag</code><br>
-         Requires: <code>pip install nats-py</code>`,
-};
+function protoNotes() {
+  const e = _enterpriseName;
+  return {
+    mqtt: `<strong>MQTT mode</strong> — connects to NATS (or any MQTT broker) on port 1883.<br>
+           Topic format: <code>${e}/Division/Site/Line/WorkCenter/Tag</code><br>
+           Requires: <code>pip install paho-mqtt</code>`,
+    nats: `<strong>NATS native mode</strong> — connects to NATS server on port 4222 (not MQTT port).<br>
+           Subject format: <code>${e}.Division.Site.Line.WorkCenter.Tag</code><br>
+           Requires: <code>pip install nats-py</code>`,
+  };
+}
 
 const DEFAULT_PORTS = { mqtt: 1883, nats: 4222 };
 
@@ -1022,7 +1032,7 @@ function selectProto(p) {
   document.getElementById('protoBtnNats').className = 'proto-btn' + (p === 'nats' ? ' on' : '');
   document.getElementById('cfgPortLabel').textContent =
     p === 'nats' ? 'Port (NATS = 4222)' : 'Port (MQTT = 1883)';
-  document.getElementById('bridgeCfgNote').innerHTML = PROTO_NOTES[p] || '';
+  document.getElementById('bridgeCfgNote').innerHTML = protoNotes()[p] || '';
   // Only auto-fill port if user hasn't typed something custom
   const portEl = document.getElementById('cfgPort');
   if (!portEl.dataset.userEdited) {

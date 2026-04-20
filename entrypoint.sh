@@ -5,7 +5,7 @@
 
 mkdir -p /data
 
-for cfg in uns_config.json bridge_config.json payload_schemas.json server_config.json; do
+for cfg in uns_config.json bridge_config.json payload_schemas.json server_config.json asset_library.json; do
     if [ ! -f "/data/$cfg" ]; then
         echo "[init] Seeding $cfg into persistent volume"
         cp "/app/$cfg" "/data/$cfg"

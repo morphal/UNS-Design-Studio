@@ -1,7 +1,7 @@
 #!/bin/bash
 echo ""
 echo " ╔══════════════════════════════════════════════════════════════╗"
-echo " ║   Royal Farmers Collective – Enterprise UNS Simulator       ║"
+echo " ║   Virtual UNS Enterprise Simulator       ║"
 echo " ║   Starting web dashboard on http://localhost:5000            ║"
 echo " ╚══════════════════════════════════════════════════════════════╝"
 echo ""

@@ -1,18 +1,19 @@
 {
   "plants": {
-    "KnappertjesBV|FactoryTerneuzen2": true,
-    "KnappertjesBV|FactoryBergenOpZoom": true,
-    "Vlokkenheim|FactoryEmmeloord": true,
-    "Vlokkenheim|FactoryVeendam": true,
-    "FritoMaxx|FactoryHeerenveen": true,
-    "FritoMaxx|FactoryHarlingen": true,
-    "FritoMaxx|FactoryMeppel": true,
-    "FritoMaxx|FactoryHardenberg": true,
-    "FritoMaxx|FactoryHoogeveen": true,
-    "FritoMaxx|FactoryCoevorden": true,
-    "Wortelkracht|FactoryRoosendaal": true,
-    "DeBietenBende|FactoryZevenbergen": true,
-    "DeBietenBende|FactoryStadskanaal": true
+    "CrispCraft|FactoryAntwerp": false,
+    "CrispCraft|FactoryGhent": false,
+    "FlakeMill|FactoryLeiden": false,
+    "FlakeMill|FactoryGroningen": false,
+    "FrostLine|FactoryDortmund": false,
+    "FrostLine|FactoryBremen": false,
+    "FrostLine|FactoryHanover": false,
+    "FrostLine|FactoryLeipzig": false,
+    "FrostLine|FactoryCologne": false,
+    "FrostLine|FactoryDresden": false,
+    "RootCore|FactoryLille": true,
+    "SugarWorks|FactoryBruges": true,
+    "SugarWorks|FactoryLiege": true,
+    "CrispCraft|FactoryAmsterdam": false
   },
-  "simulator_running": true
+  "simulator_running": false
 }
