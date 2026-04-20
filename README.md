@@ -67,11 +67,6 @@ Built as a learning and demo tool for **ISA-95 hierarchy**, **UNS architecture**
 
 ```
 🧩 Insert Asset
-┌──────────────┐ ┌──────────────┐ ┌──────────────┐
-│ 💧 Pump      │ │ 📦 Packing   │ │ ♨️  Boiler    │
-│ Rotating Eq. │ │ Packaging    │ │ Utilities    │
-│ 11 tags      │ │ 13 tags      │ │ 9 tags       │
-└──────────────┘ └──────────────┘ └──────────────┘
 ```
 <img width="716" height="661" alt="image" src="https://github.com/user-attachments/assets/6afa89de-c1ca-49d1-ac0c-be878a354ea5" />
 
