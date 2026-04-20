@@ -1063,6 +1063,11 @@ def api_simulation_profiles():
 
     return jsonify(result)
 
+# ── UNS Live View ──────────────────────────────────────────────────────────────
+@app.route('/live')
+def uns_live():
+    return render_template('uns_live.html')
+
 # ── UNS Topic Designer ─────────────────────────────────────────────────────────
 @app.route('/uns')
 def uns_editor():

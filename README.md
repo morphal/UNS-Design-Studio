@@ -279,6 +279,10 @@ UNS-Design-Studio/
 └── requirements.txt
 ```
 
+##  Live UNS viewer (requires external broker + Websocket)
+
+![Live UNS Viewer](docs/Live_Uns_viewer_via_broker.JPG)
+
 ---
 
 ##  Configuration Reference
