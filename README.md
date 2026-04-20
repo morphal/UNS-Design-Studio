@@ -315,14 +315,8 @@ On first boot, `entrypoint.sh` seeds all JSON config files into the `uns-data` D
 ```bash
 pip install -r requirements.txt
 
-# Terminal 1 — OPC-UA simulator
-python factory.py
-
-# Terminal 2 — Dashboard
-python app.py
-
-# Terminal 3 — Bridge (optional)
-python bridge.py
+# Run BAT file to start .py processes
+start_dashboard.bat
 ```
 
 Dashboard: `http://localhost:5000`
