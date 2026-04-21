@@ -1,28 +1,69 @@
 {
   "plants": {
-    "WheelforgeBV|wolfsburg": {
+    "Vault-Tec|nuka-boston-facility-01": {
       "running": true,
+      "recipe": "NUKA_CLASSIC",
       "recipes": [
         {
-          "name": "Goede_Autos",
+          "name": "NUKA_CLASSIC",
           "params": {}
         },
         {
-          "name": "Slechte_Autos",
+          "name": "NUKA_QUANTUM",
           "params": {}
         }
-      ],
-      "recipe": "Slechte_Autos"
+      ]
     },
-    "WheelforgeBV|valencia": {
+    "Vault-Tec|stimpak-facility-01": {
       "running": true,
-      "recipes": [],
-      "recipe": "--NA--"
+      "recipe": "STIMPAK_STANDARD",
+      "recipes": [
+        {
+          "name": "STIMPAK_STANDARD",
+          "params": {}
+        },
+        {
+          "name": "STIMPAK_ULTRA",
+          "params": {}
+        }
+      ]
     },
-    "WheelforgeBV|detroit": {
+    "Vault-Tec|radaway-facility-01": {
       "running": true,
-      "recipes": [],
-      "recipe": "--NA--"
+      "recipe": "RADAWAY_STANDARD",
+      "recipes": [
+        {
+          "name": "RADAWAY_STANDARD",
+          "params": {}
+        }
+      ]
+    },
+    "Vault-Tec|research-vault-facility-01": {
+      "running": true,
+      "recipe": "--NA--",
+      "recipes": []
+    },
+    "Reynolds_4_0_Corp|site-a": {
+      "running": true,
+      "recipe": "PRODUCT_A",
+      "recipes": [
+        {
+          "name": "PRODUCT_A",
+          "params": {}
+        },
+        {
+          "name": "PRODUCT_B",
+          "params": {}
+        },
+        {
+          "name": "PRODUCT_C",
+          "params": {}
+        },
+        {
+          "name": "MAINTENANCE",
+          "params": {}
+        }
+      ]
     }
   },
   "simulator_running": true
