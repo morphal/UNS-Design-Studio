@@ -1,0 +1,434 @@
+{
+  "version": "1.2",
+  "lastModified": "2026-04-21T00:00:00Z",
+  "namespaceUri": "urn:frostbite-fantasy-foods:uns:v1",
+  "description": "Frostbite Fantasy Foods – Frozen food manufacturing. IQF freezing, portioning, packaging and cold storage. BG-level template covering full ISA-95 + S88 hierarchy.",
+  "tree": {
+    "id": "ent-frostbite",
+    "name": "Frostbite_Fantasy_Foods",
+    "type": "enterprise",
+    "description": "Frostbite Fantasy Foods – premium frozen meal and snack manufacturer.",
+    "children": [
+      {
+        "id": "bu-frozen-mfg",
+        "name": "frozen-manufacturing",
+        "type": "businessUnit",
+        "description": "Frozen food manufacturing BU.",
+        "children": [
+          {
+            "id": "site-plant-ff-01",
+            "name": "plant-ff-01",
+            "type": "site",
+            "description": "Primary frozen food production site.",
+            "children": [
+              {
+                "id": "area-preparation",
+                "name": "raw-material-prep",
+                "type": "area",
+                "description": "Incoming goods, tempering, washing, cutting and blanching.",
+                "children": [
+                  {
+                    "id": "wc-blanching",
+                    "name": "blanching",
+                    "type": "workCenter",
+                    "description": "Steam/water blanching to inactivate enzymes before freezing.",
+                    "children": [
+                      {
+                        "id": "wu-blancher-01",
+                        "name": "blancher-01",
+                        "type": "workUnit",
+                        "description": "Continuous belt steam blancher.",
+                        "tags": [
+                          {
+                            "id": "tag-bl-state",
+                            "name": "run-state",
+                            "dataType": "Boolean",
+                            "unit": "",
+                            "description": "Blancher running",
+                            "access": "read",
+                            "qualifier": "data",
+                            "simulation": { "profile": "boolean_running" }
+                          },
+                          {
+                            "id": "tag-bl-temp",
+                            "name": "blanch-temperature",
+                            "dataType": "Float",
+                            "unit": "Cel",
+                            "description": "Blanching steam temperature [°C]. Target 95–98 °C.",
+                            "access": "read",
+                            "qualifier": "data",
+                            "simulation": { "profile": "temperature_process", "min": 90, "max": 100 }
+                          },
+                          {
+                            "id": "tag-bl-belt-speed",
+                            "name": "belt-speed",
+                            "dataType": "Float",
+                            "unit": "m/min",
+                            "description": "Conveyor belt speed [m/min].",
+                            "access": "read",
+                            "qualifier": "data",
+                            "simulation": { "profile": "speed_rpm", "min": 0.5, "max": 3.0 }
+                          },
+                          {
+                            "id": "tag-bl-throughput",
+                            "name": "throughput",
+                            "dataType": "Float",
+                            "unit": "kg/h",
+                            "description": "Product throughput [kg/h].",
+                            "access": "read",
+                            "qualifier": "data",
+                            "simulation": { "profile": "flow_rate", "min": 2000, "max": 6000 }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "area-iqf",
+                "name": "iqf-freezing",
+                "type": "area",
+                "description": "Individual Quick Freezing (IQF) – spiral and tunnel freezers.",
+                "children": [
+                  {
+                    "id": "wc-spiral-freezer",
+                    "name": "spiral-freezer",
+                    "type": "workCenter",
+                    "description": "Spiral IQF freezer – continuous belt, ammonia refrigeration.",
+                    "children": [
+                      {
+                        "id": "wu-spiral-01",
+                        "name": "spiral-freezer-01",
+                        "type": "workUnit",
+                        "description": "Spiral freezer, 5 000 kg/h capacity, −38 °C evaporator.",
+                        "tags": [
+                          {
+                            "id": "tag-sf01-state",
+                            "name": "run-state",
+                            "dataType": "Boolean",
+                            "unit": "",
+                            "description": "Freezer running",
+                            "access": "read",
+                            "qualifier": "data",
+                            "simulation": { "profile": "boolean_running" }
+                          },
+                          {
+                            "id": "tag-sf01-evap-temp",
+                            "name": "evaporator-temperature",
+                            "dataType": "Float",
+                            "unit": "Cel",
+                            "description": "Evaporator coil temperature [°C]. Target −38 °C.",
+                            "access": "read",
+                            "qualifier": "data",
+                            "simulation": { "profile": "temperature_process", "min": -42, "max": -30 }
+                          },
+                          {
+                            "id": "tag-sf01-air-temp",
+                            "name": "air-temperature",
+                            "dataType": "Float",
+                            "unit": "Cel",
+                            "description": "Freezer air temperature [°C].",
+                            "access": "read",
+                            "qualifier": "data",
+                            "simulation": { "profile": "temperature_process", "min": -36, "max": -28 }
+                          },
+                          {
+                            "id": "tag-sf01-product-temp-out",
+                            "name": "product-core-temperature",
+                            "dataType": "Float",
+                            "unit": "Cel",
+                            "description": "Product core temperature at exit [°C]. Target ≤ −18 °C.",
+                            "access": "read",
+                            "qualifier": "data",
+                            "simulation": { "profile": "temperature_process", "min": -22, "max": -15 }
+                          },
+                          {
+                            "id": "tag-sf01-throughput",
+                            "name": "throughput",
+                            "dataType": "Float",
+                            "unit": "kg/h",
+                            "description": "IQF throughput [kg/h].",
+                            "access": "read",
+                            "qualifier": "data",
+                            "simulation": { "profile": "flow_rate", "min": 2000, "max": 5200 }
+                          },
+                          {
+                            "id": "tag-sf01-power",
+                            "name": "compressor-power",
+                            "dataType": "Float",
+                            "unit": "kW",
+                            "description": "Refrigeration compressor power draw [kW].",
+                            "access": "read",
+                            "qualifier": "data",
+                            "simulation": { "profile": "power_kw" }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "area-portioning",
+                "name": "portioning",
+                "type": "area",
+                "description": "Weighing, portioning and tray/bag filling.",
+                "children": [
+                  {
+                    "id": "wc-multihead-weigher",
+                    "name": "multihead-weighing",
+                    "type": "workCenter",
+                    "description": "Multihead combination weighers feeding VFFS baggers.",
+                    "children": [
+                      {
+                        "id": "wu-mhw-01",
+                        "name": "multihead-weigher-01",
+                        "type": "workUnit",
+                        "description": "14-head combination weigher, ±1 g accuracy.",
+                        "tags": [
+                          {
+                            "id": "tag-mhw-state",
+                            "name": "run-state",
+                            "dataType": "Boolean",
+                            "unit": "",
+                            "description": "Weigher running",
+                            "access": "read",
+                            "qualifier": "data",
+                            "simulation": { "profile": "boolean_running" }
+                          },
+                          {
+                            "id": "tag-mhw-target-weight",
+                            "name": "target-weight",
+                            "dataType": "Float",
+                            "unit": "g",
+                            "description": "Target portion weight [g].",
+                            "access": "read",
+                            "qualifier": "data",
+                            "simulation": { "profile": "default", "min": 400, "max": 1000 }
+                          },
+                          {
+                            "id": "tag-mhw-actual-weight",
+                            "name": "mean-actual-weight",
+                            "dataType": "Float",
+                            "unit": "g",
+                            "description": "Mean actual portion weight [g].",
+                            "access": "read",
+                            "qualifier": "data",
+                            "simulation": { "profile": "default", "min": 398, "max": 1005 }
+                          },
+                          {
+                            "id": "tag-mhw-speed",
+                            "name": "cycles-per-minute",
+                            "dataType": "Float",
+                            "unit": "cyc/min",
+                            "description": "Weigher cycles per minute.",
+                            "access": "read",
+                            "qualifier": "data",
+                            "simulation": { "profile": "speed_rpm", "min": 40, "max": 80 }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "area-packaging",
+                "name": "packaging",
+                "type": "area",
+                "description": "VFFS bag sealing, checkweighing, metal detection, carton packing.",
+                "children": [
+                  {
+                    "id": "wc-vffs",
+                    "name": "vffs-bagger",
+                    "type": "workCenter",
+                    "description": "Vertical form-fill-seal bagger.",
+                    "children": [
+                      {
+                        "id": "wu-vffs-01",
+                        "name": "vffs-01",
+                        "type": "workUnit",
+                        "description": "VFFS bagger with cross and longitudinal seal.",
+                        "tags": [
+                          {
+                            "id": "tag-vffs-state",
+                            "name": "run-state",
+                            "dataType": "Boolean",
+                            "unit": "",
+                            "description": "Bagger running",
+                            "access": "read",
+                            "qualifier": "data",
+                            "simulation": { "profile": "boolean_running" }
+                          },
+                          {
+                            "id": "tag-vffs-seal-temp",
+                            "name": "seal-temperature",
+                            "dataType": "Float",
+                            "unit": "Cel",
+                            "description": "Cross-seal jaw temperature [°C].",
+                            "access": "read",
+                            "qualifier": "data",
+                            "simulation": { "profile": "temperature_process", "min": 140, "max": 180 }
+                          },
+                          {
+                            "id": "tag-vffs-bags-per-min",
+                            "name": "bags-per-minute",
+                            "dataType": "Float",
+                            "unit": "bags/min",
+                            "description": "Output bags per minute.",
+                            "access": "read",
+                            "qualifier": "data",
+                            "simulation": { "profile": "flow_rate", "min": 30, "max": 70 }
+                          },
+                          {
+                            "id": "tag-vffs-reject",
+                            "name": "reject-count",
+                            "dataType": "Int32",
+                            "unit": "bags",
+                            "description": "Bags rejected by checkweigher or metal detector.",
+                            "access": "read",
+                            "qualifier": "data",
+                            "simulation": { "profile": "accumulator_bad" }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "area-cold-storage",
+                "name": "cold-storage",
+                "type": "area",
+                "description": "Finished goods cold store and despatch.",
+                "children": [
+                  {
+                    "id": "wc-coldstore",
+                    "name": "cold-store",
+                    "type": "workCenter",
+                    "description": "−20 °C finished goods storage warehouse.",
+                    "children": [
+                      {
+                        "id": "wu-coldstore-01",
+                        "name": "cold-store-zone-01",
+                        "type": "workUnit",
+                        "description": "Cold store zone 1 – finished product.",
+                        "tags": [
+                          {
+                            "id": "tag-cs-temp",
+                            "name": "air-temperature",
+                            "dataType": "Float",
+                            "unit": "Cel",
+                            "description": "Cold store air temperature [°C]. Spec −20 ± 2 °C.",
+                            "access": "read",
+                            "qualifier": "data",
+                            "simulation": { "profile": "temperature_process", "min": -23, "max": -17 }
+                          },
+                          {
+                            "id": "tag-cs-alarm",
+                            "name": "temperature-alarm",
+                            "dataType": "Boolean",
+                            "unit": "",
+                            "description": "Temperature out-of-spec alarm.",
+                            "access": "read",
+                            "qualifier": "event",
+                            "simulation": { "profile": "boolean_alarm" }
+                          },
+                          {
+                            "id": "tag-cs-door-open",
+                            "name": "dock-door-open",
+                            "dataType": "Boolean",
+                            "unit": "",
+                            "description": "Loading dock door open status.",
+                            "access": "read",
+                            "qualifier": "data",
+                            "simulation": { "profile": "boolean_fault" }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "area-ff-kpi",
+                "name": "_kpi",
+                "type": "area",
+                "description": "Functional KPI branch – site OEE, yield and cold chain KPIs.",
+                "children": [
+                  {
+                    "id": "wc-kpi-ff",
+                    "name": "site-performance",
+                    "type": "workCenter",
+                    "description": "Site KPI rollup.",
+                    "children": [
+                      {
+                        "id": "wu-kpi-ff-rollup",
+                        "name": "kpi-rollup",
+                        "type": "workUnit",
+                        "description": "KPI aggregation node.",
+                        "tags": [
+                          {
+                            "id": "tag-kpi-oee",
+                            "name": "oee",
+                            "dataType": "Float",
+                            "unit": "%",
+                            "description": "Site OEE [%].",
+                            "access": "read",
+                            "qualifier": "kpi",
+                            "simulation": { "profile": "oee" }
+                          },
+                          {
+                            "id": "tag-kpi-yield",
+                            "name": "product-yield",
+                            "dataType": "Float",
+                            "unit": "%",
+                            "description": "Overall product yield (frozen output / raw input) [%].",
+                            "access": "read",
+                            "qualifier": "kpi",
+                            "simulation": { "profile": "quality", "min": 85, "max": 97 }
+                          },
+                          {
+                            "id": "tag-kpi-throughput",
+                            "name": "site-throughput",
+                            "dataType": "Float",
+                            "unit": "t/d",
+                            "description": "Total frozen product output today [t/d].",
+                            "access": "read",
+                            "qualifier": "kpi",
+                            "simulation": { "profile": "flow_rate", "min": 50, "max": 150 }
+                          },
+                          {
+                            "id": "tag-kpi-coldchain-compliance",
+                            "name": "cold-chain-compliance",
+                            "dataType": "Float",
+                            "unit": "%",
+                            "description": "% of cold store time within spec temperature [%].",
+                            "access": "read",
+                            "qualifier": "kpi",
+                            "simulation": { "profile": "quality", "min": 96, "max": 100 }
+                          },
+                          {
+                            "id": "tag-kpi-energy-per-ton",
+                            "name": "energy-per-tonne",
+                            "dataType": "Float",
+                            "unit": "kWh/t",
+                            "description": "Refrigeration energy per tonne frozen [kWh/t].",
+                            "access": "read",
+                            "qualifier": "kpi",
+                            "simulation": { "profile": "default", "min": 80, "max": 180 }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

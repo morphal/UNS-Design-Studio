@@ -1,0 +1,670 @@
+{
+  "version": "1.2",
+  "lastModified": "2026-04-21T00:00:00Z",
+  "namespaceUri": "urn:cleanflow-water:uns:v1",
+  "description": "Cleanflow Water – Municipal drinking water and wastewater treatment operations. BG-level template covering full ISA-95 + S88 hierarchy.",
+  "tree": {
+    "id": "ent-cleanflow",
+    "name": "Cleanflow_Water",
+    "type": "enterprise",
+    "description": "Cleanflow Water – drinking water production, distribution and wastewater treatment.",
+    "children": [
+      {
+        "id": "bu-water-ops",
+        "name": "water-operations",
+        "type": "businessUnit",
+        "description": "Water treatment and distribution business unit.",
+        "children": [
+          {
+            "id": "site-plant-wt-01",
+            "name": "plant-wt-01",
+            "type": "site",
+            "description": "Primary water treatment and distribution site.",
+            "children": [
+              {
+                "id": "area-intake",
+                "name": "intake",
+                "type": "area",
+                "description": "Raw water intake from surface source (river/reservoir) and screen filtration.",
+                "children": [
+                  {
+                    "id": "wc-intake-pump",
+                    "name": "intake-pumping",
+                    "type": "workCenter",
+                    "description": "Raw water intake pump station.",
+                    "children": [
+                      {
+                        "id": "wu-intake-pump-01",
+                        "name": "intake-pump-01",
+                        "type": "workUnit",
+                        "description": "Vertical turbine intake pump, 500 m³/h.",
+                        "tags": [
+                          {
+                            "id": "tag-ip01-state",
+                            "name": "run-state",
+                            "dataType": "Boolean",
+                            "unit": "",
+                            "description": "Pump running",
+                            "access": "read",
+                            "qualifier": "data",
+                            "simulation": { "profile": "boolean_running" }
+                          },
+                          {
+                            "id": "tag-ip01-fault",
+                            "name": "fault",
+                            "dataType": "Boolean",
+                            "unit": "",
+                            "description": "Pump fault",
+                            "access": "read",
+                            "qualifier": "data",
+                            "simulation": { "profile": "boolean_fault" }
+                          },
+                          {
+                            "id": "tag-ip01-flow",
+                            "name": "flow-rate",
+                            "dataType": "Float",
+                            "unit": "m3/h",
+                            "description": "Raw water intake flow rate [m³/h].",
+                            "access": "read",
+                            "qualifier": "data",
+                            "simulation": { "profile": "flow_rate", "min": 300, "max": 550 }
+                          },
+                          {
+                            "id": "tag-ip01-current",
+                            "name": "motor-current",
+                            "dataType": "Float",
+                            "unit": "A",
+                            "description": "Motor current [A].",
+                            "access": "read",
+                            "qualifier": "data",
+                            "simulation": { "profile": "motor_current" }
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "id": "wc-screen",
+                    "name": "coarse-screening",
+                    "type": "workCenter",
+                    "description": "Drum screen and trash rack – removes debris > 6 mm.",
+                    "children": [
+                      {
+                        "id": "wu-screen-01",
+                        "name": "drum-screen-01",
+                        "type": "workUnit",
+                        "description": "Self-cleaning rotating drum screen.",
+                        "tags": [
+                          {
+                            "id": "tag-scr-state",
+                            "name": "run-state",
+                            "dataType": "Boolean",
+                            "unit": "",
+                            "description": "Screen running",
+                            "access": "read",
+                            "qualifier": "data",
+                            "simulation": { "profile": "boolean_running" }
+                          },
+                          {
+                            "id": "tag-scr-dp",
+                            "name": "differential-pressure",
+                            "dataType": "Float",
+                            "unit": "mbar",
+                            "description": "Screen differential pressure [mbar]. High DP triggers auto-backwash.",
+                            "access": "read",
+                            "qualifier": "data",
+                            "simulation": { "profile": "pressure", "min": 5, "max": 120 }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "area-treatment",
+                "name": "treatment",
+                "type": "area",
+                "description": "Coagulation, flocculation, sedimentation, filtration and UV disinfection.",
+                "children": [
+                  {
+                    "id": "wc-coag-floc",
+                    "name": "coagulation-flocculation",
+                    "type": "workCenter",
+                    "description": "Chemical coagulation (FeSO₄) and flocculation mixing.",
+                    "children": [
+                      {
+                        "id": "wu-coag-tank-01",
+                        "name": "coagulation-tank-01",
+                        "type": "workUnit",
+                        "description": "Flash mix / rapid mix coagulation tank.",
+                        "tags": [
+                          {
+                            "id": "tag-coag-state",
+                            "name": "run-state",
+                            "dataType": "Boolean",
+                            "unit": "",
+                            "description": "Coagulation running",
+                            "access": "read",
+                            "qualifier": "data",
+                            "simulation": { "profile": "boolean_running" }
+                          },
+                          {
+                            "id": "tag-coag-turbidity-in",
+                            "name": "turbidity-inlet",
+                            "dataType": "Float",
+                            "unit": "NTU",
+                            "description": "Raw water turbidity at coagulation inlet [NTU].",
+                            "access": "read",
+                            "qualifier": "data",
+                            "simulation": { "profile": "default", "min": 5, "max": 200 }
+                          },
+                          {
+                            "id": "tag-coag-dose",
+                            "name": "coagulant-dose",
+                            "dataType": "Float",
+                            "unit": "mg/L",
+                            "description": "FeSO₄ coagulant dose rate [mg/L].",
+                            "access": "read",
+                            "qualifier": "data",
+                            "simulation": { "profile": "default", "min": 10, "max": 60 }
+                          },
+                          {
+                            "id": "tag-coag-ph",
+                            "name": "ph-value",
+                            "dataType": "Float",
+                            "unit": "pH",
+                            "description": "Tank pH. Optimal coagulation 6.8–7.4.",
+                            "access": "read",
+                            "qualifier": "data",
+                            "simulation": { "profile": "default", "min": 6.5, "max": 7.8 }
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "id": "wc-filtration",
+                    "name": "rapid-sand-filtration",
+                    "type": "workCenter",
+                    "description": "Dual-media (anthracite/sand) rapid filtration.",
+                    "children": [
+                      {
+                        "id": "wu-filter-01",
+                        "name": "filter-cell-01",
+                        "type": "workUnit",
+                        "description": "Rapid sand filter cell 1.",
+                        "tags": [
+                          {
+                            "id": "tag-flt01-state",
+                            "name": "run-state",
+                            "dataType": "Boolean",
+                            "unit": "",
+                            "description": "Filter in service",
+                            "access": "read",
+                            "qualifier": "data",
+                            "simulation": { "profile": "boolean_running" }
+                          },
+                          {
+                            "id": "tag-flt01-turbidity-out",
+                            "name": "turbidity-outlet",
+                            "dataType": "Float",
+                            "unit": "NTU",
+                            "description": "Filtered water turbidity [NTU]. WHO target < 0.1 NTU.",
+                            "access": "read",
+                            "qualifier": "data",
+                            "simulation": { "profile": "default", "min": 0.02, "max": 0.3 }
+                          },
+                          {
+                            "id": "tag-flt01-headloss",
+                            "name": "headloss",
+                            "dataType": "Float",
+                            "unit": "m",
+                            "description": "Filter headloss [m]. Backwash triggered > 2.5 m.",
+                            "access": "read",
+                            "qualifier": "data",
+                            "simulation": { "profile": "default", "min": 0.1, "max": 3.0 }
+                          },
+                          {
+                            "id": "tag-flt01-backwash",
+                            "name": "backwash-active",
+                            "dataType": "Boolean",
+                            "unit": "",
+                            "description": "Backwash cycle active",
+                            "access": "read",
+                            "qualifier": "data",
+                            "simulation": { "profile": "boolean_alarm" }
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "id": "wc-uv-disinfection",
+                    "name": "uv-disinfection",
+                    "type": "workCenter",
+                    "description": "UV-C disinfection bank – 4-log pathogen reduction.",
+                    "children": [
+                      {
+                        "id": "wu-uv-bank-01",
+                        "name": "uv-bank-01",
+                        "type": "workUnit",
+                        "description": "Medium-pressure UV reactor bank.",
+                        "tags": [
+                          {
+                            "id": "tag-uv-state",
+                            "name": "run-state",
+                            "dataType": "Boolean",
+                            "unit": "",
+                            "description": "UV bank online",
+                            "access": "read",
+                            "qualifier": "data",
+                            "simulation": { "profile": "boolean_running" }
+                          },
+                          {
+                            "id": "tag-uv-dose",
+                            "name": "uv-dose",
+                            "dataType": "Float",
+                            "unit": "mJ/cm2",
+                            "description": "Delivered UV dose [mJ/cm²]. Minimum 40 mJ/cm².",
+                            "access": "read",
+                            "qualifier": "data",
+                            "simulation": { "profile": "default", "min": 38, "max": 80 }
+                          },
+                          {
+                            "id": "tag-uv-transmittance",
+                            "name": "uv-transmittance",
+                            "dataType": "Float",
+                            "unit": "%",
+                            "description": "UV transmittance of water at 254 nm [%].",
+                            "access": "read",
+                            "qualifier": "data",
+                            "simulation": { "profile": "default", "min": 85, "max": 99 }
+                          },
+                          {
+                            "id": "tag-uv-lamp-hours",
+                            "name": "lamp-hours",
+                            "dataType": "Float",
+                            "unit": "h",
+                            "description": "Accumulated lamp operating hours [h]. Replace at 12 000 h.",
+                            "access": "read",
+                            "qualifier": "data",
+                            "simulation": { "profile": "default", "min": 0, "max": 12000 }
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "id": "wc-chlorination",
+                    "name": "chlorination",
+                    "type": "workCenter",
+                    "description": "Residual chlorine dosing for distribution network protection.",
+                    "children": [
+                      {
+                        "id": "wu-chlorine-dosing-01",
+                        "name": "chlorine-dosing-01",
+                        "type": "workUnit",
+                        "description": "NaOCl dosing system.",
+                        "tags": [
+                          {
+                            "id": "tag-cl-state",
+                            "name": "run-state",
+                            "dataType": "Boolean",
+                            "unit": "",
+                            "description": "Dosing pump running",
+                            "access": "read",
+                            "qualifier": "data",
+                            "simulation": { "profile": "boolean_running" }
+                          },
+                          {
+                            "id": "tag-cl-dose",
+                            "name": "chlorine-dose",
+                            "dataType": "Float",
+                            "unit": "mg/L",
+                            "description": "NaOCl dose rate [mg/L as Cl₂]. Target 0.3–0.5 mg/L residual.",
+                            "access": "read",
+                            "qualifier": "data",
+                            "simulation": { "profile": "default", "min": 0.2, "max": 0.8 }
+                          },
+                          {
+                            "id": "tag-cl-residual",
+                            "name": "residual-chlorine",
+                            "dataType": "Float",
+                            "unit": "mg/L",
+                            "description": "Outlet free residual chlorine [mg/L].",
+                            "access": "read",
+                            "qualifier": "data",
+                            "simulation": { "profile": "default", "min": 0.1, "max": 0.6 }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "area-distribution",
+                "name": "distribution",
+                "type": "area",
+                "description": "Treated water storage, pressure management and distribution to consumers.",
+                "children": [
+                  {
+                    "id": "wc-clear-well",
+                    "name": "clear-well",
+                    "type": "workCenter",
+                    "description": "Treated water storage reservoir (contact time for disinfection).",
+                    "children": [
+                      {
+                        "id": "wu-clear-well-01",
+                        "name": "clear-well-01",
+                        "type": "workUnit",
+                        "description": "Covered clear-well tank, 5 000 m³.",
+                        "tags": [
+                          {
+                            "id": "tag-cw-level",
+                            "name": "level",
+                            "dataType": "Float",
+                            "unit": "%",
+                            "description": "Clear-well level [% of capacity].",
+                            "access": "read",
+                            "qualifier": "data",
+                            "simulation": { "profile": "level" }
+                          },
+                          {
+                            "id": "tag-cw-volume",
+                            "name": "volume",
+                            "dataType": "Float",
+                            "unit": "m3",
+                            "description": "Absolute stored volume [m³].",
+                            "access": "read",
+                            "qualifier": "data",
+                            "simulation": { "profile": "default", "min": 1000, "max": 5000 }
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "id": "wc-transfer-pumps",
+                    "name": "high-lift-pumping",
+                    "type": "workCenter",
+                    "description": "High-lift pumps distributing treated water into the network.",
+                    "children": [
+                      {
+                        "id": "wu-hl-pump-01",
+                        "name": "hl-pump-01",
+                        "type": "workUnit",
+                        "description": "High-lift centrifugal pump, VFD-driven, 300 m³/h.",
+                        "tags": [
+                          {
+                            "id": "tag-hlp01-state",
+                            "name": "run-state",
+                            "dataType": "Boolean",
+                            "unit": "",
+                            "description": "Pump running",
+                            "access": "read",
+                            "qualifier": "data",
+                            "simulation": { "profile": "boolean_running" }
+                          },
+                          {
+                            "id": "tag-hlp01-flow",
+                            "name": "flow-rate",
+                            "dataType": "Float",
+                            "unit": "m3/h",
+                            "description": "Distribution flow rate [m³/h].",
+                            "access": "read",
+                            "qualifier": "data",
+                            "simulation": { "profile": "flow_rate", "min": 100, "max": 320 }
+                          },
+                          {
+                            "id": "tag-hlp01-pressure",
+                            "name": "discharge-pressure",
+                            "dataType": "Float",
+                            "unit": "bar",
+                            "description": "Pump discharge pressure [bar].",
+                            "access": "read",
+                            "qualifier": "data",
+                            "simulation": { "profile": "pressure", "min": 4.0, "max": 8.0 }
+                          },
+                          {
+                            "id": "tag-hlp01-current",
+                            "name": "motor-current",
+                            "dataType": "Float",
+                            "unit": "A",
+                            "description": "Motor current [A].",
+                            "access": "read",
+                            "qualifier": "data",
+                            "simulation": { "profile": "motor_current" }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "area-wastewater",
+                "name": "wastewater",
+                "type": "area",
+                "description": "Wastewater treatment – primary settlement, activated sludge, tertiary polish, sludge dewatering.",
+                "children": [
+                  {
+                    "id": "wc-primary-settlement",
+                    "name": "primary-settlement",
+                    "type": "workCenter",
+                    "description": "Primary clarifiers – gravity settlement of suspended solids.",
+                    "children": [
+                      {
+                        "id": "wu-clarifier-01",
+                        "name": "primary-clarifier-01",
+                        "type": "workUnit",
+                        "description": "Circular primary clarifier, 30 m diameter.",
+                        "tags": [
+                          {
+                            "id": "tag-pc01-state",
+                            "name": "run-state",
+                            "dataType": "Boolean",
+                            "unit": "",
+                            "description": "Clarifier in service",
+                            "access": "read",
+                            "qualifier": "data",
+                            "simulation": { "profile": "boolean_running" }
+                          },
+                          {
+                            "id": "tag-pc01-ss-out",
+                            "name": "suspended-solids-outlet",
+                            "dataType": "Float",
+                            "unit": "mg/L",
+                            "description": "Effluent suspended solids [mg/L]. Target < 150 mg/L.",
+                            "access": "read",
+                            "qualifier": "data",
+                            "simulation": { "profile": "default", "min": 50, "max": 250 }
+                          },
+                          {
+                            "id": "tag-pc01-sludge-level",
+                            "name": "sludge-blanket-level",
+                            "dataType": "Float",
+                            "unit": "m",
+                            "description": "Sludge blanket depth [m].",
+                            "access": "read",
+                            "qualifier": "data",
+                            "simulation": { "profile": "level", "min": 0.2, "max": 1.5 }
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "id": "wc-activated-sludge",
+                    "name": "activated-sludge",
+                    "type": "workCenter",
+                    "description": "Biological treatment – aeration basins with return activated sludge.",
+                    "children": [
+                      {
+                        "id": "wu-aeration-basin-01",
+                        "name": "aeration-basin-01",
+                        "type": "workUnit",
+                        "description": "Plug-flow aeration basin with fine-bubble diffusers.",
+                        "tags": [
+                          {
+                            "id": "tag-ab01-do",
+                            "name": "dissolved-oxygen",
+                            "dataType": "Float",
+                            "unit": "mg/L",
+                            "description": "Dissolved oxygen in aeration basin [mg/L]. Target 2.0 mg/L.",
+                            "access": "read",
+                            "qualifier": "data",
+                            "simulation": { "profile": "default", "min": 0.5, "max": 4.0 }
+                          },
+                          {
+                            "id": "tag-ab01-mlss",
+                            "name": "mlss",
+                            "dataType": "Float",
+                            "unit": "mg/L",
+                            "description": "Mixed liquor suspended solids [mg/L]. Target 3 000–4 000 mg/L.",
+                            "access": "read",
+                            "qualifier": "data",
+                            "simulation": { "profile": "default", "min": 2000, "max": 5000 }
+                          },
+                          {
+                            "id": "tag-ab01-air-flow",
+                            "name": "air-flow",
+                            "dataType": "Float",
+                            "unit": "m3/h",
+                            "description": "Supplied aeration air flow [m³/h].",
+                            "access": "read",
+                            "qualifier": "data",
+                            "simulation": { "profile": "flow_rate", "min": 500, "max": 2000 }
+                          },
+                          {
+                            "id": "tag-ab01-nh4",
+                            "name": "ammonia-nitrogen",
+                            "dataType": "Float",
+                            "unit": "mg/L",
+                            "description": "Effluent ammonium-N [mg/L NH₄-N]. Discharge limit < 3 mg/L.",
+                            "access": "read",
+                            "qualifier": "data",
+                            "simulation": { "profile": "default", "min": 0.5, "max": 6.0 }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "area-ww-kpi",
+                "name": "_kpi",
+                "type": "area",
+                "description": "Functional KPI branch – water treatment and network performance KPIs.",
+                "children": [
+                  {
+                    "id": "wc-kpi-wt",
+                    "name": "site-performance",
+                    "type": "workCenter",
+                    "description": "Site-level KPI rollup.",
+                    "children": [
+                      {
+                        "id": "wu-kpi-wt-rollup",
+                        "name": "kpi-rollup",
+                        "type": "workUnit",
+                        "description": "KPI aggregation node.",
+                        "tags": [
+                          {
+                            "id": "tag-kpi-output-volume",
+                            "name": "daily-output-volume",
+                            "dataType": "Float",
+                            "unit": "m3/d",
+                            "description": "Total drinking water produced today [m³/d].",
+                            "access": "read",
+                            "qualifier": "kpi",
+                            "simulation": { "profile": "flow_rate", "min": 5000, "max": 12000 }
+                          },
+                          {
+                            "id": "tag-kpi-compliance",
+                            "name": "compliance-rate",
+                            "dataType": "Float",
+                            "unit": "%",
+                            "description": "Drinking water quality compliance [%]. Regulatory target 100 %.",
+                            "access": "read",
+                            "qualifier": "kpi",
+                            "simulation": { "profile": "quality", "min": 97, "max": 100 }
+                          },
+                          {
+                            "id": "tag-kpi-energy-per-m3",
+                            "name": "energy-per-m3",
+                            "dataType": "Float",
+                            "unit": "kWh/m3",
+                            "description": "Energy consumption per m³ produced [kWh/m³]. Benchmark 0.4 kWh/m³.",
+                            "access": "read",
+                            "qualifier": "kpi",
+                            "simulation": { "profile": "default", "min": 0.3, "max": 0.7 }
+                          },
+                          {
+                            "id": "tag-kpi-leakage",
+                            "name": "non-revenue-water",
+                            "dataType": "Float",
+                            "unit": "%",
+                            "description": "Non-revenue water (leakage) [%]. Target < 10 %.",
+                            "access": "read",
+                            "qualifier": "kpi",
+                            "simulation": { "profile": "default", "min": 5, "max": 18 }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "area-energy",
+                "name": "_energy",
+                "type": "area",
+                "description": "Functional energy branch – electricity metering and energy KPIs.",
+                "children": [
+                  {
+                    "id": "wc-elec-metering",
+                    "name": "electricity",
+                    "type": "workCenter",
+                    "description": "Main electricity metering.",
+                    "children": [
+                      {
+                        "id": "wu-main-meter",
+                        "name": "main-meter",
+                        "type": "workUnit",
+                        "description": "HV/LV transformer MV main meter.",
+                        "tags": [
+                          {
+                            "id": "tag-mm-power",
+                            "name": "active-power",
+                            "dataType": "Float",
+                            "unit": "kW",
+                            "description": "Total site active power [kW].",
+                            "access": "read",
+                            "qualifier": "data",
+                            "simulation": { "profile": "power_kw" }
+                          },
+                          {
+                            "id": "tag-mm-energy",
+                            "name": "energy-today",
+                            "dataType": "Float",
+                            "unit": "kWh",
+                            "description": "Accumulated energy today [kWh].",
+                            "access": "read",
+                            "qualifier": "data",
+                            "simulation": { "profile": "accumulator_good" }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

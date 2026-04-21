@@ -1,0 +1,594 @@
+{
+  "version": "1.2",
+  "lastModified": "2026-04-21T00:00:00Z",
+  "namespaceUri": "urn:pillcraft-co:uns:v1",
+  "description": "Pillcraft Co – Pharmaceutical manufacturing. API synthesis, granulation, tablet compression, cleanroom packaging, QC/LIMS. BG-level template covering full ISA-95 + S88 hierarchy.",
+  "tree": {
+    "id": "ent-pillcraft",
+    "name": "Pillcraft_Co",
+    "type": "enterprise",
+    "description": "Pillcraft Co – mid-size pharmaceutical manufacturer, solid oral dosage forms.",
+    "children": [
+      {
+        "id": "bu-pharma-mfg",
+        "name": "pharma-manufacturing",
+        "type": "businessUnit",
+        "description": "Pharmaceutical manufacturing BU – API synthesis through finished product.",
+        "children": [
+          {
+            "id": "site-plant-ph-01",
+            "name": "plant-ph-01",
+            "type": "site",
+            "description": "Primary GMP pharmaceutical manufacturing site.",
+            "children": [
+              {
+                "id": "area-api",
+                "name": "api-synthesis",
+                "type": "area",
+                "description": "Active Pharmaceutical Ingredient (API) synthesis and isolation. Contained S88 process cells.",
+                "children": [
+                  {
+                    "id": "wc-synthesis-reactor",
+                    "name": "synthesis-reactors",
+                    "type": "workCenter",
+                    "description": "Multi-step chemical synthesis reactor train.",
+                    "children": [
+                      {
+                        "id": "wu-synth-r01",
+                        "name": "synthesis-reactor-01",
+                        "type": "workUnit",
+                        "description": "Glass-lined synthesis reactor, 2 000 L, with jacket and condenser.",
+                        "tags": [
+                          {
+                            "id": "tag-sr01-state",
+                            "name": "run-state",
+                            "dataType": "Boolean",
+                            "unit": "",
+                            "description": "Reactor running",
+                            "access": "read",
+                            "qualifier": "data",
+                            "simulation": { "profile": "boolean_running" }
+                          },
+                          {
+                            "id": "tag-sr01-temp",
+                            "name": "reactor-temperature",
+                            "dataType": "Float",
+                            "unit": "Cel",
+                            "description": "Reactor jacket-controlled temperature [°C].",
+                            "access": "read",
+                            "qualifier": "data",
+                            "simulation": { "profile": "temperature_process", "min": -10, "max": 80 }
+                          },
+                          {
+                            "id": "tag-sr01-pressure",
+                            "name": "reactor-pressure",
+                            "dataType": "Float",
+                            "unit": "kPa",
+                            "description": "Reactor headspace pressure [kPa(g)].",
+                            "access": "read",
+                            "qualifier": "data",
+                            "simulation": { "profile": "pressure", "min": -50, "max": 200 }
+                          },
+                          {
+                            "id": "tag-sr01-agitator",
+                            "name": "agitator-speed",
+                            "dataType": "Float",
+                            "unit": "rpm",
+                            "description": "Agitator speed [rpm].",
+                            "access": "read",
+                            "qualifier": "data",
+                            "simulation": { "profile": "speed_rpm", "min": 30, "max": 200 }
+                          },
+                          {
+                            "id": "tag-sr01-ph",
+                            "name": "ph-value",
+                            "dataType": "Float",
+                            "unit": "pH",
+                            "description": "Reaction mixture pH.",
+                            "access": "read",
+                            "qualifier": "data",
+                            "simulation": { "profile": "default", "min": 3.0, "max": 9.0 }
+                          },
+                          {
+                            "id": "tag-sr01-batch",
+                            "name": "batch-id",
+                            "dataType": "String",
+                            "unit": "",
+                            "description": "S88 batch ID (e.g. API-20260421-001).",
+                            "access": "read",
+                            "qualifier": "data",
+                            "simulation": { "profile": "erp_order_id" }
+                          },
+                          {
+                            "id": "tag-sr01-recipe",
+                            "name": "recipe",
+                            "dataType": "String",
+                            "unit": "",
+                            "description": "Active synthesis recipe name.",
+                            "access": "read",
+                            "qualifier": "data",
+                            "simulation": { "profile": "recipe" }
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "id": "wc-crystallisation",
+                    "name": "crystallisation",
+                    "type": "workCenter",
+                    "description": "API crystallisation and isolation (centrifuge + wash).",
+                    "children": [
+                      {
+                        "id": "wu-crystalliser-01",
+                        "name": "crystalliser-01",
+                        "type": "workUnit",
+                        "description": "Cooling crystalliser vessel.",
+                        "tags": [
+                          {
+                            "id": "tag-crys-state",
+                            "name": "run-state",
+                            "dataType": "Boolean",
+                            "unit": "",
+                            "description": "Crystalliser running",
+                            "access": "read",
+                            "qualifier": "data",
+                            "simulation": { "profile": "boolean_running" }
+                          },
+                          {
+                            "id": "tag-crys-temp",
+                            "name": "temperature",
+                            "dataType": "Float",
+                            "unit": "Cel",
+                            "description": "Crystallisation temperature [°C].",
+                            "access": "read",
+                            "qualifier": "data",
+                            "simulation": { "profile": "temperature_process", "min": 0, "max": 25 }
+                          },
+                          {
+                            "id": "tag-crys-yield",
+                            "name": "api-yield",
+                            "dataType": "Float",
+                            "unit": "%",
+                            "description": "API crystallisation yield [%mol]. Target ≥ 88 %.",
+                            "access": "read",
+                            "qualifier": "data",
+                            "simulation": { "profile": "quality", "min": 82, "max": 95 }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "area-formulation",
+                "name": "formulation",
+                "type": "area",
+                "description": "Granulation and tablet compression – solid oral dosage manufacturing.",
+                "children": [
+                  {
+                    "id": "wc-granulation",
+                    "name": "granulation",
+                    "type": "workCenter",
+                    "description": "High-shear wet granulation + fluid-bed drying.",
+                    "children": [
+                      {
+                        "id": "wu-hsgm-01",
+                        "name": "high-shear-granulator-01",
+                        "type": "workUnit",
+                        "description": "High-shear granulator, 200 L bowl.",
+                        "tags": [
+                          {
+                            "id": "tag-hsgm-state",
+                            "name": "run-state",
+                            "dataType": "Boolean",
+                            "unit": "",
+                            "description": "Granulator running",
+                            "access": "read",
+                            "qualifier": "data",
+                            "simulation": { "profile": "boolean_running" }
+                          },
+                          {
+                            "id": "tag-hsgm-impeller",
+                            "name": "impeller-speed",
+                            "dataType": "Float",
+                            "unit": "rpm",
+                            "description": "Impeller speed [rpm]. Typical 100–400 rpm.",
+                            "access": "read",
+                            "qualifier": "data",
+                            "simulation": { "profile": "speed_rpm", "min": 80, "max": 420 }
+                          },
+                          {
+                            "id": "tag-hsgm-torque",
+                            "name": "impeller-torque",
+                            "dataType": "Float",
+                            "unit": "Nm",
+                            "description": "Impeller torque – endpoint detection [Nm].",
+                            "access": "read",
+                            "qualifier": "data",
+                            "simulation": { "profile": "motor_current", "min": 5, "max": 60 }
+                          },
+                          {
+                            "id": "tag-hsgm-moisture",
+                            "name": "granule-moisture",
+                            "dataType": "Float",
+                            "unit": "%",
+                            "description": "Loss-on-drying moisture of wet granule [%]. Target < 2 % after drying.",
+                            "access": "read",
+                            "qualifier": "data",
+                            "simulation": { "profile": "default", "min": 0.5, "max": 3.5 }
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "id": "wc-compression",
+                    "name": "tablet-compression",
+                    "type": "workCenter",
+                    "description": "Rotary tablet compression.",
+                    "children": [
+                      {
+                        "id": "wu-tablet-press-01",
+                        "name": "tablet-press-01",
+                        "type": "workUnit",
+                        "description": "Rotary tablet press, 51-station, up to 300 000 tabs/h.",
+                        "tags": [
+                          {
+                            "id": "tag-tp01-state",
+                            "name": "run-state",
+                            "dataType": "Boolean",
+                            "unit": "",
+                            "description": "Press running",
+                            "access": "read",
+                            "qualifier": "data",
+                            "simulation": { "profile": "boolean_running" }
+                          },
+                          {
+                            "id": "tag-tp01-speed",
+                            "name": "turret-speed",
+                            "dataType": "Float",
+                            "unit": "rpm",
+                            "description": "Turret speed [rpm].",
+                            "access": "read",
+                            "qualifier": "data",
+                            "simulation": { "profile": "speed_rpm", "min": 10, "max": 60 }
+                          },
+                          {
+                            "id": "tag-tp01-hardness",
+                            "name": "tablet-hardness",
+                            "dataType": "Float",
+                            "unit": "N",
+                            "description": "Mean tablet crushing strength [N]. Spec 80–150 N.",
+                            "access": "read",
+                            "qualifier": "data",
+                            "simulation": { "profile": "default", "min": 70, "max": 160 }
+                          },
+                          {
+                            "id": "tag-tp01-weight",
+                            "name": "tablet-weight",
+                            "dataType": "Float",
+                            "unit": "mg",
+                            "description": "Mean tablet weight [mg]. Nominal depends on recipe.",
+                            "access": "read",
+                            "qualifier": "data",
+                            "simulation": { "profile": "default", "min": 195, "max": 205 }
+                          },
+                          {
+                            "id": "tag-tp01-output",
+                            "name": "tablets-per-hour",
+                            "dataType": "Float",
+                            "unit": "tabs/h",
+                            "description": "Production rate [tabs/h].",
+                            "access": "read",
+                            "qualifier": "data",
+                            "simulation": { "profile": "flow_rate", "min": 100000, "max": 300000 }
+                          },
+                          {
+                            "id": "tag-tp01-reject",
+                            "name": "reject-count",
+                            "dataType": "Int32",
+                            "unit": "tabs",
+                            "description": "Tablets rejected by weight check [tabs].",
+                            "access": "read",
+                            "qualifier": "data",
+                            "simulation": { "profile": "accumulator_bad" }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "area-packaging",
+                "name": "cleanroom-packaging",
+                "type": "area",
+                "description": "ISO 8 cleanroom blister packaging, bottle filling and carton packing.",
+                "children": [
+                  {
+                    "id": "wc-blister",
+                    "name": "blister-packaging",
+                    "type": "workCenter",
+                    "description": "Blister forming, filling, sealing and punching.",
+                    "children": [
+                      {
+                        "id": "wu-blister-01",
+                        "name": "blister-machine-01",
+                        "type": "workUnit",
+                        "description": "Rotary blister machine – PVDC/ALU, 400 blisters/min.",
+                        "tags": [
+                          {
+                            "id": "tag-bl01-state",
+                            "name": "run-state",
+                            "dataType": "Boolean",
+                            "unit": "",
+                            "description": "Machine running",
+                            "access": "read",
+                            "qualifier": "data",
+                            "simulation": { "profile": "boolean_running" }
+                          },
+                          {
+                            "id": "tag-bl01-speed",
+                            "name": "line-speed",
+                            "dataType": "Float",
+                            "unit": "blisters/min",
+                            "description": "Blister output speed [blisters/min].",
+                            "access": "read",
+                            "qualifier": "data",
+                            "simulation": { "profile": "flow_rate", "min": 200, "max": 420 }
+                          },
+                          {
+                            "id": "tag-bl01-temp-forming",
+                            "name": "forming-temperature",
+                            "dataType": "Float",
+                            "unit": "Cel",
+                            "description": "PVC/PVDC forming temperature [°C].",
+                            "access": "read",
+                            "qualifier": "data",
+                            "simulation": { "profile": "temperature_process", "min": 100, "max": 140 }
+                          },
+                          {
+                            "id": "tag-bl01-empty-blister",
+                            "name": "empty-blister-alarm",
+                            "dataType": "Boolean",
+                            "unit": "",
+                            "description": "Vision system empty-blister detection alarm.",
+                            "access": "read",
+                            "qualifier": "event",
+                            "simulation": { "profile": "boolean_alarm" }
+                          },
+                          {
+                            "id": "tag-bl01-oee",
+                            "name": "oee",
+                            "dataType": "Float",
+                            "unit": "%",
+                            "description": "Blister machine OEE [%].",
+                            "access": "read",
+                            "qualifier": "kpi",
+                            "simulation": { "profile": "oee" }
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "id": "wc-cleanroom-hvac",
+                    "name": "cleanroom-hvac",
+                    "type": "workCenter",
+                    "description": "ISO 8 cleanroom HVAC – temperature, RH, differential pressure monitoring.",
+                    "children": [
+                      {
+                        "id": "wu-cr-hvac-01",
+                        "name": "ahu-cleanroom-01",
+                        "type": "workUnit",
+                        "description": "Air handling unit supplying cleanroom packaging area.",
+                        "tags": [
+                          {
+                            "id": "tag-cr-temp",
+                            "name": "room-temperature",
+                            "dataType": "Float",
+                            "unit": "Cel",
+                            "description": "Cleanroom air temperature [°C]. Spec 20 ± 2 °C.",
+                            "access": "read",
+                            "qualifier": "data",
+                            "simulation": { "profile": "temperature_process", "min": 17, "max": 23 }
+                          },
+                          {
+                            "id": "tag-cr-rh",
+                            "name": "relative-humidity",
+                            "dataType": "Float",
+                            "unit": "%",
+                            "description": "Relative humidity [%RH]. Spec 45 ± 5 %.",
+                            "access": "read",
+                            "qualifier": "data",
+                            "simulation": { "profile": "default", "min": 38, "max": 55 }
+                          },
+                          {
+                            "id": "tag-cr-dp",
+                            "name": "differential-pressure",
+                            "dataType": "Float",
+                            "unit": "Pa",
+                            "description": "Cleanroom positive pressure differential vs. corridor [Pa]. Min 5 Pa.",
+                            "access": "read",
+                            "qualifier": "data",
+                            "simulation": { "profile": "default", "min": 3, "max": 20 }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "area-lims",
+                "name": "_lims",
+                "type": "area",
+                "description": "Functional LIMS branch – in-process and release QC data.",
+                "children": [
+                  {
+                    "id": "wc-in-process-qc",
+                    "name": "in-process",
+                    "type": "workCenter",
+                    "description": "In-process quality control (IPC) sampling results.",
+                    "children": [
+                      {
+                        "id": "wu-ipc-compression",
+                        "name": "compression-ipc",
+                        "type": "workUnit",
+                        "description": "IPC results for tablet compression – weight, hardness, friability.",
+                        "tags": [
+                          {
+                            "id": "tag-ipc-weight-rsd",
+                            "name": "weight-rsd",
+                            "dataType": "Float",
+                            "unit": "%",
+                            "description": "Tablet weight RSD from IPC sample [%]. Spec ≤ 2 %.",
+                            "access": "read",
+                            "qualifier": "quality",
+                            "simulation": { "profile": "default", "min": 0.2, "max": 3.5 }
+                          },
+                          {
+                            "id": "tag-ipc-hardness-mean",
+                            "name": "hardness-mean",
+                            "dataType": "Float",
+                            "unit": "N",
+                            "description": "Mean tablet hardness from IPC [N].",
+                            "access": "read",
+                            "qualifier": "quality",
+                            "simulation": { "profile": "default", "min": 75, "max": 160 }
+                          },
+                          {
+                            "id": "tag-ipc-friability",
+                            "name": "friability",
+                            "dataType": "Float",
+                            "unit": "%",
+                            "description": "Tablet friability [%]. Spec < 1 %.",
+                            "access": "read",
+                            "qualifier": "quality",
+                            "simulation": { "profile": "default", "min": 0.1, "max": 1.5 }
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "id": "wc-lot-release",
+                    "name": "lot-release",
+                    "type": "workCenter",
+                    "description": "Final lot release QC – assay, dissolution, microbiology.",
+                    "children": [
+                      {
+                        "id": "wu-release-qc",
+                        "name": "release-qc-results",
+                        "type": "workUnit",
+                        "description": "Lot release decision data.",
+                        "tags": [
+                          {
+                            "id": "tag-rel-assay",
+                            "name": "api-assay",
+                            "dataType": "Float",
+                            "unit": "%",
+                            "description": "API content assay [% label claim]. Spec 95–105 %.",
+                            "access": "read",
+                            "qualifier": "quality",
+                            "simulation": { "profile": "quality", "min": 94, "max": 106 }
+                          },
+                          {
+                            "id": "tag-rel-dissolution",
+                            "name": "dissolution-q45",
+                            "dataType": "Float",
+                            "unit": "%",
+                            "description": "Dissolution Q45 (release at 45 min) [%]. Spec ≥ 75 %.",
+                            "access": "read",
+                            "qualifier": "quality",
+                            "simulation": { "profile": "quality", "min": 70, "max": 99 }
+                          },
+                          {
+                            "id": "tag-rel-status",
+                            "name": "lot-release-status",
+                            "dataType": "String",
+                            "unit": "",
+                            "description": "QP lot release decision (PASS / FAIL / QUARANTINE).",
+                            "access": "read",
+                            "qualifier": "quality",
+                            "simulation": { "profile": "default" }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "area-pharma-kpi",
+                "name": "_kpi",
+                "type": "area",
+                "description": "Functional KPI branch – site production and quality KPIs.",
+                "children": [
+                  {
+                    "id": "wc-kpi-pharma-site",
+                    "name": "site-performance",
+                    "type": "workCenter",
+                    "description": "Site KPI rollup.",
+                    "children": [
+                      {
+                        "id": "wu-kpi-pharma",
+                        "name": "kpi-rollup",
+                        "type": "workUnit",
+                        "description": "KPI aggregation.",
+                        "tags": [
+                          {
+                            "id": "tag-kpi-oee",
+                            "name": "oee",
+                            "dataType": "Float",
+                            "unit": "%",
+                            "description": "Site OEE [%].",
+                            "access": "read",
+                            "qualifier": "kpi",
+                            "simulation": { "profile": "oee" }
+                          },
+                          {
+                            "id": "tag-kpi-right-first-time",
+                            "name": "right-first-time",
+                            "dataType": "Float",
+                            "unit": "%",
+                            "description": "Right-first-time lot release rate [%]. Pharma benchmark 95 %.",
+                            "access": "read",
+                            "qualifier": "kpi",
+                            "simulation": { "profile": "quality", "min": 90, "max": 100 }
+                          },
+                          {
+                            "id": "tag-kpi-batches-released",
+                            "name": "batches-released-today",
+                            "dataType": "Int32",
+                            "unit": "batches",
+                            "description": "Batches released today.",
+                            "access": "read",
+                            "qualifier": "kpi",
+                            "simulation": { "profile": "accumulator_good" }
+                          },
+                          {
+                            "id": "tag-kpi-deviations",
+                            "name": "open-deviations",
+                            "dataType": "Int32",
+                            "unit": "count",
+                            "description": "Open GMP deviations.",
+                            "access": "read",
+                            "qualifier": "kpi",
+                            "simulation": { "profile": "counter_faults" }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
