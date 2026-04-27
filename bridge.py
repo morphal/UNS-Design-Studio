@@ -166,16 +166,36 @@ def _format_payload(value, ts, unit, schema_id, topic, sep, schemas, data_type, 
     }
 
     payload = {}
-    for field in schema.get('fields', []):
-        key = field.get('key', '')
-        if not key:
-            continue
-        if 'static' in field:
-            payload[key] = field['static']
-        else:
-            payload[key] = sources.get(field.get('source', ''))
+for field in schema.get('fields', []):
+    key = field.get('key', '')
+    if not key:
+        continue
 
-    return json.dumps(payload)
+    source = field.get('source', '')
+
+    if source == 'static':
+        raw = field.get('staticVal', '')
+
+        if raw == 'true':
+            payload[key] = True
+        elif raw == 'false':
+            payload[key] = False
+        else:
+            try:
+                if raw != '':
+                    payload[key] = float(raw) if '.' in raw else int(raw)
+                else:
+                    payload[key] = ''
+            except Exception:
+                payload[key] = raw
+
+    elif 'static' in field:
+        payload[key] = field['static']
+
+    else:
+        payload[key] = sources.get(source)
+
+return json.dumps(payload)
 
 
 # ── OPC-UA node cache & poll ───────────────────────────────────────────────────
