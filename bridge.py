@@ -195,7 +195,7 @@ for field in schema.get('fields', []):
     else:
         payload[key] = sources.get(source)
 
-return json.dumps(payload)
+    return json.dumps(payload)
 
 
 # ── OPC-UA node cache & poll ───────────────────────────────────────────────────
