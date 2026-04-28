@@ -1,7 +1,7 @@
 {
   "plants": {
     "Vault-Tec|nuka-boston-facility-01": {
-      "running": true,
+      "running": false,
       "recipe": "NUKA_CLASSIC",
       "recipes": [
         {
@@ -15,7 +15,7 @@
       ]
     },
     "Vault-Tec|stimpak-facility-01": {
-      "running": true,
+      "running": false,
       "recipe": "STIMPAK_STANDARD",
       "recipes": [
         {
@@ -29,7 +29,7 @@
       ]
     },
     "Vault-Tec|radaway-facility-01": {
-      "running": true,
+      "running": false,
       "recipe": "RADAWAY_STANDARD",
       "recipes": [
         {
@@ -39,12 +39,12 @@
       ]
     },
     "Vault-Tec|research-vault-facility-01": {
-      "running": true,
+      "running": false,
       "recipe": "--NA--",
       "recipes": []
     },
     "Reynolds_4_0_Corp|site-a": {
-      "running": true,
+      "running": false,
       "recipe": "PRODUCT_A",
       "recipes": [
         {
@@ -66,5 +66,5 @@
       ]
     }
   },
-  "simulator_running": true
+  "simulator_running": false
 }

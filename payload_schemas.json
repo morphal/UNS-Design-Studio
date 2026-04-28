@@ -1,142 +1,126 @@
 {
-  "schemas": [
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "All accepted UNS data contracts",
+  "anyOf": [
     {
-      "description": "Value, timestamp, unit and quality — the bridge default",
-      "fields": [
-        {
-          "key": "value",
-          "source": "value",
-          "staticVal": ""
+      "title": "Contract 1001 - Standard value with epoch timestamp, unit and quality",
+      "type": "object",
+      "properties": {
+        "datacontract_id": {
+          "const": 1001
         },
-        {
-          "key": "ts",
-          "source": "ts_epoch",
-          "staticVal": ""
+        "value": {
+          "type": "number"
         },
-        {
-          "key": "unit",
-          "source": "unit",
-          "staticVal": ""
+        "ts": {
+          "type": "number"
         },
-        {
-          "key": "quality",
-          "source": "quality",
-          "staticVal": ""
+        "unit": {
+          "type": "string"
         },
-        {
-          "key": "datacontract_id",
-          "source": "static",
-          "staticVal": "1001"
+        "quality": {
+          "type": "string"
         }
-      ],
-      "id": "standard",
-      "name": "Standard (default)"
+      },
+      "required": [
+        "datacontract_id",
+        "value",
+        "ts",
+        "unit",
+        "quality"
+      ]
     },
     {
-      "description": "Minimal payload: value + timestamp only",
-      "fields": [
-        {
-          "key": "value",
-          "source": "value",
-          "staticVal": ""
+      "title": "Contract 1002 - Simple value with epoch timestamp",
+      "type": "object",
+      "properties": {
+        "datacontract_id": {
+          "const": 1002
         },
-        {
-          "key": "ts",
-          "source": "ts_epoch",
-          "staticVal": ""
+        "value": {
+          "type": "number"
         },
-        {
-          "key": "datacontract_id",
-          "source": "static",
-          "staticVal": "1002"
+        "ts": {
+          "type": "number"
         }
-      ],
-      "id": "simple",
-      "name": "Simple Value"
+      },
+      "required": [
+        "datacontract_id",
+        "value",
+        "ts"
+      ]
     },
     {
-      "description": "Mimics Sparkplug B NBIRTH/DDATA metric structure",
-      "fields": [
-        {
-          "key": "name",
-          "source": "tagName",
-          "staticVal": ""
+      "title": "Contract 1003 - Sparkplug B-like payload",
+      "type": "object",
+      "properties": {
+        "datacontract_id": {
+          "const": 1003
         },
-        {
-          "key": "value",
-          "source": "value",
-          "staticVal": ""
+        "name": {
+          "type": "string"
         },
-        {
-          "key": "timestamp",
-          "source": "ts_ms",
-          "staticVal": ""
+        "value": {
+          "type": "number"
         },
-        {
-          "key": "dataType",
-          "source": "dataType",
-          "staticVal": ""
+        "timestamp": {
+          "type": "integer"
         },
-        {
-          "key": "quality",
-          "source": "quality",
-          "staticVal": ""
+        "dataType": {
+          "type": "string"
         },
-        {
-          "key": "datacontract_id",
-          "source": "static",
-          "staticVal": "1003"
+        "quality": {
+          "type": "string"
         }
-      ],
-      "id": "sparkplug",
-      "name": "Sparkplug B-like"
+      },
+      "required": [
+        "datacontract_id",
+        "name",
+        "value",
+        "timestamp",
+        "dataType",
+        "quality"
+      ]
     },
     {
-      "description": "Full ISA-95 context including site, path and data type",
-      "fields": [
-        {
-          "key": "v",
-          "source": "value",
-          "staticVal": ""
+      "title": "Contract 1004 - ISA-95 Extended payload",
+      "type": "object",
+      "properties": {
+        "datacontract_id": {
+          "const": 1004
         },
-        {
-          "key": "q",
-          "source": "quality",
-          "staticVal": ""
+        "v": {
+          "type": "number"
         },
-        {
-          "key": "t",
-          "source": "ts_iso",
-          "staticVal": ""
+        "q": {
+          "type": "string"
         },
-        {
-          "key": "uom",
-          "source": "unit",
-          "staticVal": ""
+        "t": {
+          "type": "string"
         },
-        {
-          "key": "tagPath",
-          "source": "topicPath",
-          "staticVal": ""
+        "uom": {
+          "type": "string"
         },
-        {
-          "key": "dataType",
-          "source": "dataType",
-          "staticVal": ""
+        "tagPath": {
+          "type": "string"
         },
-        {
-          "key": "site",
-          "source": "siteName",
-          "staticVal": ""
+        "dataType": {
+          "type": "string"
         },
-        {
-          "key": "datacontract_id",
-          "source": "static",
-          "staticVal": "1004"
+        "site": {
+          "type": "string"
         }
-      ],
-      "id": "isa95",
-      "name": "ISA-95 Extended"
+      },
+      "required": [
+        "datacontract_id",
+        "v",
+        "q",
+        "t",
+        "uom",
+        "tagPath",
+        "dataType",
+        "site"
+      ]
     }
   ]
 }
